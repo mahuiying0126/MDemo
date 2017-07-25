@@ -1,0 +1,10 @@
+platform :ios, '8.0'
+target 'BangDemo' do use_frameworks!
+pod 'Alamofire'
+pod 'SwiftyJSON'
+pod 'MJExtension'
+pod 'SnapKit'
+pod 'AlamofireImage'
+pod 'MBProgressHUD'
+
+end
