@@ -9,8 +9,10 @@ import UIKit
 import SwiftyJSON
 
 class MHomeViewController: UIViewController ,noticDelegate{
+    
     static let reuseIdentifier = "homeCollectionCell"
     static let reusableView = "ReusableView"
+    
     var homeDelegate = MHomeViewModel()
     
     //MARK: LifeCycle
@@ -24,9 +26,11 @@ class MHomeViewController: UIViewController ,noticDelegate{
             self?.adviertArray = array
             self?.homeHeadView.BannerIcons(array)
         }
+        
         HomeNoticeModel().loadNoticeData { [weak self](array) in
             self?.homeHeadView.setupNoticeArray(array)
         }
+        
         HomeCourseModel().loadRecommandCourseData { [weak self](array) in
             self?.homeDelegate.dataArray = array
             self?.homeCollectionView .reloadData()
@@ -36,6 +40,7 @@ class MHomeViewController: UIViewController ,noticDelegate{
     /// 点击跳转到公告详情页面
     /// - Parameter model: 点击公告model
     func clickNoticIndex(model:HomeNoticeModel){
+        
         let messageView = MessageDetailViewController()
         messageView.messageId = model.ID
         messageView.msgDetail = model.descrip

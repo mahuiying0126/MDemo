@@ -13,7 +13,7 @@ class HomeDetailViewController: UIViewController,DetailTopBaseViewDelegate,topBu
     var detailCourse : String?
     var infoModel : DetailInfoModel?
     var courseModel : DetailCourseModel?
-    var coursePackageArray : NSArray?
+    
     /** *播放器视图 */
     var playerView : MPlayerView?
     
@@ -48,41 +48,24 @@ class HomeDetailViewController: UIViewController,DetailTopBaseViewDelegate,topBu
     
     //MARK:数据请求
     func loadDetailData()  {
-        let detailDict : [String : Any] = ["courseId":detailCourse! ,"userId":"1" ,"uuId":KEY_UUID ]
-        MNetworkRequest.sharedInstance .postRequest(urlString: courseinfo(), params: detailDict , success: { [weak self](responsData) in
-            let responseData = JSON(responsData)
-            if responseData["success"].boolValue{
-                let tempDict : NSDictionary = responseData["entity"].rawValue as! NSDictionary
-                self?.infoModel = DetailInfoModel .mj_object(withKeyValues: tempDict)
-                
-                self?.courseModel = DetailCourseModel.mj_object(withKeyValues: tempDict["course"])
-                self?.courseModel?.courseID = self?.detailCourse!
-                
-                self?.courseModel!.isOK = (self?.infoModel!.isok)!
-                if((self?.infoModel?.course) != nil){
-                    if(self?.infoModel?.isFav == false && Int(USERID) != 0){
-                        self?.topViewTool.collectionBtn? .setImage(UIImage.init(named: "已收藏"), for: .normal)
-                        self?.topViewTool.collectionBtn? .setTitle("已收藏", for: .normal)
-                    }
+        HomeDetailViewModel().loadingHomeCourseData(parameter: detailCourse!) { [weak self](someInfoModel, coursModel, coursPackageArray, listDeatilData) in
+            self?.infoModel = someInfoModel
+            self?.courseModel = coursModel
+            self?.coursePackageArray = coursPackageArray
+            self?.listDeatilArray = listDeatilData
+            self?.courseModel?.courseID = self?.detailCourse!
+            if((self?.infoModel?.course) != nil){
+                if(self?.infoModel?.isFav == false && Int(USERID) != 0){
+                    self?.topViewTool.collectionBtn? .setImage(UIImage.init(named: "已收藏"), for: .normal)
+                    self?.topViewTool.collectionBtn? .setTitle("已收藏", for: .normal)
                 }
-                
-                if(tempDict["coursePackageList"] is NSArray){
-                    self?.coursePackageArray = (tempDict["coursePackageList"]  as! NSArray)
-                }
-                
-                if(tempDict["courseKpoints"] is NSArray){
-                    self?.listDeatilArray = DetailCourseListModel .mj_objectArray(withKeyValuesArray: tempDict["courseKpoints"])
-                }
-                
-                ///获取数据,刷新UI
-                self?.settopBaseViewData()
-                self?.setTeacherListData()
-                self?.MCourseListData()
-                
             }
-        }) { (error) in
-            
+            ///获取数据,刷新UI
+            self?.settopBaseViewData()
+            self?.setTeacherListData()
+            self?.MCourseListData()
         }
+        
     }
     ///顶部视图,播放按钮,数据实现
     func settopBaseViewData() {
@@ -97,14 +80,14 @@ class HomeDetailViewController: UIViewController,DetailTopBaseViewDelegate,topBu
     ///课程列表数据,和分区头数据
     
     func MCourseListData()  {
-        let number  = NSInteger(Float(self.coursePackageArray!.count) / 2.0 + 0.6)
+        let number  = NSInteger(Float(self.coursePackageArray.count) / 2.0 + 0.6)
         let height = number * 40 + 5*(number+1)
         let frame = CGRect.init(x: 0, y: 0, width: Int(Screen_width), height: height)
         let flowLayout = UICollectionViewFlowLayout()
         flowLayout.scrollDirection = .vertical
         
         let coursePackView = MCoursePackageView.init(frame: frame, collectionViewLayout: flowLayout)
-        let tempPackageArray = DetailCoursePackageModel.mj_objectArray(withKeyValuesArray: self.coursePackageArray!)
+        let tempPackageArray = DetailCoursePackageModel.mj_objectArray(withKeyValuesArray: self.coursePackageArray)
         
         coursePackView.packageFromData(dataArray: tempPackageArray!)
         self.listTableView.tableHeaderView = coursePackView
@@ -257,6 +240,12 @@ class HomeDetailViewController: UIViewController,DetailTopBaseViewDelegate,topBu
     lazy var listDeatilArray : NSArray = {
         
         let tempArray = NSArray()
+        return tempArray
+    }()
+    
+    lazy var coursePackageArray : NSArray = {
+        let tempArray = NSArray()
+        
         return tempArray
     }()
     

@@ -72,7 +72,7 @@ class HomeCollectionViewCell: UICollectionViewCell {
     
     func cellForModel(model:HomeCourseModel) {
         
-        let url = URL(string: imageUrlString+(model.mobileLogo!))!
+        let url = URL(string: imageUrlString+(model.mobileLogo)!)!
         homeImage?.af_setImage(withURL: url,placeholderImage:UIImage(named:"加载中"))
         if  (model.currentPrice == nil)  {
            
@@ -80,11 +80,10 @@ class HomeCollectionViewCell: UICollectionViewCell {
         }else{
             self.homePrice?.text = String.init(format: "¥ %.2f", Float(model.currentPrice!)!)
         }
-        self.homeTitle?.text = model.courseName!;
+        
+        self.homeTitle?.text = model.courseName
         
         self.homeCount?.text = ("播放量:") + (model.playCount!) as String;
-
-        
     }
     
     

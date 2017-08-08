@@ -650,6 +650,10 @@ final class MPlayerView: UIView,UIGestureRecognizerDelegate {
      */
     @objc private func playOrPauseButtonClick(sender:UIButton){
         
+        if sender.isHidden {
+            return
+        }
+        
         sender.isSelected = !sender.isSelected
         if sender.isSelected {
             self.player?.pause()

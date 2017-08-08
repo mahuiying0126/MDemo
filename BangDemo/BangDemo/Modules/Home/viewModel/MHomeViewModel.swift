@@ -72,7 +72,6 @@ class MHomeViewModel: NSObject,UICollectionViewDataSource, UICollectionViewDeleg
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
         let tempArray  = self.dataArray[indexPath.section] as! NSArray
         let model  = tempArray[indexPath.row] as! HomeCourseModel
         self.cellDidSelectEvent!(model)

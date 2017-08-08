@@ -68,6 +68,7 @@ class DetailTopBaseView: UIView {
     }
     
     func setImageUrl(imageUrl:String)  {
+        
         self.backGroundImage?.af_setImage(withURL: URL.init(string: imageUrl)!,placeholderImage:UIImage.init(named: "加载中"))
     }
     

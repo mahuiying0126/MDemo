@@ -14,14 +14,13 @@ class HomeCourseModel: NSObject {
     var pageViewcount : String?
     var currentPrice : String?
     var ID : String?
-    var isPay : Bool?
+    var isPay = Bool()
     var courseId : String?
     var lessionnum : String?
     var playCount : String?
     var mobileLogo : String?
     var orderNum : String?
     var courseName : String?
-    
     
     override static func mj_replacedKeyFromPropertyName() -> [AnyHashable : Any]! {
         
