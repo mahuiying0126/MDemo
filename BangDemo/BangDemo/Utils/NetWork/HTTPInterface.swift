@@ -52,4 +52,9 @@ public func coursecontent() -> String{
     return baseUrlString.appending("course/content")
 }
 
+/// 课程评论
+
+public func courseAssesslist() -> String{
+    return baseUrlString.appending("course/assess/list")
+}
 

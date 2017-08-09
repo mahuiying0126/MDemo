@@ -28,8 +28,8 @@ public let Screen_width = UIScreen.main.bounds.size.width
 public let Ratio_height = UIScreen.main.bounds.size.height / 667.0
 public let Ratio_width = UIScreen.main.bounds.size.width / 375.0
 
-public let Spacing_width = 15
-public let Spacing_heght = 15
+public let Spacing_width15 : CGFloat = 15
+public let Spacing_heght15 : CGFloat = 15
 
 public func FONT(_ int:CGFloat) ->UIFont {
     return UIFont .systemFont(ofSize: int)

@@ -66,6 +66,10 @@ class HomeDetailViewController: UIViewController,DetailTopBaseViewDelegate,topBu
             self?.MCourseListData()
         }
         
+        HomeDetailViewModel().loadCommentData(courseID: detailCourse!, currentPage: 1, isLoadMore: true) {[weak self] (commentData, totlePage) in
+            self?.commentTableView.commentData(commentData)
+        }
+        
     }
     ///顶部视图,播放按钮,数据实现
     func settopBaseViewData() {

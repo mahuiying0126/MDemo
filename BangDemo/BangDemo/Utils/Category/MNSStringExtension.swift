@@ -11,11 +11,16 @@ import Foundation
 extension NSString{
     
     func widthForFont(font: inout UIFont) -> CGFloat {
-        let size = self.sizeForFont(font: &font, size:CGSize.init(width: CGFloat(HUGE), height: CGFloat(HUGE)) , lineBreakMode: .byWordWrapping)
+        let size = self.sizeForFont(font: &font, size:.init(width: CGFloat(HUGE), height: CGFloat(HUGE)) , lineBreakMode: .byWordWrapping)
         
         return size.width
     }
     
+    func heightForFont(font : inout UIFont,width:CGFloat) -> CGFloat {
+        
+        let size = self.sizeForFont(font: &font, size: .init(width: width, height: CGFloat(HUGE)), lineBreakMode: .byWordWrapping)
+        return size.height
+    }
     
     
     func sizeForFont(font : inout UIFont,size:CGSize,lineBreakMode:NSLineBreakMode) -> CGSize {

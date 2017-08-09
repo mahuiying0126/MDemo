@@ -22,16 +22,19 @@ class CommentCellFrameModel: NSObject {
     /** *分割线位置 */
     var lineFrame :  CGRect?
     /** *行高 */
-    var cellHeight :  CGRect?
+    var cellHeight :  CGFloat?
     
     private let spacingM : CGFloat = 10
     private let maxWith = (Screen_width - 5 * 10) * 0.5
-    
-    func setCellModel(_ cellModel : CommentUserModel) -> CommentCellFrameModel {
+    private var font15 = UIFont.systemFont(ofSize: 15)
+    private var font13 = UIFont.systemFont(ofSize: 13)
+    func cellFrameModel(_ cellModel : CommentUserModel) -> CommentCellFrameModel {
         let frameModel   = CommentCellFrameModel()
         frameModel.model = cellModel
         ///定义图片宽高是40,边距是15
-        frameModel.imageFrame = CGRect.init(x: Spacing_width, y: Spacing_heght, width: 40, height: 40)
+        ///图片 frame
+        frameModel.imageFrame = .init(x: Spacing_width15, y: Spacing_heght15, width: 40, height: 40)
+        
         var name = ""
         
         if ((cellModel.nickname?.deletSpaceInString().characters.count)! > 0) {
@@ -44,12 +47,30 @@ class CommentCellFrameModel: NSObject {
         }else{
             name = "匿名用户"
         }
+        let name_x = (frameModel.imageFrame?.maxX)! + spacingM
+        let name_y = frameModel.imageFrame?.minY
+        let name_w = (name as NSString).widthForFont(font: &font15)
+        ///昵称 frame
+        frameModel.nameFrame = .init(x: name_x, y: name_y!, width: name_w, height: 18)
         
-//        let name_x = (frameModel.imageFrame?.maxX)! + spacingM
-//        let name_y = frameModel.imageFrame?.minY
-//        let tmpSize = CGSize.init(width: maxWith, height: CGFloat(MAXFLOAT))
+        let time_w = (cellModel.createTime! as NSString).widthForFont(font: &font13)
+        let time_x = Screen_width - Spacing_heght15 - time_w
+        ///时间 frame
+        frameModel.timeFrame = .init(x: time_x, y: name_y!, width: time_w, height: 18)
         
+        let content_y = (frameModel.timeFrame?.maxY)! + spacingM
         
+        let conttempSize = CGSize.init(width: Screen_width - name_x - 15.0, height: CGFloat(MAXFLOAT))
+        let contentSize = (cellModel.content! as NSString).sizeForFont(font: &font15, size: conttempSize, lineBreakMode: .byCharWrapping)
+        ///评论内容 frame
+        frameModel.contentFrame = .init(x: name_x, y: content_y, width: contentSize.width, height:contentSize.height)
+        
+        let line_y = (frameModel.contentFrame?.maxY)! + Spacing_heght15
+        
+        ///分割线 frame
+        frameModel.lineFrame = CGRect.init(x: 0, y: line_y, width: Screen_width, height: 1.0)
+        ///cell 高度 frame
+        frameModel.cellHeight = frameModel.lineFrame?.maxY
         
         
        return frameModel

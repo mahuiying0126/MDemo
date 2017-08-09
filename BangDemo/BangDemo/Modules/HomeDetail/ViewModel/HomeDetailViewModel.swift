@@ -21,15 +21,7 @@ class HomeDetailViewModel: NSObject {
                 let courseModel = DetailCourseModel.mj_object(withKeyValues: tempDict["course"])!
                 courseModel.isOK = infoModel.isok
                 let coursePackageArray = (tempDict["coursePackageList"]  as! NSArray)
-                let listDeatilArray = DetailCourseListModel .mj_objectArray(withKeyValuesArray: tempDict["courseKpoints"])!
-//                if(tempDict["coursePackageList"] is NSArray){
-//                    
-//                }
-//                    
-//                if(tempDict["courseKpoints"] is NSArray){
-//                    
-//                }
-                
+                let listDeatilArray = DetailCourseListModel.mj_objectArray(withKeyValuesArray: tempDict["courseKpoints"])!
                 success(infoModel,courseModel,coursePackageArray,listDeatilArray)
                 
             }
@@ -40,7 +32,22 @@ class HomeDetailViewModel: NSObject {
     }
     
     
-    func loadCommentData(courseID:String,currentPage:NSInteger,isLoadMore:Bool,successBlock:@escaping(_ listData:NSArray) -> ()) {
+    func loadCommentData(courseID:String,currentPage:NSInteger,isLoadMore:Bool,successBlock:@escaping(_ listData:NSArray,_ totlePage:NSInteger) -> ()) {
+        let commentDict : [String : Any] = ["courseId":courseID,"page.currentPage":currentPage]
+        MNetworkRequest.sharedInstance .postRequest(urlString: courseAssesslist(), params: commentDict, success: { (data) in
+            let responseData = JSON(data)
+            if responseData["success"].boolValue{
+                let tempDict = responseData["entity"].rawValue as! NSDictionary
+                let page = tempDict["page"] as! NSDictionary
+                let totlpage = page["totalPageSize"] as! NSInteger
+
+                let tempArray = CommentUserModel.mj_objectArray(withKeyValuesArray: tempDict["assessList"] as! NSArray)
+                successBlock(tempArray!,totlpage)
+            
+            }
+        }) { (merror) in
+            
+        }
         
     }
     
