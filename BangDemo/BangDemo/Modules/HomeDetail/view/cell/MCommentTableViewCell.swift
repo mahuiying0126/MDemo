@@ -51,8 +51,10 @@ class MCommentTableViewCell: UITableViewCell {
 
         let tempStr = imageUrlString + (cellModel?.avatar)!
         let url = NSURL.init(string: tempStr)
-        self.headImage?.af_setImage(withURL: url! as URL,placeholderImage:UIImage.init(named: "头像"))
         self.headImage?.frame = model.imageFrame!
+        self.headImage?.af_setImage(withURL:url! as URL, placeholderImage: UIImage.init(named: "头像"), filter: nil, progress: nil, progressQueue: .main, imageTransition: .noTransition, runImageTransitionIfCached: true, completion: { [weak self](imagedata) in
+            self?.headImage?.addCornerRadius((model.imageFrame?.size.width)! / 2)
+        })
         
         if (cellModel?.nickname?.deletSpaceInString().characters.count)! > 0 {
             self.nickLable?.text = cellModel?.nickname!
@@ -63,7 +65,7 @@ class MCommentTableViewCell: UITableViewCell {
         }
         self.nickLable?.frame = model.nameFrame!
         
-//        let mytime = cellModel?.createTime as! NSMutableString
+//        let mytime : NSMutableString = cellModel?.createTime as! NSMutableString
 //        
 //        if mytime.length > 3 {
 //            mytime.deleteCharacters(in: NSRange.init(location: mytime.length - 3, length: 3))
@@ -71,10 +73,11 @@ class MCommentTableViewCell: UITableViewCell {
         self.timeLabel?.text = cellModel?.createTime!
         
         self.timeLabel?.frame = model.timeFrame!
-       
-        let attribstr = try! NSAttributedString.init(data:(cellModel?.content?.data(using: String.Encoding.unicode))! , options: [NSDocumentTypeDocumentAttribute:NSHTMLTextDocumentType], documentAttributes: nil)
         
-        self.contentLabel?.attributedText = attribstr
+//        let attribstr = try! NSAttributedString.init(data:(cellModel?.content?.data(using: String.Encoding.unicode))! , options: [NSDocumentTypeDocumentAttribute:NSHTMLTextDocumentType], documentAttributes: nil)
+        
+        self.contentLabel?.attributedText = cellModel?.content?.getParagraphStyle(font: 14, color:.gray , headIndent: 0.0)
+        
         self.contentLabel?.frame = model.contentFrame!
         self.lineView?.frame = model.lineFrame!
    

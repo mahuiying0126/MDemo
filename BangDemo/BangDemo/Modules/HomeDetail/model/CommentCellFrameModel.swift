@@ -61,7 +61,9 @@ class CommentCellFrameModel: NSObject {
         let content_y = (frameModel.timeFrame?.maxY)! + spacingM
         
         let conttempSize = CGSize.init(width: Screen_width - name_x - 15.0, height: CGFloat(MAXFLOAT))
+        
         let contentSize = (cellModel.content! as NSString).sizeForFont(font: &font15, size: conttempSize, lineBreakMode: .byCharWrapping)
+        
         ///评论内容 frame
         frameModel.contentFrame = .init(x: name_x, y: content_y, width: contentSize.width, height:contentSize.height)
         

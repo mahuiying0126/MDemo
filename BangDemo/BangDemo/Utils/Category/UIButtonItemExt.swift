@@ -11,6 +11,14 @@ import Foundation
 extension UIBarButtonItem{
     
     
+   /// 设置一个导航按钮
+   ///
+   /// - Parameters:
+   ///   - target:  target
+   ///   - action: 点击事件
+   ///   - image: 正常图片
+   ///   - hightImage: 高亮图片
+   /// - Returns: 返回设置好的BarButton
    func itemWithTarg(target:Any,action:Selector,image:NSString,hightImage:NSString) -> UIBarButtonItem {
         let button:UIButton = UIButton(type:.custom)
         button .addTarget(target, action: action, for: .touchUpInside)
