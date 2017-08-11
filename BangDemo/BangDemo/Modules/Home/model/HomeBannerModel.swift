@@ -26,8 +26,11 @@ class HomeBannerModel: NSObject {
     
     func loadingBannerData(success : @escaping (_ response : NSMutableArray)->()){
         
-        MNetworkRequest.sharedInstance.postRequestNoparam(urlString: advertisement() as String, success: {(requestData) in
-            let responseData = JSON(requestData)
+        let bunder = MNetRequestSeting()
+        bunder.hostUrl = advertisement()
+        bunder.cashSeting = .MSave
+        bunder.isHidenHUD = true
+        bunder.requestDataFromHostURL(seting: bunder, successBlock: { (responseData) in
             if(responseData["success"].boolValue && responseData["entity"].dictionary != nil){
                 let entity = responseData["entity"]
                 if(entity["indexCenterBanner"].array != nil){
@@ -41,6 +44,7 @@ class HomeBannerModel: NSObject {
                 }
             }
         }) { (error) in}
+        
     }
 
     

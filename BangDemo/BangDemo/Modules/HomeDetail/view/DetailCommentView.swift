@@ -14,6 +14,7 @@ class DetailCommentView: UITableView ,UITableViewDelegate,UITableViewDataSource{
     var commentData : NSArray?
     override init(frame: CGRect, style: UITableViewStyle) {
         super.init(frame: frame, style: style)
+        self.tableHeaderView = MCommentHeadView.init(frame:.init(x: 0, y: 0, width: Screen_width, height: 130))
         self.delegate = self
         self.dataSource = self
         self.separatorStyle = .none

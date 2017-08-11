@@ -853,7 +853,7 @@ final class MPlayerView: UIView,UIGestureRecognizerDelegate {
         
         switch orientation {
         case .portraitUpsideDown:
-            let frame = UIScreen.main.applicationFrame
+            let frame = UIScreen.main.bounds
             self.center = CGPoint.init(x: frame.origin.x + ceil(frame.size.width/2), y: frame.origin.y + ceil(frame.size.height/2))
             self.frame = frame
             self.centerPlayOrPauseBtn?.setImage(MIMAGE("Player_pause_btn"), for: .normal)
@@ -870,7 +870,7 @@ final class MPlayerView: UIView,UIGestureRecognizerDelegate {
             break
             
         case .portrait:
-            let frame = UIScreen.main.applicationFrame
+            let frame = UIScreen.main.bounds
             self.center = CGPoint.init(x: frame.origin.x + ceil(frame.size.width/2), y: frame.origin.y + ceil((frame.size.width*9/16)/2))
             self.frame = CGRect.init(x: frame.origin.x, y: frame.origin.x, width: frame.size.width, height: Screen_width * 9/16)
             self.centerPlayOrPauseBtn?.setImage(MIMAGE("Player_pause_btn_small"), for: .normal)
@@ -887,7 +887,7 @@ final class MPlayerView: UIView,UIGestureRecognizerDelegate {
             
         case .landscapeLeft:
             
-            let frame = UIScreen.main.applicationFrame
+            let frame = UIScreen.main.bounds
             self.center = CGPoint.init(x: frame.origin.x + ceil(frame.size.width/2), y: frame.origin.y + ceil(frame.size.height/2))
             self.frame = frame
             self.centerPlayOrPauseBtn?.setImage(MIMAGE("Player_pause_btn"), for: .normal)
@@ -902,7 +902,7 @@ final class MPlayerView: UIView,UIGestureRecognizerDelegate {
             break
             
         case .landscapeRight:
-            let frame = UIScreen.main.applicationFrame
+            let frame = UIScreen.main.bounds
             self.center = CGPoint.init(x: frame.origin.x + ceil(frame.size.width/2), y: frame.origin.y + ceil(frame.size.height/2))
             self.frame = frame
             self.centerPlayOrPauseBtn?.setImage(MIMAGE("Player_pause_btn"), for: .normal)

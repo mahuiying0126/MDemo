@@ -9,3 +9,4 @@
 #import "DownloadManager.h"
 #import "MediaServer.h"
 #import "DeviceTool.h"
+#import <CommonCrypto/CommonDigest.h>

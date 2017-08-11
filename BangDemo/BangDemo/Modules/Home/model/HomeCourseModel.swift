@@ -30,9 +30,10 @@ class HomeCourseModel: NSObject {
     //MARK: 加载课程列表数据
     func loadRecommandCourseData(success : @escaping (_ response : NSMutableArray) ->()){
         
-        MNetworkRequest.sharedInstance.postRequestNoparam(urlString: recommandCourse() as String, success: { (requested) in
-            
-            let responseData = JSON(requested)
+        let recommand = MNetRequestSeting()
+        recommand.hostUrl = recommandCourse()
+        recommand.cashSeting = .MSave
+        recommand.requestDataFromHostURL(seting: recommand, successBlock: { (responseData) in
             if(responseData["success"]).boolValue && (responseData["entity"].dictionary != nil){
                 let entity =  responseData["entity"]
                 let tempDataArray = NSMutableArray()
@@ -49,10 +50,11 @@ class HomeCourseModel: NSObject {
                 success(tempDataArray)
                 
             }
-            
+
         }) { (error) in
-            //获取数据失败
+            
         }
+       
     }
     
     

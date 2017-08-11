@@ -43,7 +43,7 @@ extension NSString{
     /// - Returns: 字体宽高
     func sizeForFont(font : inout UIFont,size:CGSize,lineBreakMode:NSLineBreakMode) -> CGSize {
         var result = CGSize()
-        if  isEqual(font) {
+        if isEqual(font) {
             font = .systemFont(ofSize: 12)
         }
         if self.responds(to: #selector(boundingRect(with:options:attributes:context:))) {

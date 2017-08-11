@@ -42,6 +42,8 @@
 		6D5D260B1EE1078100F66937 /* TeacherTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D5D260A1EE1078100F66937 /* TeacherTableViewCell.swift */; };
 		6D5D260D1EE1112700F66937 /* NSMutableNSStringExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D5D260C1EE1112700F66937 /* NSMutableNSStringExt.swift */; };
 		6D5D260F1EE14A1600F66937 /* DetailTeacherListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D5D260E1EE14A1600F66937 /* DetailTeacherListModel.swift */; };
+		6D64A1FB1F3BF3BB002354E1 /* MNetworkUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D64A1FA1F3BF3BB002354E1 /* MNetworkUtils.swift */; };
+		6D64A2001F3C6506002354E1 /* MNetRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D64A1FF1F3C6506002354E1 /* MNetRequest.swift */; };
 		6D7822351EDFB57600717F8E /* MNavigationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D7822341EDFB57600717F8E /* MNavigationViewController.swift */; };
 		6D7822381EDFB5A600717F8E /* MMainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D7822371EDFB5A600717F8E /* MMainViewController.swift */; };
 		6D78223A1EDFB5ED00717F8E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D7822391EDFB5ED00717F8E /* AppDelegate.swift */; };
@@ -69,7 +71,6 @@
 		6D78227C1EDFB7D200717F8E /* BackgroundSwitch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D78227B1EDFB7D200717F8E /* BackgroundSwitch.swift */; };
 		6D7822841EDFB82D00717F8E /* UIButtonItemExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D7822801EDFB82D00717F8E /* UIButtonItemExt.swift */; };
 		6D7822891EDFB8B300717F8E /* HTTPInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D7822871EDFB8B300717F8E /* HTTPInterface.swift */; };
-		6D78228A1EDFB8B300717F8E /* MNetworkTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D7822881EDFB8B300717F8E /* MNetworkTool.swift */; };
 		6D78228E1EDFB98800717F8E /* PlistFileTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D78228D1EDFB98800717F8E /* PlistFileTool.swift */; };
 		6D7822991EE0240F00717F8E /* DetailInfoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D7822981EE0240F00717F8E /* DetailInfoModel.swift */; };
 		6D78229B1EE0271000717F8E /* DetailCourseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D78229A1EE0271000717F8E /* DetailCourseModel.swift */; };
@@ -85,6 +86,8 @@
 		6DE7A7E01F271FF3005D06BD /* RateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DE7A7D91F271FF3005D06BD /* RateView.swift */; };
 		6DE7A7E11F271FF3005D06BD /* ResolutionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DE7A7DA1F271FF3005D06BD /* ResolutionView.swift */; };
 		6DE7A7E21F271FF3005D06BD /* SwitchCircuitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DE7A7DB1F271FF3005D06BD /* SwitchCircuitView.swift */; };
+		6DF806AE1F3B1C26001EAF53 /* MCommentHeadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DF806AD1F3B1C26001EAF53 /* MCommentHeadView.swift */; };
+		6DF806B01F3B2487001EAF53 /* MNetRequestSeting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DF806AF1F3B2487001EAF53 /* MNetRequestSeting.swift */; };
 		6DF9A75F1F3428CB005DDACB /* HomeDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DF9A75E1F3428CB005DDACB /* HomeDetailViewModel.swift */; };
 		6DF9A7611F3469DC005DDACB /* MCommentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DF9A7601F3469DC005DDACB /* MCommentTableViewCell.swift */; };
 		6DF9A7651F346DCD005DDACB /* CommentCellFrameModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DF9A7641F346DCD005DDACB /* CommentCellFrameModel.swift */; };
@@ -157,6 +160,8 @@
 		6D5D260A1EE1078100F66937 /* TeacherTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TeacherTableViewCell.swift; sourceTree = "<group>"; };
 		6D5D260C1EE1112700F66937 /* NSMutableNSStringExt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSMutableNSStringExt.swift; sourceTree = "<group>"; };
 		6D5D260E1EE14A1600F66937 /* DetailTeacherListModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailTeacherListModel.swift; sourceTree = "<group>"; };
+		6D64A1FA1F3BF3BB002354E1 /* MNetworkUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MNetworkUtils.swift; sourceTree = "<group>"; };
+		6D64A1FF1F3C6506002354E1 /* MNetRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MNetRequest.swift; sourceTree = "<group>"; };
 		6D7822341EDFB57600717F8E /* MNavigationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MNavigationViewController.swift; sourceTree = "<group>"; };
 		6D7822371EDFB5A600717F8E /* MMainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MMainViewController.swift; sourceTree = "<group>"; };
 		6D7822391EDFB5ED00717F8E /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -185,7 +190,6 @@
 		6D78227B1EDFB7D200717F8E /* BackgroundSwitch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackgroundSwitch.swift; sourceTree = "<group>"; };
 		6D7822801EDFB82D00717F8E /* UIButtonItemExt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIButtonItemExt.swift; sourceTree = "<group>"; };
 		6D7822871EDFB8B300717F8E /* HTTPInterface.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTTPInterface.swift; sourceTree = "<group>"; };
-		6D7822881EDFB8B300717F8E /* MNetworkTool.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MNetworkTool.swift; sourceTree = "<group>"; };
 		6D78228D1EDFB98800717F8E /* PlistFileTool.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlistFileTool.swift; sourceTree = "<group>"; };
 		6D7822981EE0240F00717F8E /* DetailInfoModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailInfoModel.swift; sourceTree = "<group>"; };
 		6D78229A1EE0271000717F8E /* DetailCourseModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailCourseModel.swift; sourceTree = "<group>"; };
@@ -207,6 +211,8 @@
 		6DE7A7D91F271FF3005D06BD /* RateView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RateView.swift; sourceTree = "<group>"; };
 		6DE7A7DA1F271FF3005D06BD /* ResolutionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResolutionView.swift; sourceTree = "<group>"; };
 		6DE7A7DB1F271FF3005D06BD /* SwitchCircuitView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwitchCircuitView.swift; sourceTree = "<group>"; };
+		6DF806AD1F3B1C26001EAF53 /* MCommentHeadView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MCommentHeadView.swift; sourceTree = "<group>"; };
+		6DF806AF1F3B2487001EAF53 /* MNetRequestSeting.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MNetRequestSeting.swift; sourceTree = "<group>"; };
 		6DF9A75E1F3428CB005DDACB /* HomeDetailViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeDetailViewModel.swift; sourceTree = "<group>"; };
 		6DF9A7601F3469DC005DDACB /* MCommentTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MCommentTableViewCell.swift; sourceTree = "<group>"; };
 		6DF9A7641F346DCD005DDACB /* CommentCellFrameModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentCellFrameModel.swift; sourceTree = "<group>"; };
@@ -346,6 +352,7 @@
 				6D8C7F831F012C750007FD55 /* MCourseListTableViewCell.swift */,
 				6D53F7261F1E07AF00AA484F /* CoursePackageCollectionViewCell.swift */,
 				6DF9A7601F3469DC005DDACB /* MCommentTableViewCell.swift */,
+				6DF806AD1F3B1C26001EAF53 /* MCommentHeadView.swift */,
 			);
 			path = cell;
 			sourceTree = "<group>";
@@ -598,7 +605,9 @@
 			isa = PBXGroup;
 			children = (
 				6D7822871EDFB8B300717F8E /* HTTPInterface.swift */,
-				6D7822881EDFB8B300717F8E /* MNetworkTool.swift */,
+				6DF806AF1F3B2487001EAF53 /* MNetRequestSeting.swift */,
+				6D64A1FA1F3BF3BB002354E1 /* MNetworkUtils.swift */,
+				6D64A1FF1F3C6506002354E1 /* MNetRequest.swift */,
 			);
 			path = NetWork;
 			sourceTree = "<group>";
@@ -927,6 +936,7 @@
 				6D4A69A61EF93E6F00F0932A /* DetailCourseChildModel.swift in Sources */,
 				6D5D260D1EE1112700F66937 /* NSMutableNSStringExt.swift in Sources */,
 				6D7822841EDFB82D00717F8E /* UIButtonItemExt.swift in Sources */,
+				6D64A2001F3C6506002354E1 /* MNetRequest.swift in Sources */,
 				6DE7A7E01F271FF3005D06BD /* RateView.swift in Sources */,
 				6D2B46AB1EE249BE00F4F077 /* TeacherHeaderView.swift in Sources */,
 				6D4CA9FA1EE9637B00A9364D /* SSKeychain.m in Sources */,
@@ -949,6 +959,7 @@
 				6D7822351EDFB57600717F8E /* MNavigationViewController.swift in Sources */,
 				6D97C77B1F3ABCAA00EF8D96 /* MUIImageExtension.swift in Sources */,
 				6D7822721EDFB70A00717F8E /* SilenceCarouselView.swift in Sources */,
+				6DF806B01F3B2487001EAF53 /* MNetRequestSeting.swift in Sources */,
 				6D7822661EDFB6CD00717F8E /* DetailCourseListView.swift in Sources */,
 				6DF9A7651F346DCD005DDACB /* CommentCellFrameModel.swift in Sources */,
 				6D78224F1EDFB69300717F8E /* MCourseViewController.swift in Sources */,
@@ -957,7 +968,6 @@
 				6D7822561EDFB69300717F8E /* HomeHeadCollectionReusableView.swift in Sources */,
 				6DE7A7E21F271FF3005D06BD /* SwitchCircuitView.swift in Sources */,
 				6D7822521EDFB69300717F8E /* HomeBannerModel.swift in Sources */,
-				6D78228A1EDFB8B300717F8E /* MNetworkTool.swift in Sources */,
 				6D5D260B1EE1078100F66937 /* TeacherTableViewCell.swift in Sources */,
 				6DE7A7E11F271FF3005D06BD /* ResolutionView.swift in Sources */,
 				6D7822701EDFB70A00717F8E /* MBProgressHUD+MJ.m in Sources */,
@@ -965,6 +975,7 @@
 				6D7822671EDFB6CD00717F8E /* DetailTeacherView.swift in Sources */,
 				6D7822651EDFB6CD00717F8E /* DetailCommentView.swift in Sources */,
 				6DF9A7671F346E17005DDACB /* CommentUserModel.swift in Sources */,
+				6D64A1FB1F3BF3BB002354E1 /* MNetworkUtils.swift in Sources */,
 				6D78228E1EDFB98800717F8E /* PlistFileTool.swift in Sources */,
 				6D97C77D1F3ABD4900EF8D96 /* MUIImageViewExtension.swift in Sources */,
 				6D4CA9FF1EE9643C00A9364D /* KyeUDIDTool.swift in Sources */,
@@ -976,6 +987,7 @@
 				6DE7A7DC1F271FF3005D06BD /* DeviceTool.m in Sources */,
 				6D7ED02E1F25E69400A94F91 /* MHomeViewModel.swift in Sources */,
 				6D3330B51F37F2B500D4F341 /* MNSStringExtension.swift in Sources */,
+				6DF806AE1F3B1C26001EAF53 /* MCommentHeadView.swift in Sources */,
 				6D7822511EDFB69300717F8E /* MHomeViewController.swift in Sources */,
 				6D7822891EDFB8B300717F8E /* HTTPInterface.swift in Sources */,
 			);
@@ -1123,7 +1135,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 485BFC6E6309FDCDCDF12C6D /* Pods-BangDemo.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -1133,7 +1145,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/BangDemo/bridgeFile/BangDemo-Bridging-Header.h";
 				INFOPLIST_FILE = BangDemo/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited)";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1157,7 +1169,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = F0D35C0AF2CF364F8249997A /* Pods-BangDemo.release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -1167,7 +1179,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/BangDemo/bridgeFile/BangDemo-Bridging-Header.h";
 				INFOPLIST_FILE = BangDemo/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited)";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
