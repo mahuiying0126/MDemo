@@ -21,19 +21,33 @@ class MHomeViewController: UIViewController ,noticDelegate{
         // Do any additional setup after loading the view.
         self.view.backgroundColor = Whit;
         self.title = "首页"
-        self.homeCollectionView.reloadData()
-        HomeBannerModel().loadingBannerData { [weak self] (array) in
+        let group = DispatchGroup()
+        group.enter()
+        HomeBannerModel().loadingBannerData(success: {[weak self] (array) in
+            group.leave()
             self?.adviertArray = array
             self?.homeHeadView.BannerIcons(array)
+        }) { (mError) in
+            group.leave()
         }
         
-        HomeNoticeModel().loadNoticeData { [weak self](array) in
+        group.enter()
+        HomeNoticeModel().loadNoticeData(success: { [weak self](array) in
+            group.leave()
             self?.homeHeadView.setupNoticeArray(array)
+        }) { (error) in
+            group.leave()
+        }
+        group.enter()
+        HomeCourseModel().loadRecommandCourseData(success: {  [weak self](array) in
+            group.leave()
+            self?.homeDelegate.dataArray = array
+            }) { (error) in
+                group.leave()
         }
         
-        HomeCourseModel().loadRecommandCourseData { [weak self](array) in
-            self?.homeDelegate.dataArray = array
-            self?.homeCollectionView .reloadData()
+        group.notify(queue: .main) { 
+            self.homeCollectionView .reloadData()
         }
     }
     //MARK: Public 公共方法
@@ -71,7 +85,7 @@ class MHomeViewController: UIViewController ,noticDelegate{
         collectionView.register(HomeHeadCollectionReusableView.self, forSupplementaryViewOfKind:UICollectionElementKindSectionHeader, withReuseIdentifier: reusableView)
         
         self.view .addSubview(collectionView)
-        collectionView .addSubview(self.homeHeadView)
+        
         return collectionView
     }()
     
@@ -79,6 +93,7 @@ class MHomeViewController: UIViewController ,noticDelegate{
         
         let headView = HomeHeadView.init(frame: CGRect.init(x: 0, y: -(Screen_width*0.5 + 25 + 10), width: Screen_width, height: Screen_width*0.5 + 25 + 10))
         headView.noticdelegate = self
+        self.homeCollectionView.addSubview(headView)
         headView.silenceCarouselView?.silenceCarouselViewTapBlock = {
             [weak self](carouselView, index) in
             //轮播图点击事件,进入详情

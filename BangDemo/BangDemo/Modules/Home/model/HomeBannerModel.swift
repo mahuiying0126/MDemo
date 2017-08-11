@@ -24,7 +24,7 @@ class HomeBannerModel: NSObject {
         return ["ID":"id"]
     }
     
-    func loadingBannerData(success : @escaping (_ response : NSMutableArray)->()){
+    func loadingBannerData(success : @escaping (_ response : NSMutableArray)->(),failture : @escaping (_ error : Error)->()){
         
         let bunder = MNetRequestSeting()
         bunder.hostUrl = advertisement()
@@ -43,7 +43,10 @@ class HomeBannerModel: NSObject {
                     }
                 }
             }
-        }) { (error) in}
+        }) { (error) in
+            failture(error)
+        }
+        
         
     }
 

@@ -25,7 +25,7 @@ class HomeNoticeModel: NSObject {
     }
 
     //MARK: 加载公告数据
-    func loadNoticeData(success: @escaping(_ response : NSMutableArray) -> () )  {
+    func loadNoticeData(success: @escaping(_ response : NSMutableArray) -> (),failture : @escaping (_ error : Error)->() )  {
     
         let notic = MNetRequestSeting()
         notic.hostUrl = homeNote()
@@ -44,7 +44,7 @@ class HomeNoticeModel: NSObject {
                 }
             }
         }) { (error) in
-            
+           failture(error)
         }
         
     }

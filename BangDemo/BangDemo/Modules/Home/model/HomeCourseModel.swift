@@ -28,7 +28,7 @@ class HomeCourseModel: NSObject {
     }
     
     //MARK: 加载课程列表数据
-    func loadRecommandCourseData(success : @escaping (_ response : NSMutableArray) ->()){
+    func loadRecommandCourseData(success : @escaping (_ response : NSMutableArray) ->(),failture : @escaping (_ error : Error)->()){
         
         let recommand = MNetRequestSeting()
         recommand.hostUrl = recommandCourse()
@@ -52,7 +52,7 @@ class HomeCourseModel: NSObject {
             }
 
         }) { (error) in
-            
+            failture(error)
         }
        
     }
