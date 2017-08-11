@@ -48,13 +48,18 @@ class MCommentTableViewCell: UITableViewCell {
     
     func updatCellFrame(model:CommentCellFrameModel)  {
         let cellModel = model.model
-
-        let tempStr = imageUrlString + (cellModel?.avatar)!
-        let url = NSURL.init(string: tempStr)
         self.headImage?.frame = model.imageFrame!
-        self.headImage?.af_setImage(withURL:url! as URL, placeholderImage: UIImage.init(named: "头像"), filter: nil, progress: nil, progressQueue: .main, imageTransition: .noTransition, runImageTransitionIfCached: true, completion: { [weak self](imagedata) in
-            self?.headImage?.addCornerRadius((model.imageFrame?.size.width)! / 2)
-        })
+        if cellModel?.avatar != nil {
+            let tempStr = imageUrlString + (cellModel?.avatar)!
+            let url = NSURL.init(string: tempStr)
+            self.headImage?.af_setImage(withURL:url! as URL, placeholderImage: UIImage.init(named: "头像"), filter: nil, progress: nil, progressQueue: .main, imageTransition: .noTransition, runImageTransitionIfCached: true, completion: { [weak self](imagedata) in
+                self?.headImage?.addCornerRadius((model.imageFrame?.size.width)! / 2)
+            })
+        }else{
+            self.headImage?.image = MIMAGE("头像")
+            self.headImage?.addCornerRadius((model.imageFrame?.size.width)! / 2)
+        }
+        
         
         if (cellModel?.nickname?.deletSpaceInString().characters.count)! > 0 {
             self.nickLable?.text = cellModel?.nickname!
