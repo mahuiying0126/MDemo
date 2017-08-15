@@ -24,7 +24,7 @@ class DetailCourseChildModel: NSObject {
     /// * 播放量
     var playcount : String?
     /// * 是否免费
-    var isfree : Int?
+    var isfree : Int = 0
     /// * 视频类型
     var videotype : String?
     /// * 老师ID
@@ -40,10 +40,10 @@ class DetailCourseChildModel: NSObject {
     /// * pageCount
     var pageCount : String?
     /// * touristIsFree
-    var touristIsFree : Bool?
+    var touristIsFree : Bool = false
     
     /** 是否被点击*/
-    var isSelected = Bool()
+    var isSelected : Bool = false
     
     override static func mj_replacedKeyFromPropertyName() -> [AnyHashable : Any]! {
         

@@ -62,7 +62,7 @@ final class MPlayerView: UIView,UIGestureRecognizerDelegate {
     /** *手势,枚举 */
     private var panDirection : PanDirection?
     /** *是否在调节音量 */
-    private var isVolume = Bool()
+    private var isVolume : Bool = false
     /** *声音进度条 */
     private var volumeViewSlider : UISlider?
     /** *播放器状态 */
@@ -112,30 +112,30 @@ final class MPlayerView: UIView,UIGestureRecognizerDelegate {
     /** *视频类型 */
     var videoType : String?
     /** *清晰度 */
-    var chanel : Int32?
+    var chanel : Int32 = CHANNEL_HIGH
     /** *是否为本地视频 */
-    var isLOCAL = Bool()
+    var isLOCAL : Bool = false
     /** *当前时长 */
-    final var currentTime : NSInteger?
+    final var currentTime : NSInteger = 0
     /** *总时长 */
-    final var totalTime : NSInteger?
+    final var totalTime : NSInteger = 0
     /** *显示控制层定时器 */
     private var timer : Timer?
     /** *是否正在拖动进度条 */
-    private var progressDragging : Bool?
+    private var progressDragging : Bool = false
     /** *控制层是否显示 */
-    private var controlViewIsShowing : Bool?
+    private var controlViewIsShowing : Bool = false
     /** *是否锁屏屏幕 */
-    private var isLocked = Bool()
+    private var isLocked : Bool = false
     /** *是否全屏 */
-    private var isFullScreen = Bool()
+    private var isFullScreen : Bool = false
     /** *时间观察 */
     private var timeObserve : Any?
     private var resolutionView : ResolutionView?
     /** *是否播放完毕 */
-    var playEnd = Bool()
+    var playEnd : Bool = false
     /** *当前倍速 */
-    var rateValue : Float?
+    var rateValue : Float = 1.0
     
     /// 创建播放器单例
     static let shared = MPlayerView()
@@ -226,8 +226,8 @@ final class MPlayerView: UIView,UIGestureRecognizerDelegate {
         
         self.playerItem = self.getPlayItemWithURLString(url: videoURLStr)
         self.player?.replaceCurrentItem(with: self.playerItem)
-        self.player?.seek(to: CMTimeMake(Int64(currentTime!), 1))
-        self.player?.rate = self.rateValue!
+        self.player?.seek(to: CMTimeMake(Int64(currentTime), 1))
+        self.player?.rate = self.rateValue
 //        self.player?.play()
     }
     
@@ -255,7 +255,7 @@ final class MPlayerView: UIView,UIGestureRecognizerDelegate {
      */
     @objc private func tapOneClick(gesture:UIGestureRecognizer){
         if !playEnd {
-            if controlViewIsShowing! {
+            if controlViewIsShowing {
                 hideControlView()
                 cancleDelay()
                 controlViewIsShowing = false
@@ -529,7 +529,7 @@ final class MPlayerView: UIView,UIGestureRecognizerDelegate {
      */
     private func stopAnimation(){
         self.activeView?.stopAnimating()
-        self.centerPlayOrPauseBtn?.isHidden = controlViewIsShowing! ? false : true
+        self.centerPlayOrPauseBtn?.isHidden = controlViewIsShowing ? false : true
         self.activeLB?.isHidden = true
 
     }
@@ -667,23 +667,23 @@ final class MPlayerView: UIView,UIGestureRecognizerDelegate {
      */
     @objc private func clickRateBtnEvent(){
         
-        self.rateValue! += 0.2
-        if self.rateValue! >= 1.2 && self.rateValue! < 1.3 {
+        self.rateValue += 0.2
+        if self.rateValue >= 1.2 && self.rateValue < 1.3 {
             self.rateValue = 1.2
-        }else if self.rateValue! >= 1.4 && self.rateValue! < 1.5 {
+        }else if self.rateValue >= 1.4 && self.rateValue < 1.5 {
             self.rateValue = 1.5
-        }else if self.rateValue! > 1.5 {
+        }else if self.rateValue > 1.5 {
             self.rateValue = 1.0
         }
         
-        self.player?.rate = self.rateValue!
+        self.player?.rate = self.rateValue
         if isLOCAL {
             rateBtn?.setImage(MIMAGE("选中倍速"), for: .normal)
             ratelabel?.textColor = UIColorFromRGB(0xf6a54a)
-            ratelabel?.text = String.init(format: "倍速 %.1fx", self.rateValue!)
+            ratelabel?.text = String.init(format: "倍速 %.1fx", self.rateValue)
             
         }else{
-            rateView?.rateLB?.text = String.init(format: "倍速 %.1fx", self.rateValue!)
+            rateView?.rateLB?.text = String.init(format: "倍速 %.1fx", self.rateValue)
             rateView?.videoLB?.textColor = Whit
             rateView?.audioLB?.textColor = Whit
             rateView?.rateLB?.textColor = UIColorFromRGB(0xf6a54a)
@@ -805,15 +805,15 @@ final class MPlayerView: UIView,UIGestureRecognizerDelegate {
     }
     
     @objc private func progressSliderValueChanged(slider:UISlider){
-        if (totalTime != nil)  {
-            let chageTime = slider.value * Float(totalTime!)
+        if (totalTime > 0)  {
+            let chageTime = slider.value * Float(totalTime)
             self.currentTimeLB?.text = String.init(format: "%@", self.timeStringWithTime(times: NSInteger(chageTime)))
         }
     }
     
     @objc private func progressSliderTouchEnded(slider:UISlider){
-        if (totalTime != nil) {
-            self.player?.seek(to: CMTimeMake(Int64(slider.value * Float(totalTime!)), 1))
+        if (totalTime > 0) {
+            self.player?.seek(to: CMTimeMake(Int64(slider.value * Float(totalTime)), 1))
             self.player?.play()
             self.centerPlayOrPauseBtn?.isSelected = false
         }

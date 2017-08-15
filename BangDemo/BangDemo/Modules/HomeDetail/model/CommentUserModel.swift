@@ -11,19 +11,19 @@ import UIKit
 class CommentUserModel: NSObject {
 
     /** *id*/
-    var ID : Int?
+    var ID : Int = 0
     /** *用户 id */
-    var userId : Int?
+    var userId : Int = 0
     /** *kpointId */
-    var kpointId : Int?
+    var kpointId : Int = 0
     /** *状态 */
-    var status : Int?
+    var status : Int = 0
     /** *邮箱是否可用 */
-    var emailIsavalible : Int?
+    var emailIsavalible : Int = 0
     /** *手机是否可用 */
-    var mobileIsavalible : Int?
+    var mobileIsavalible : Int = 0
     /** *昵称是否可用 */
-    var isavalible : Int?
+    var isavalible : Int = 0
     /** *评论内容 */
     var content : String?
     /** *评论时间 */

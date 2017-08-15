@@ -15,11 +15,11 @@ class DetailCoursePackageModel: NSObject {
     /** *课程包名字*/
     var name : String?
     /** *是否支付 */
-    var isPay : Int?
+    var isPay : Int = 0
     /** *losetype */
-    var losetype : Int?
+    var losetype : Int = 0
     /** *是否被选择 */
-    var isSelect = Bool()
+    var isSelect : Bool = false
     
     override static func mj_replacedKeyFromPropertyName() -> [AnyHashable : Any]! {
         return ["ID":"id"]

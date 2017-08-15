@@ -18,6 +18,8 @@ import UIKit
 class DetailTopToolView: UIView {
 
     var collectionBtn : UIButton?
+    /** *课程 id */
+    var courseId : String?
     weak var topViewButtonDelegate : topButtonClickDelegate?
     
     override init(frame: CGRect) {
@@ -65,9 +67,18 @@ class DetailTopToolView: UIView {
     
     
     func detailThreeBtnClick(sender: UIButton)  {
-        if self.topViewButtonDelegate != nil   {
-            self.topViewButtonDelegate?.collectionAndDownClick(buttonTag: sender.tag)
+        if sender.tag == 1 {
+            if sender.isSelected {
+                ///已经是已收藏状态,再点击就是取消收藏
+                collectionCleanCourse()
+            }else{
+                collectionCourse()
+            }
+        }else{
+          self.topViewButtonDelegate?.collectionAndDownClick(buttonTag: sender.tag)
         }
+        
+        
     }
     
     func threeSegmentBtnClick(sender:UISegmentedControl) {
@@ -75,6 +86,63 @@ class DetailTopToolView: UIView {
             self.topViewButtonDelegate?.threeSegmentBtn(segmentIndex: sender.selectedSegmentIndex)
         }
     }
+    
+    private func collectionCleanCourse() {
+        
+        let collection = MNetRequestSeting()
+        collection.hostUrl = collectionCleanFavorites()
+        collection.paramet = ["userId":USERID,"courseId":self.courseId!]
+        collection.requestDataFromNetSet(seting: collection, successBlock: { [weak self](responseData) in
+            if responseData["success"].boolValue {
+                self?.collectionBtn?.isSelected = false
+                MBProgressHUD.showSuccess("取消收藏")
+                ///再将本地缓存重新刷新
+                self?.refreshCourseData()
+            }else{
+                MBProgressHUD.showError("取消失败!")
+            }
+        }) { (merror) in
+            MBProgressHUD.showError("取消失败!")
+        }
+    }
+    private func collectionCourse() {
+        if NSInteger(USERID)! > 0 {
+            let collection = MNetRequestSeting()
+            collection.hostUrl = collectionAdd()
+            collection.paramet = ["userId":USERID,"courseId":self.courseId!]
+            collection.requestDataFromNetSet(seting: collection, successBlock: { [weak self](responseData) in
+                if responseData["success"].boolValue {
+                    self?.collectionBtn?.isSelected = true
+                    MBProgressHUD.showSuccess("收藏成功!")
+                     ///再将本地缓存重新刷新
+                    self?.refreshCourseData()
+                }else{
+                    MBProgressHUD.showError("收藏失败!")
+                }
+            }) { (merror) in
+                MBProgressHUD.showError("收藏失败!")
+            }
+            
+        }else{
+            MBProgressHUD.showMBPAlertView("请登录后收藏", withSecond: 1.0)
+        }
+        
+    }
+    
+    private func refreshCourseData() {
+        let homeCourse = MNetRequestSeting()
+        homeCourse.hostUrl = courseinfo()
+        homeCourse.isHidenHUD = true
+        homeCourse.paramet  = ["courseId":self.courseId!,"userId":USERID ,"uuId":KEY_UUID]
+        homeCourse.cashSeting = .MSave
+        homeCourse.isRefresh = true;
+        homeCourse.requestDataFromNetSet(seting: homeCourse, successBlock: { (reson) in
+            
+        }, failture: { (merror) in
+            
+        })
+    }
+    
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")

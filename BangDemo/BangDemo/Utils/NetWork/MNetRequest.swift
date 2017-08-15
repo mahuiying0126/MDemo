@@ -14,10 +14,10 @@ class MNetRequest: NSObject {
         ///打印请求链接
         var parameter = [String : Any]()
         if requestSet.paramet != nil {
-            MNetworkUtils.printRequestUrlString(urlString: requestSet.hostUrl!, Paramter: requestSet.paramet! as NSDictionary)
+           let _ = MNetworkUtils.printRequestUrlString(urlString: requestSet.hostUrl!, Paramter: requestSet.paramet! as NSDictionary)
             parameter = requestSet.paramet!
         }else{
-            MNetworkUtils.printRequestUrlString(urlString: requestSet.hostUrl!, Paramter: ["":""])
+           let _ = MNetworkUtils.printRequestUrlString(urlString: requestSet.hostUrl!, Paramter: ["":""])
             parameter = ["Key":"Value"]
         }
         

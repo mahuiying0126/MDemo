@@ -27,8 +27,13 @@ class TeacherHeaderView: UIView {
         courseName?.text = model.name!
         let currentText = String.init(format: "¥ %@", model.currentprice!)
         currentPrice?.attributedText = NSMutableAttributedString().markStyleAttributeString(currentText,lineStyle:.styleNone, markFont: 14.0, markMakeRange: NSRange.init(location: 0, length: 1), markColor: .black, textFont: 18.0, textMakeRange: NSRange.init(location: 2, length: currentText.characters.count - 2), textColor: UIColorFromRGB(0x007AFF))
+        
         let sourceText = String.init(format: "¥ %@", model.sourceprice!)
+        
         sourcePrice?.attributedText = NSMutableAttributedString().markStyleAttributeString(sourceText,lineStyle:.styleSingle, markFont: 14.0, markMakeRange: NSMakeRange(0, 1), markColor: .black, textFont: 18.0, textMakeRange: NSRange.init(location: 2, length: sourceText.characters.count - 2), textColor: UIColorFromRGB(0x7F7F7F))
+        
+        
+        
         if (model.isOK || Double(model.currentprice!)! <= 0.0) {
             purchaseBtn?.isEnabled = false
             purchaseBtn?.setTitle("", for: .normal)
@@ -86,18 +91,28 @@ class TeacherHeaderView: UIView {
             make.left.equalTo(courseName!)
             make.top.equalTo(courseName!.snp.bottom).offset(12)
             make.height.equalTo(21)
-            make.width.equalTo(60)
+            
         })
         sourcePrice?.snp.makeConstraints({ (make) in
             make.left.equalTo(currentPrice!.snp.right).offset(10)
             make.top.height.equalTo(currentPrice!)
-            make.width.equalTo(100)
+            
         })
+        
+        let line1 = UIView()
+        line1.backgroundColor = UIColorFromRGB(0x7F7F7F)
+        sourcePrice?.addSubview(line1)
+        line1.snp.makeConstraints { (make) in
+            make.center.equalTo(sourcePrice!)
+            make.height.equalTo(1)
+            make.width.equalTo(sourcePrice!)
+        }
+        
         purchaseBtn?.snp.makeConstraints({ (make) in
             make.top.equalTo(courseName!.snp.bottom)
             make.right.equalTo(self).offset(-10)
-            make.width.equalTo(85)
-            make.height.equalTo(36)
+            make.width.equalTo(80)
+            make.height.equalTo(32)
         })
         line.snp.makeConstraints { (make) in
             make.left.right.equalTo(self)

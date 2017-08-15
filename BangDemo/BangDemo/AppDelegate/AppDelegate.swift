@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import Alamofire
+import IQKeyboardManagerSwift
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -24,13 +26,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.window?.makeKeyAndVisible();
         self.window?.backgroundColor = navColor
         self.window?.rootViewController = MMainViewController()
-       
+        UIApplication.shared.statusBarStyle = .lightContent
+        
         ///获取uuid
         if (userDefault.object(forKey: "KEY_UUID") == nil) {
             let Udid = getUUID()
             userDefault.set(Udid, forKey: "KEY_UUID")
         }
         
+        if userDefault.object(forKey: "USERID") == nil {
+            let userID = "1"
+            userDefault.set(userID, forKey: "USERID")
+        }
+        
+        ///添加网络监听
+        listenNetWorkingStatus()
+        IQKeyboardManager.sharedManager().enable = true
+        IQKeyboardManager.sharedManager().shouldResignOnTouchOutside = true
+//        IQKeyboardManager.sharedManager().enableAutoToolbar = false
         return true
     }
 
@@ -39,6 +52,26 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             return .allButUpsideDown
         }
         return .portrait
+    }
+    
+    func listenNetWorkingStatus() {
+        let manager = NetworkReachabilityManager()
+        manager?.listener = { status in
+            if status == .notReachable {
+                MYLog("没有网络")
+            }
+            if status == .unknown {
+                MYLog("未知网络")
+            }
+            if status == NetworkReachabilityManager.NetworkReachabilityStatus.reachable(.wwan) {
+                MYLog("WWAN网络")
+            }
+            if status == NetworkReachabilityManager.NetworkReachabilityStatus.reachable(.ethernetOrWiFi) {
+                MYLog("WIFI 以太网网络")
+            }
+            
+        }
+        manager?.startListening()
     }
     
     func applicationWillResignActive(_ application: UIApplication) {

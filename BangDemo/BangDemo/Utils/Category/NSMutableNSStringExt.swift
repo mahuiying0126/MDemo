@@ -51,14 +51,13 @@ extension NSMutableAttributedString{
     /// - Returns: 返回一个标签类富文本
     func markStyleAttributeString(_ titleString :String,lineStyle:NSUnderlineStyle, markFont:CGFloat,markMakeRange:NSRange,markColor:UIColor,textFont:CGFloat,textMakeRange:NSRange,textColor:UIColor) -> NSMutableAttributedString {
         //富文本设置
-//        let attribtDic :Dictionary<String,Any> = [NSStrikethroughStyleAttributeName : lineStyle]
         let attributeString = NSMutableAttributedString.init(string: titleString)
-        
-        attributeString.addAttribute(NSStrikethroughStyleAttributeName, value: lineStyle, range: NSMakeRange(0, attributeString.length))
         attributeString.addAttribute(NSFontAttributeName, value: FONT(markFont), range: markMakeRange)
         attributeString.addAttribute(NSForegroundColorAttributeName, value: markColor, range: markMakeRange)
         attributeString.addAttribute(NSFontAttributeName, value: FONT(textFont), range: textMakeRange)
         attributeString.addAttribute(NSForegroundColorAttributeName, value: textColor, range: textMakeRange)
+        attributeString.addAttribute(NSStrikethroughStyleAttributeName, value: NSNumber.init(value: lineStyle.rawValue), range: NSMakeRange(0, attributeString.length))
+        
         return attributeString
     }
     

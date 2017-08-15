@@ -33,7 +33,7 @@ class DetailCourseListModel: NSObject {
     var courseware : String?
     var childKpoints : Array<Any>?
     var teacherName : String?
-    var isSelected = Bool()
+    var isSelected : Bool = false
     var content : String?
     var imageUrl : String?
     var chapterName : String?

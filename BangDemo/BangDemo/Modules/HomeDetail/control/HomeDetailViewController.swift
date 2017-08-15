@@ -54,11 +54,8 @@ class HomeDetailViewController: UIViewController,DetailTopBaseViewDelegate,topBu
             self?.coursePackageArray = coursPackageArray
             self?.listDeatilArray = listDeatilData
             self?.courseModel?.courseID = self?.detailCourse!
-            if((self?.infoModel?.course) != nil){
-                if(self?.infoModel?.isFav == false && Int(USERID) != 0){
-                    self?.topViewTool.collectionBtn? .setImage(UIImage.init(named: "已收藏"), for: .normal)
-                    self?.topViewTool.collectionBtn? .setTitle("已收藏", for: .normal)
-                }
+            if(self?.infoModel?.isFav == false && Int(USERID) != 0){
+                self?.topViewTool.collectionBtn?.isSelected = true
             }
             ///获取数据,刷新UI
             self?.settopBaseViewData()
@@ -81,7 +78,7 @@ class HomeDetailViewController: UIViewController,DetailTopBaseViewDelegate,topBu
     func setTeacherListData(){
         self.teacherList.teacherListData((self.courseModel)!)
     }
-    ///课程列表数据,和分区头数据
+    ///课程列表数据,和分区头,课程包数据
     
     func MCourseListData()  {
         let number  = NSInteger(Float(self.coursePackageArray.count) / 2.0 + 0.6)
@@ -109,7 +106,10 @@ class HomeDetailViewController: UIViewController,DetailTopBaseViewDelegate,topBu
             break
         case 2:
             ///中间大播放按钮
-            MYLog(tage)
+            let courseModel  = self.listDeatilArray[0] as! DetailCourseListModel
+            let tempArray = courseModel.childKpoints
+            let model = tempArray?.first as! DetailCourseChildModel
+            self.didSelectCourseList(index: IndexPath(), model: model)
             break
             
         default:
@@ -119,10 +119,23 @@ class HomeDetailViewController: UIViewController,DetailTopBaseViewDelegate,topBu
     ///收藏代理
     func collectionAndDownClick(buttonTag:Int){
         
+        MYLog(buttonTag)
+        switch buttonTag {
+        case 0:
+            ///下载
+            
+            break
+        case 2:
+            ///分享
+            
+            break
+        default:
+            break
+        }
+        
     }
     ///segment代理
     func threeSegmentBtn(segmentIndex: Int){
-        MYLog(segmentIndex)
         switch segmentIndex {
         case 0:
             self.detailScrollView.contentOffset = CGPoint.init(x: 0, y: 0)
@@ -150,24 +163,80 @@ class HomeDetailViewController: UIViewController,DetailTopBaseViewDelegate,topBu
     }
     
     func didSelectCourseList(index : IndexPath , model : DetailCourseChildModel){
-        MYLog("点击了课程列表,第\(index.row)行")
-    ParsingEncrypteString().parseStringWith(urlString:"c10da47d5bed4b9dc3364d7bf06b590a", fileType: "VIDEO", isLocal: false) { (videoUrl) in
-            
-            if self.playerView != nil {
-                self.playerView?.removeFromSuperview()
-                self.playerView?.currentTime = 0
-                self.playerView?.exchangeWithURL(videoURLStr: videoUrl)
-            }else{
-                self.playerView  = MPlayerView.shared.initWithFrame(frame: CGRect.init(x: 0, y: 0, width: Screen_width, height: Screen_width * 9/16), videoUrl: videoUrl, type: "VIDEO")
-                self.playerView?.mPlayerDelegate = self
+        var checkResultDict : JSON!
+        if NSInteger(USERID)! > 0 {
+            ///用户登录了
+           checkResultDict = model.ID?.checkPointIsAbleToPlay()
+        }else{
+            ///提示去登录
+            return
+        }
+    
+        if checkResultDict["success"].boolValue {
+            let entity = checkResultDict["entity"]
+            let fileStyle = entity["fileType"]
+            let videoStyle = entity["videoType"]
+            if fileStyle.string == MediaVideoType {
+                ///视频
+                if videoStyle.string == PlayerMedia96KType {
+                    ///96K视频
+                    playVideoWithUrl(url: entity["videoUrl"].string!, type: MediaVideoType)
+                }else if videoStyle.string == MediaUnknownType {
+                    ///CC视频
+                    MBProgressHUD.showMBPAlertView("视频格式不正确", withSecond: 1.0)
+                }
                 
+                
+            }else if fileStyle.string == MediaAudioType {
+                ///音频
+                playVideoWithUrl(url: entity["videoUrl"].string!, type: MediaAudioType)
             }
-            self.playerView?.videoParseCode = "c10da47d5bed4b9dc3364d7bf06b590a"
-            self.view.addSubview(self.playerView!)
+            
+
+        }else{
+            if (self.infoModel?.isok)! {
+                ///已经买了,还是不能播
+                MBProgressHUD.showMBPAlertView("视频暂时无法播放", withSecond: 1.5)
+            }else{
+                ///不能播,可能没有买
+                MBProgressHUD.showMBPAlertView("还未购买课程,请先去购买!", withSecond: 1.5)
+            }
+        }
+
+    }
+    
+    private func playVideoWithUrl(url:String,type:String) {
+        
+        if MNetworkUtils.isNoNet() {
+            MBProgressHUD.showMBPAlertView("无可用网络", withSecond: 1.0)
+            return
+        }
+        if MNetworkUtils.isEnableWWAN() {
+            ///4G网络提示信息
+            
+        }else if MNetworkUtils.isEnableWIFI() {
+            ///Wifi 直接播放
+            playMeidoWithUrl(url: url, type: type)
+            
         }
         
-        
     }
+    
+    private func playMeidoWithUrl(url:String,type:String){
+        ParsingEncrypteString().parseStringWith(urlString: url, fileType: type, isLocal: false) {[weak self] (videoUrl) in
+            if self?.playerView != nil {
+                self?.playerView?.removeFromSuperview()
+                self?.playerView?.currentTime = 0
+                self?.playerView?.exchangeWithURL(videoURLStr: videoUrl)
+            }else{
+                self?.playerView = MPlayerView.shared.initWithFrame(frame: CGRect.init(x: 0, y: 0, width: Screen_width, height: Screen_width * 9/16), videoUrl: videoUrl, type: type)
+                self?.playerView?.mPlayerDelegate = self
+            }
+            self?.playerView?.videoParseCode = url
+            self?.view.addSubview((self?.playerView)!)
+        }
+    }
+    
     ///MARK:播放器代理事件
     func closePlayer() {
         ///还可以做一些操作,比如清除单元格状态
@@ -177,7 +246,6 @@ class HomeDetailViewController: UIViewController,DetailTopBaseViewDelegate,topBu
         //        print("~~~~~当前时间!!!!!!总时间",currTime,totTime);
     }
     
-    //MARK:Private 私有方法
     
     
     //MARK: lazy 懒加载
@@ -198,6 +266,7 @@ class HomeDetailViewController: UIViewController,DetailTopBaseViewDelegate,topBu
     lazy var topViewTool : DetailTopToolView = {
         let tempTool = DetailTopToolView.init(frame: CGRect.init(x: 0, y: Screen_width * 9/16.0, width: Screen_width, height: 100))
         tempTool.topViewButtonDelegate = self
+        tempTool.courseId = self.detailCourse
         return tempTool
     }()
     

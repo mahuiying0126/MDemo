@@ -11,7 +11,7 @@ import UIKit
 class DetailCourseModel: NSObject {
     
     var ID : String?
-    var isPay = Bool()
+    var isPay : Bool = false
     var sourceprice : String?
     var currentprice : String?
     var losetype : String?
@@ -20,7 +20,7 @@ class DetailCourseModel: NSObject {
     var context : String?
     var mobileLogo : String?
     var teacherList : NSArray?
-    var isOK = Bool()
+    var isOK : Bool = false
     var courseID : String?
     
     override static func mj_replacedKeyFromPropertyName() -> [AnyHashable : Any]! {

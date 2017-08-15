@@ -130,10 +130,6 @@ class DetailCourseListView: UITableView ,UITableViewDelegate,UITableViewDataSour
             make.top.equalTo(view).offset(8)
             make.height.equalTo(18)
         }
-        
-        
-        
-        
         return view
         
     }

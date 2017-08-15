@@ -6,6 +6,8 @@
 //  Copyright © 2017年 Magic. All rights reserved.
 //
 import UIKit
+import Foundation
+import Alamofire
 
 
 func MYLog<T>(_ message : T, file : String = #file, funcName : String = #function, lineNum : Int = #line) {
@@ -39,7 +41,7 @@ public let LibraryDirectory : String = NSSearchPathForDirectoriesInDomains(FileM
 
 public let userDefault = UserDefaults.standard
 
-public let USERID : String = userDefault .object(forKey: "USERID") as! String
+public let USERID : String = userDefault.object(forKey: "USERID") as! String
 
 public let KEY_UUID : String = userDefault.object(forKey: "KEY_UUID") as! String
 

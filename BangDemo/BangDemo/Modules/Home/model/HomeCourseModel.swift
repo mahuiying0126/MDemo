@@ -14,7 +14,7 @@ class HomeCourseModel: NSObject {
     var pageViewcount : String?
     var currentPrice : String?
     var ID : String?
-    var isPay = Bool()
+    var isPay : Bool = false
     var courseId : String?
     var lessionnum : String?
     var playCount : String?
@@ -33,7 +33,8 @@ class HomeCourseModel: NSObject {
         let recommand = MNetRequestSeting()
         recommand.hostUrl = recommandCourse()
         recommand.cashSeting = .MSave
-        recommand.requestDataFromHostURL(seting: recommand, successBlock: { (responseData) in
+        recommand.isHidenHUD = false
+        recommand.requestDataFromNetSet(seting: recommand, successBlock: { (responseData) in
             if(responseData["success"]).boolValue && (responseData["entity"].dictionary != nil){
                 let entity =  responseData["entity"]
                 let tempDataArray = NSMutableArray()

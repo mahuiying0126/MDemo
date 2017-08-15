@@ -27,6 +27,7 @@ class MCommentHeadView: UIView {
         addCommentTextView = UITextView()
         self.addSubview(addCommentTextView!)
         addCommentTextView?.text = "我要评论"
+        addCommentTextView?.inputView = UIView()
         addCommentTextView?.textColor = UIColor.lightGray
         addCommentTextView?.layer.borderColor = lineColor.cgColor
         addCommentTextView?.layer.borderWidth = 0.8

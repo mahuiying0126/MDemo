@@ -7,7 +7,7 @@
 //
 
 import UIKit
-
+import Alamofire
 class MNetworkUtils: NSObject {
     
     final class func compareTime(currentTime:Date,fileCreatTime:Date) -> NSInteger{
@@ -94,7 +94,7 @@ class MNetworkUtils: NSObject {
     }
     
     ///打印请求路径
-    final class func printRequestUrlString(urlString:String,Paramter:NSDictionary) {
+    final class func printRequestUrlString(urlString:String,Paramter:NSDictionary) -> String{
         let dicKeysArray = Paramter.allKeys
         var urlWithParamterString = urlString
         
@@ -109,8 +109,41 @@ class MNetworkUtils: NSObject {
             }
         }
         MYLog(urlWithParamterString)
-        
+        return urlWithParamterString
     }
+    
+    final class func isEnableWIFI() -> Bool {
+    
+        let netReachability = NetworkReachabilityManager()?.networkReachabilityStatus
+        if netReachability == NetworkReachabilityManager.NetworkReachabilityStatus.reachable(.ethernetOrWiFi) {
+        return true
+    }
+    
+    return false
+    }
+    
+    final class func isEnableWWAN() -> Bool {
+        let netReachability = NetworkReachabilityManager()?.networkReachabilityStatus
+        if netReachability == NetworkReachabilityManager.NetworkReachabilityStatus.reachable(.wwan) {
+            return true
+        }
+        return false
+    }
+    
+    final class func isNoNet()->Bool {
+        let netReachability = NetworkReachabilityManager()?.networkReachabilityStatus
+        if netReachability == NetworkReachabilityManager.NetworkReachabilityStatus.notReachable {
+            return true
+        }
+        return false
+    }
+    
+        
+        
+        
+
+        
+        
     
 }
 

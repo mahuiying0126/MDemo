@@ -58,3 +58,19 @@ public func courseAssesslist() -> String{
     return baseUrlString.appending("course/assess/list")
 }
 
+///验证播放节点
+
+public func checkKpoint() -> String{
+    return baseUrlString.appending("check/kpoint")
+}
+
+///取消收藏
+
+public func collectionCleanFavorites() -> String{
+    return baseUrlString.appending("collection/cleanFavorites")
+}
+
+public func collectionAdd() ->String {
+    return baseUrlString.appending("collection/add")
+}
+

@@ -11,11 +11,10 @@ import UIKit
 class DetailInfoModel: NSObject {
     var currentCourseId : String?
     var defaultKpointId : String?
-    var haveAudio = Bool()
-    var isFav = Bool()
-    var haveVideo = Bool()
-    var isok = Bool()
-    var course : NSArray?
+    var haveAudio : Bool = false
+    var isFav : Bool = false
+    var haveVideo : Bool = false
+    var isok : Bool = false
     
     
 }

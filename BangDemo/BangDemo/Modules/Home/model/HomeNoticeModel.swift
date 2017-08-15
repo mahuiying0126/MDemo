@@ -31,7 +31,7 @@ class HomeNoticeModel: NSObject {
         notic.hostUrl = homeNote()
         notic.cashSeting = .MSave
         notic.isHidenHUD = true
-        notic.requestDataFromHostURL(seting: notic, successBlock: { (responseData) in
+        notic.requestDataFromNetSet(seting: notic, successBlock: { (responseData) in
             if (responseData.dictionary != nil)  {
                 if(responseData["success"].boolValue){
                     if(responseData["entity"].array != nil){

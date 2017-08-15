@@ -6,5 +6,5 @@ pod 'MJExtension'
 pod 'SnapKit'
 pod 'AlamofireImage'
 pod 'MBProgressHUD'
-
+pod 'IQKeyboardManagerSwift'
 end

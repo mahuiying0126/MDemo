@@ -8,7 +8,7 @@
 
 import UIKit
 import SwiftyJSON
-import Alamofire
+
 class MNetRequestSeting: NSObject {
     
     
@@ -30,17 +30,17 @@ class MNetRequestSeting: NSObject {
     }
     
     /** *是否显示 HUD */
-    var isHidenHUD = Bool()
+    var isHidenHUD : Bool = false
     /** *是否是HTTPS请求,默认是NO */
-    var isHttpsRequest = Bool()
+    var isHttpsRequest : Bool = false
     /** *是否刷新数据 */
-    var isRefresh = Bool()
+    var isRefresh : Bool = false
     /** *缓存设置策略 */
     var cashSeting : MCacheSeting?
     /** *请求方式,默认POST请求 */
     var requestStytle : MRequesttMethod?
     /** *缓存时间 */
-    var cashTime = NSInteger()
+    var cashTime : NSInteger = 0
     /** *请求地址 */
     var hostUrl : String?
     /** *参数 */
@@ -48,7 +48,7 @@ class MNetRequestSeting: NSObject {
     /** *验证json格式 */
     var jsonValidator : Any?
     
-    final func requestDataFromHostURL(seting:MNetRequestSeting,successBlock : @escaping (_ response : JSON)->(), failture : @escaping (_ error : Error)->()) {
+    final func requestDataFromNetSet(seting:MNetRequestSeting,successBlock : @escaping (_ response : JSON)->(), failture : @escaping (_ error : Error)->()) {
         
         let HUD = MBProgressHUD.showAdded(to: UIApplication.shared.windows.last!, animated: true)
         HUD.label.text = "正在加载"
@@ -63,16 +63,14 @@ class MNetRequestSeting: NSObject {
             let isFileExist = fileManager.fileExists(atPath: path)
             ///将以前缓存的数据取出
             let data = NSKeyedUnarchiver.unarchiveObject(withFile: path)
-            ///创建一个网络监听,如果没有网络,以前有缓存则直接返回缓存的
-            let netReachability = NetworkReachabilityManager()
-            netReachability?.listener = {status in
-                if status == .notReachable{
-                    let response = JSON(data!)
-                    successBlock(response)
-                    HUD.removeFromSuperview()
-                    return
-                }
+            ///如果没有网络,以前有缓存则直接返回缓存的
+            if MNetworkUtils.isNoNet() {
+                let response = JSON(data!)
+                successBlock(response)
+                HUD.removeFromSuperview()
+                return
             }
+            
             
             ///如果存在,再检查文件有没有过期,日期间隔根据自己定的
             if isFileExist && !seting.isRefresh {
@@ -106,6 +104,7 @@ class MNetRequestSeting: NSObject {
                         })
                     }else{
                         //文件创建时间小于当前时间,返回缓存数据
+                        
                         let response = JSON(data!)
                         successBlock(response)
                         HUD.removeFromSuperview()
@@ -160,6 +159,30 @@ class MNetRequestSeting: NSObject {
             })
         }
         
+    }
+    
+    func requestDataForSynchronous(hostUrl:String) -> JSON {
+    
+        let url = URL(string:hostUrl)
+        //创建请求对象
+        let request = URLRequest(url: url!)
+        let session = URLSession.shared
+        var responDic = NSDictionary()
+        let semaphore = DispatchSemaphore(value: 0)
+        let dataTask = session.dataTask(with: request,completionHandler: {(data, response, error) -> Void in
+            if error != nil{
+                print(error!)
+            }else{
+                
+                responDic = try! JSONSerialization.jsonObject(with: data!, options: JSONSerialization.ReadingOptions.allowFragments) as! NSDictionary
+            }
+            semaphore.signal()
+        }) as URLSessionTask
+        
+        //使用resume方法启动任务
+        dataTask.resume()
+        _ = semaphore.wait(timeout: DispatchTime.distantFuture)
+        return JSON(responDic)
     }
     ///将数据保存到本地
     private func saveCashDataForArchiver(response : [String : AnyObject],seting:MNetRequestSeting){

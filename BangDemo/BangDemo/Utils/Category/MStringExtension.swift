@@ -7,7 +7,7 @@
 //
 
 import Foundation
-
+import SwiftyJSON
 extension String {
     
     
@@ -60,6 +60,19 @@ extension String {
         let text = NSAttributedString.init(string: self, attributes: dic)
         
         return text
+    }
+    
+    func checkPointIsAbleToPlay() ->  JSON{
+        let checkPoint = MNetRequestSeting()
+        checkPoint.hostUrl = checkKpoint()
+        checkPoint.isHidenHUD = true
+        checkPoint.paramet = ["kpointId":self,"userId":"1","uuId":KEY_UUID]
+        let url = MNetworkUtils.printRequestUrlString(urlString: checkPoint.hostUrl!, Paramter: checkPoint.paramet! as NSDictionary)
+        let poindInfo = checkPoint.requestDataForSynchronous(hostUrl: url)
+        
+        return poindInfo
+        
+        
     }
     
     

@@ -33,6 +33,7 @@ class HomeCollectionViewCell: UICollectionViewCell {
         self.addSubview(homeTitle!)
         homeCount = UILabel()
         homeCount?.font = FONT(13)
+        homeCount?.textAlignment = .right
         homePrice?.textColor = UIColor.gray
         self.addSubview(homeCount!)
         homePrice = UILabel()
@@ -50,16 +51,15 @@ class HomeCollectionViewCell: UICollectionViewCell {
         homeTitle?.snp.makeConstraints({ (make) in
             make.left.equalTo(homeImage!)
             make.top.equalTo((homeImage?.snp.bottom)!).offset(10)
-            make.width.equalTo(self)
+            make.right.equalTo(self).offset(-3)
             make.height.equalTo(20)
             
         })
         
         homePrice?.snp.makeConstraints({ (make) in
             make.left.equalTo(homeTitle!)
-            make.bottom.equalTo(self)
-            make.width.equalTo(self.snp.width).multipliedBy(0.5)
-            make.top.equalTo((homeTitle?.snp.bottom)!).offset(10)
+            make.bottom.equalTo(self).offset(-3)
+            make.width.equalTo(self.snp.width).multipliedBy(0.3)
         })
         homeCount?.snp.makeConstraints({ (make) in
             make.left.equalTo((homePrice?.snp.right)!)
