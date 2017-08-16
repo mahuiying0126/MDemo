@@ -50,7 +50,8 @@ class HomeHeadView: UIView {
         })
         
         self.noticeLabel?.snp.makeConstraints({ (make) in
-            make.left.right.equalTo(self).offset(12);
+            make.left.equalTo(self).offset(12)
+            make.right.equalTo(self).offset(-5)
             make.top.equalTo((self.silenceCarouselView?.snp.bottom)!)
             make.height.equalTo(25)
         })

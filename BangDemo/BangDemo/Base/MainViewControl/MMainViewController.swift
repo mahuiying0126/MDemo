@@ -59,14 +59,7 @@ class MMainViewController: UITabBarController {
         
     }
     
-//    override var shouldAutorotate: Bool{
-//        return (self.selectedViewController?.shouldAutorotate)!
-//    }
-//    
-//    override var supportedInterfaceOrientations: UIInterfaceOrientationMask{
-//        
-//        return self.selectedViewController!.supportedInterfaceOrientations
-//    }
+
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

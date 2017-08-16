@@ -17,10 +17,10 @@ class MNavigationViewController: UINavigationController {
 
         let navigationBar = UINavigationBar .appearance()
         navigationBar.barTintColor = navColor
-        navigationBar.tintColor = UIColor.clear
-        navigationBar.titleTextAttributes =  {[
+        navigationBar.tintColor = .white
+        navigationBar.titleTextAttributes =  [
             NSForegroundColorAttributeName: Whit,
-            ]}()
+            ]
         navigationBar.backgroundColor = navColor
         
         let item = UIBarButtonItem.appearance()
@@ -40,7 +40,7 @@ class MNavigationViewController: UINavigationController {
 
    
     override func pushViewController(_ viewController: UIViewController, animated: Bool) {
-        
+        viewController.automaticallyAdjustsScrollViewInsets = true
         if self.viewControllers.count > 0 {
             //当push 出页面时，隐藏导航栏按钮
             viewController.hidesBottomBarWhenPushed = true

@@ -11,7 +11,7 @@ import UIKit
 class MCommentHeadView: UIView {
 
     /** *输入框 */
-    var  addCommentTextView : UITextView?
+    var  addCommentTextView : UITextField?
     /** *发送按钮 */
     var  addCommentButton : UIButton?
     
@@ -24,10 +24,12 @@ class MCommentHeadView: UIView {
         let tipImage = UIImageView()
         self.addSubview(tipImage)
         tipImage.image = MIMAGE("bg-discussion")
-        addCommentTextView = UITextView()
+        addCommentTextView = UITextField()
         self.addSubview(addCommentTextView!)
-        addCommentTextView?.text = "我要评论"
-        addCommentTextView?.inputView = UIView()
+        addCommentTextView?.placeholder = "我要评论..."
+        addCommentTextView?.font = FONT(15)
+        addCommentTextView?.leftView = UIView.init(frame: CGRect.init(x: 0, y: 0, width: 8, height: 0))
+        addCommentTextView?.leftViewMode = .always
         addCommentTextView?.textColor = UIColor.lightGray
         addCommentTextView?.layer.borderColor = lineColor.cgColor
         addCommentTextView?.layer.borderWidth = 0.8

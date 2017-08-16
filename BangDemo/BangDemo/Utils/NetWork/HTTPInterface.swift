@@ -70,7 +70,14 @@ public func collectionCleanFavorites() -> String{
     return baseUrlString.appending("collection/cleanFavorites")
 }
 
+///收藏
 public func collectionAdd() ->String {
     return baseUrlString.appending("collection/add")
 }
+
+///增加评论
+public func Courseassessadd() ->String{
+    return baseUrlString.appending("course/assess/add")
+}
+
 

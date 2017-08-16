@@ -56,6 +56,7 @@ extension NSMutableAttributedString{
         attributeString.addAttribute(NSForegroundColorAttributeName, value: markColor, range: markMakeRange)
         attributeString.addAttribute(NSFontAttributeName, value: FONT(textFont), range: textMakeRange)
         attributeString.addAttribute(NSForegroundColorAttributeName, value: textColor, range: textMakeRange)
+        
         attributeString.addAttribute(NSStrikethroughStyleAttributeName, value: NSNumber.init(value: lineStyle.rawValue), range: NSMakeRange(0, attributeString.length))
         
         return attributeString

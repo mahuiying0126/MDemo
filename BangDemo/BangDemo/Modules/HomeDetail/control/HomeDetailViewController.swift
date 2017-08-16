@@ -8,7 +8,7 @@
 
 import UIKit
 import SwiftyJSON
-class HomeDetailViewController: UIViewController,DetailTopBaseViewDelegate,topButtonClickDelegate,buyCourseOrPlayViewDelegate,CourseListDelegate,MPlayerViewDelegate {
+class HomeDetailViewController: UIViewController,DetailTopBaseViewDelegate,topButtonClickDelegate,buyCourseOrPlayViewDelegate,CourseListDelegate,MPlayerViewDelegate,addCommentCompleteDelegate {
     
     var detailCourse : String?
     var infoModel : DetailInfoModel?
@@ -33,6 +33,7 @@ class HomeDetailViewController: UIViewController,DetailTopBaseViewDelegate,topBu
         
         self.view.addSubview(self.topBaseView)
         loadDetailData()
+        loadCommentData()
         
     }
     override func viewWillAppear(_ animated: Bool) {
@@ -62,12 +63,14 @@ class HomeDetailViewController: UIViewController,DetailTopBaseViewDelegate,topBu
             self?.setTeacherListData()
             self?.MCourseListData()
         }
-        
-        HomeDetailViewModel().loadCommentData(courseID: detailCourse!, currentPage: 1, isLoadMore: true) {[weak self] (commentData, totlePage) in
-            self?.commentTableView.commentData(commentData)
-        }
-        
     }
+    
+    func loadCommentData() {
+        HomeDetailViewModel().loadCommentData(courseID: detailCourse!, currentPage: 1, isLoadMore: true) {[weak self] (commentData, totlePage) in
+            self?.commentTableView.commentData(commentData, courseID: (self?.detailCourse)!, pointID: (self?.infoModel?.defaultKpointId)!)
+        }
+    }
+    
     ///顶部视图,播放按钮,数据实现
     func settopBaseViewData() {
         ///顶部图片路径
@@ -246,6 +249,10 @@ class HomeDetailViewController: UIViewController,DetailTopBaseViewDelegate,topBu
         //        print("~~~~~当前时间!!!!!!总时间",currTime,totTime);
     }
     
+    func addCommentComplete(){
+        loadCommentData()
+    }
+    
     
     
     //MARK: lazy 懒加载
@@ -306,6 +313,7 @@ class HomeDetailViewController: UIViewController,DetailTopBaseViewDelegate,topBu
     lazy var commentTableView : DetailCommentView = {
         
         let comment = DetailCommentView.init(frame: CGRect.init(x: 2 * Screen_width, y: 0, width: Screen_width, height: self.detailScrollView.frame.height), style: UITableViewStyle.plain)
+            comment.commentCompleteDelegate = self
         return comment
         
     }()

@@ -26,13 +26,13 @@ class TeacherHeaderView: UIView {
     func setTeacherHeadModel(_ model:DetailCourseModel){
         courseName?.text = model.name!
         let currentText = String.init(format: "¥ %@", model.currentprice!)
-        currentPrice?.attributedText = NSMutableAttributedString().markStyleAttributeString(currentText,lineStyle:.styleNone, markFont: 14.0, markMakeRange: NSRange.init(location: 0, length: 1), markColor: .black, textFont: 18.0, textMakeRange: NSRange.init(location: 2, length: currentText.characters.count - 2), textColor: UIColorFromRGB(0x007AFF))
+        currentPrice?.attributedText = NSMutableAttributedString().markStyleAttributeString(currentText,lineStyle:.styleNone, markFont: 15.0, markMakeRange: NSRange.init(location: 0, length: 1), markColor: .black, textFont: 18.0, textMakeRange: NSRange.init(location: 2, length: currentText.characters.count - 2), textColor: UIColorFromRGB(0x007AFF))
         
         let sourceText = String.init(format: "¥ %@", model.sourceprice!)
         
-        sourcePrice?.attributedText = NSMutableAttributedString().markStyleAttributeString(sourceText,lineStyle:.styleSingle, markFont: 14.0, markMakeRange: NSMakeRange(0, 1), markColor: .black, textFont: 18.0, textMakeRange: NSRange.init(location: 2, length: sourceText.characters.count - 2), textColor: UIColorFromRGB(0x7F7F7F))
+        sourcePrice?.attributedText = NSMutableAttributedString().markStyleAttributeString(sourceText,lineStyle:.styleNone, markFont: 15.0, markMakeRange: NSMakeRange(0, 1), markColor: .black, textFont: 18.0, textMakeRange: NSRange.init(location: 2, length: sourceText.characters.count - 2), textColor: UIColorFromRGB(0x7F7F7F))
         
-        
+
         
         if (model.isOK || Double(model.currentprice!)! <= 0.0) {
             purchaseBtn?.isEnabled = false
