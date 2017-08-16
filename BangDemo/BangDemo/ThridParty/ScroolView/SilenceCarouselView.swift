@@ -41,7 +41,7 @@ open class SilenceCarouselView: UIView,UIScrollViewDelegate {
     var time:TimeInterval = 3.0
     
         /// 要展示的图片数组
-    var imageArray:[AnyObject]?
+    var imageArray:[Any]?
     
         /// 定时器
     fileprivate var timer:Timer?
@@ -97,7 +97,7 @@ open class SilenceCarouselView: UIView,UIScrollViewDelegate {
         
     }
     
-    public func setupimageArray (_ array : [AnyObject]){
+    public func setupimageArray (_ array : [Any]){
         
         self.imageArray = array
         self.reload()

@@ -106,8 +106,8 @@ class MHomeViewController: UIViewController ,noticDelegate{
         
     }()
 
-    lazy var adviertArray : NSMutableArray = {
-        var temparray = NSMutableArray()
+    lazy var adviertArray : Array<Any> = {
+        let temparray = Array<Any>()
         return temparray
     }()
 

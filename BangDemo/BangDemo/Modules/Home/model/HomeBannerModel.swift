@@ -24,7 +24,7 @@ class HomeBannerModel: NSObject {
         return ["ID":"id"]
     }
     
-    func loadingBannerData(success : @escaping (_ response : NSMutableArray)->(),failture : @escaping (_ error : Error)->()){
+    func loadingBannerData(success : @escaping (_ response : Array<Any>)->(),failture : @escaping (_ error : Error)->()){
         
         let bunder = MNetRequestSeting()
         bunder.hostUrl = advertisement()
@@ -39,7 +39,7 @@ class HomeBannerModel: NSObject {
                     let adviertArray = HomeBannerModel.mj_objectArray(withKeyValuesArray: indexCenterBanners.rawValue)
                     //bunder图片
                     if(adviertArray != nil) {
-                        success(adviertArray!)
+                        success(adviertArray as! Array<Any>)
                     }
                 }
             }

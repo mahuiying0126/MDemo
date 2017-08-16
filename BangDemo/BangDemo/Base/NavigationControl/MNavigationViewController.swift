@@ -24,18 +24,18 @@ class MNavigationViewController: UINavigationController {
         navigationBar.backgroundColor = navColor
         
         let item = UIBarButtonItem.appearance()
-        let attrs = NSMutableDictionary()
+        var attrs = Dictionary<String, Any>()
         attrs[NSForegroundColorAttributeName] = Whit
         attrs[NSFontAttributeName] = FONT(15.0)
         
-        item.setTitleTextAttributes(attrs as? [String : Any], for: UIControlState.normal)
+        item.setTitleTextAttributes(attrs, for: UIControlState.normal)
         // 设置不可用状态
-        let disableTextAttrs = NSMutableDictionary()
+        var disableTextAttrs = Dictionary<String, Any>()
         disableTextAttrs[NSForegroundColorAttributeName] = ColorFromRGB(153.0, 153.0, 153.0 , 0.7)
         disableTextAttrs[NSFontAttributeName] = FONT(15.0)
         self.navigationBar.isTranslucent = false
 
-        item.setTitleTextAttributes(disableTextAttrs as? [String : Any], for: UIControlState.disabled)
+        item.setTitleTextAttributes(disableTextAttrs, for: UIControlState.disabled)
     }
 
    

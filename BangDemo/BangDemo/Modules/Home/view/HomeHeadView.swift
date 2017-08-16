@@ -20,7 +20,7 @@ class HomeHeadView: UIView {
     var silenceCarouselView:SilenceCarouselView?
     var noticeLabel : UILabel?
     weak var noticdelegate : noticDelegate?
-    var noticeArray : NSMutableArray?
+    var noticeArray : Array<Any>?
     var noticeNum : Int?
     
     
@@ -61,22 +61,23 @@ class HomeHeadView: UIView {
         }
     }
     
-    public func BannerIcons( _ bannerArray : NSMutableArray){
-        let imageArr = NSMutableArray()
+    public func BannerIcons( _ bannerArray : Array<Any>){
+        var imageArr = Array<Any>()
         for model in bannerArray {
             let model = model as! HomeBannerModel
             let imageStr = imageUrlString + ((model.imagesUrl)!)
-            imageArr.add(imageStr)
+            imageArr.append(imageStr)
         }
         
-        self.silenceCarouselView?.setupimageArray(imageArr as [AnyObject])
+        self.silenceCarouselView?.setupimageArray(imageArr)
     }
     
     
-    public func setupNoticeArray(_ array : NSMutableArray){
+    public func setupNoticeArray(_ array : Array<Any>){
         self.noticeArray = array
         if array.count != 0 {
-            let model : HomeNoticeModel = self.noticeArray?.firstObject as! HomeNoticeModel
+            
+            let model : HomeNoticeModel = self.noticeArray?.first as! HomeNoticeModel
             self.noticeLabel?.attributedText = NSMutableAttributedString().attributedString(imageName: "radio", textStr: model.title!, fontSize: 15.0, color: UIColor.black)
         }
     }

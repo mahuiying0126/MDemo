@@ -25,7 +25,7 @@ class HomeNoticeModel: NSObject {
     }
 
     //MARK: 加载公告数据
-    func loadNoticeData(success: @escaping(_ response : NSMutableArray) -> (),failture : @escaping (_ error : Error)->() )  {
+    func loadNoticeData(success: @escaping(_ response : Array<Any>) -> (),failture : @escaping (_ error : Error)->() )  {
     
         let notic = MNetRequestSeting()
         notic.hostUrl = homeNote()
@@ -38,7 +38,7 @@ class HomeNoticeModel: NSObject {
                         let entity = responseData["entity"];
                         let noticeArray = HomeNoticeModel.mj_objectArray(withKeyValuesArray: entity.rawValue)
                         if(noticeArray != nil){
-                            success(noticeArray!)
+                            success(noticeArray as! Array<Any>)
                         }
                     }
                 }

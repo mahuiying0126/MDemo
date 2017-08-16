@@ -28,7 +28,7 @@ class HomeCourseModel: NSObject {
     }
     
     //MARK: 加载课程列表数据
-    func loadRecommandCourseData(success : @escaping (_ response : NSMutableArray) ->(),failture : @escaping (_ error : Error)->()){
+    func loadRecommandCourseData(success : @escaping (_ response : Array<Any>) ->(),failture : @escaping (_ error : Error)->()){
         
         let recommand = MNetRequestSeting()
         recommand.hostUrl = recommandCourse()
@@ -37,16 +37,16 @@ class HomeCourseModel: NSObject {
         recommand.requestDataFromNetSet(seting: recommand, successBlock: { (responseData) in
             if(responseData["success"]).boolValue && (responseData["entity"].dictionary != nil){
                 let entity =  responseData["entity"]
-                let tempDataArray = NSMutableArray()
+                var tempDataArray = Array<Any>()
                 if(entity["1"].exists()){
                     
-                    let first :NSArray  = HomeCourseModel.mj_objectArray(withKeyValuesArray: entity["1"].rawValue )
-                    tempDataArray .add(first)
+                    let first = HomeCourseModel.mj_objectArray(withKeyValuesArray: entity["1"].rawValue )
+                    tempDataArray.append(first!)
                     
                 }
                 if(entity["2"].exists()){
-                    let second:NSArray  = HomeCourseModel.mj_objectArray(withKeyValuesArray: entity["2"].rawValue)
-                    tempDataArray .add(second)
+                    let second  = HomeCourseModel.mj_objectArray(withKeyValuesArray: entity["2"].rawValue)
+                    tempDataArray.append(second!)
                 }
                 success(tempDataArray)
                 

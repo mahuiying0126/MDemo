@@ -42,20 +42,22 @@ extension NSString{
     ///   - lineBreakMode: 字体折行样式
     /// - Returns: 字体宽高
     func sizeForFont(font : inout UIFont,size:CGSize,lineBreakMode:NSLineBreakMode) -> CGSize {
+        
         var result = CGSize()
         if isEqual(font) {
             font = .systemFont(ofSize: 12)
         }
         if self.responds(to: #selector(boundingRect(with:options:attributes:context:))) {
-            let attr = NSMutableDictionary()
+            var attr = Dictionary<String,Any>()
             attr[NSFontAttributeName] = font
             if lineBreakMode != .byWordWrapping {
+                
                 let paragraphStyle = NSMutableParagraphStyle()
                 paragraphStyle.lineBreakMode = lineBreakMode
                 attr[NSParagraphStyleAttributeName] = paragraphStyle
             }
             
-            let rect = self.boundingRect(with: size, options: [.usesLineFragmentOrigin,.usesFontLeading] , attributes: attr as? [String : Any], context: nil)
+            let rect = self.boundingRect(with: size, options: [.usesLineFragmentOrigin,.usesFontLeading] , attributes: attr, context: nil)
             result = rect.size
             
         }else{

@@ -42,15 +42,15 @@ class MMainViewController: UITabBarController {
         
         viewController.tabBarItem.selectedImage = UIImage(named:selectImage as String)?.withRenderingMode(UIImageRenderingMode.alwaysOriginal)
         //设置文字样式
-        let textAttrs = NSMutableDictionary()
+        var textAttrs = Dictionary<String, Any>()
         textAttrs[NSForegroundColorAttributeName] = UIColorFromRGB(0x919192);
         //被选择
-        let selectTextAttrs = NSMutableDictionary ()
+        var selectTextAttrs = Dictionary<String,Any>()
         selectTextAttrs[NSForegroundColorAttributeName] = ColorFromRGB(63.0, 131.0, 230.0, 1.0);
         selectTextAttrs[NSFontAttributeName] = FONT(16.0)
         viewController.tabBarItem.setTitleTextAttributes(
-            textAttrs as? [String : Any], for: UIControlState.normal)
-        viewController.tabBarItem.setTitleTextAttributes(selectTextAttrs as?[String : Any], for: UIControlState.selected)
+            textAttrs, for: UIControlState.normal)
+        viewController.tabBarItem.setTitleTextAttributes(selectTextAttrs, for: UIControlState.selected)
         
         let mainNavigation = MNavigationViewController(rootViewController: viewController)
         mainNavigation.navigationBar.isTranslucent = false

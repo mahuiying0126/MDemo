@@ -76,9 +76,9 @@ class MHomeViewModel: NSObject,UICollectionViewDataSource, UICollectionViewDeleg
         let model  = tempArray[indexPath.row] as! HomeCourseModel
         self.cellDidSelectEvent!(model)
     }
-    lazy var dataArray : NSMutableArray = {
+    lazy var dataArray : Array<Any> = {
         
-        var tempArray = NSMutableArray()
+        let tempArray = Array<Any>()
         
         return tempArray
         
