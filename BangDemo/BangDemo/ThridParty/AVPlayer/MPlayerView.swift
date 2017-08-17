@@ -66,7 +66,7 @@ final class MPlayerView: UIView,UIGestureRecognizerDelegate {
     /** *声音进度条 */
     private var volumeViewSlider : UISlider?
     /** *播放器状态 */
-    var status : PlayerStatus?
+    var status : PlayerStatus = .PlayerBuffering
     /** *音频背景 */
     var musicBackGround : UIImageView?
     /** *顶部背景 */
@@ -141,6 +141,12 @@ final class MPlayerView: UIView,UIGestureRecognizerDelegate {
     static let shared = MPlayerView()
     private override init(frame: CGRect) {
         super.init(frame: frame)
+        do {
+            try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback)
+            try AVAudioSession.sharedInstance().setActive(true)
+        } catch {
+            
+        }
     }
     
      /// 初始化播放器视图
@@ -150,7 +156,7 @@ final class MPlayerView: UIView,UIGestureRecognizerDelegate {
      ///   - url: videoUrl(hhtp://非加密链接)
      ///   - type: 类型:音频 || 视频
      ///   - parseString: 需要解析的码
-     func initWithFrame(frame:CGRect,videoUrl:String,type:String) -> MPlayerView {
+    func initWithFrame(frame:CGRect,videoUrl:String,type:String) -> MPlayerView {
         self.backgroundColor = UIColor.black
         //开启屏幕旋转
         let appde = UIApplication.shared.delegate as! AppDelegate
@@ -175,7 +181,20 @@ final class MPlayerView: UIView,UIGestureRecognizerDelegate {
         ///亮度,视图暂时没有做
         return self
     }
-    
+    ///暂停播放器
+    func pausePlayer()  {
+        if self.status == .PlayerPlaying || self.status == .PlayerBuffering {
+            self.centerPlayOrPauseBtn?.isSelected = true
+            self.player?.pause()
+        }
+    }
+    ///开始播放
+    func playPlayer()  {
+        if self.status == .PlayerPaused || self.status == .PlayerBuffering {
+            self.centerPlayOrPauseBtn?.isSelected =  false
+            self.player?.play()
+        }
+    }
     
     /*
      * 初始化playerItem,play
@@ -194,13 +213,14 @@ final class MPlayerView: UIView,UIGestureRecognizerDelegate {
         ///开启菊花
         self.startAnimation()
         
+        
+        
     }
-    
     /*
      * 初始化playerItem
      */
     private func getPlayItemWithURLString(url:String) -> AVPlayerItem{
-
+        
         let Item = AVPlayerItem.init(url: NSURL.init(string: url.addingPercentEncoding(withAllowedCharacters: NSCharacterSet.urlPathAllowed)!)! as URL)
         
         if playerItem == Item {
@@ -218,6 +238,21 @@ final class MPlayerView: UIView,UIGestureRecognizerDelegate {
         Item.addObserver(self, forKeyPath: "loadedTimeRanges", options: NSKeyValueObservingOptions.new, context: nil)
         return Item
     }
+    
+    
+    func setLockView(){
+        
+        MPNowPlayingInfoCenter.default().nowPlayingInfo = [
+            MPMediaItemPropertyTitle:"第一夫人",
+            MPMediaItemPropertyArtist:"张杰",
+//            MPMediaItemPropertyArtwork:MPMediaItemArtwork(image: UIImage(named: "img.jpeg")!),
+            MPNowPlayingInfoPropertyPlaybackRate:1.0,
+            MPMediaItemPropertyPlaybackDuration:self.totalTime,
+            MPNowPlayingInfoPropertyElapsedPlaybackTime:self.currentTime
+        ]
+    }
+    
+    
     
     /*
      * 切换视频调用方法
@@ -578,14 +613,14 @@ final class MPlayerView: UIView,UIGestureRecognizerDelegate {
             switch status {
             case .readyToPlay:
                 self.playerItem?.audioTimePitchAlgorithm = AVAudioTimePitchAlgorithmTimeDomain
-                self.status! = .PlayerReadyToPlay
+                self.status = .PlayerReadyToPlay
                 stopAnimation()
                 //时间刷新,倍速
                 addTimeObserve()
                 enableAudioTracks(isable: true, playerItem: self.playerItem!)
                 break
             case .failed:
-                self.status! = .PlayerFaild
+                self.status = .PlayerFaild
                 break
             default:
                 break
@@ -603,11 +638,19 @@ final class MPlayerView: UIView,UIGestureRecognizerDelegate {
         self.timeObserve = self.player?.addPeriodicTimeObserver(forInterval: CMTimeMake(1, 1), queue: nil, using: { [weak self](time) in
             if #available(iOS 10.0, *) {
                 if self?.player?.timeControlStatus == .playing {
-                    self?.status = PlayerStatus.PlayerPlaying
+                    self?.status = .PlayerPlaying
                 }else if self?.player?.timeControlStatus == .paused {
-                    self?.status = PlayerStatus.PlayerPaused
+                    self?.status = .PlayerPaused
                 }else if self?.player?.timeControlStatus == .waitingToPlayAtSpecifiedRate {
-                    self?.status = PlayerStatus.PlayerBuffering
+                    self?.status = .PlayerBuffering
+                }
+            }else{
+                if self?.player?.status == .readyToPlay {
+                    self?.status = .PlayerPlaying
+                }else if self?.player?.status == .failed {
+                    self?.status = .PlayerPaused
+                }else{
+                   self?.status = .PlayerBuffering
                 }
             }
             if (self?.playerItem != nil) {
@@ -619,6 +662,7 @@ final class MPlayerView: UIView,UIGestureRecognizerDelegate {
                 if (currentItem?.seekableTimeRanges.count)! > 0 && (currentItem?.duration.timescale)! != 0 {
                     self?.totalTime = NSInteger(totalTime)
                     self?.currentTime = NSInteger(currentTime)
+                    self?.setLockView()
                     let currentTimeString = self?.timeStringWithTime(times: NSInteger(currentTime))
                     let totalTimeString = self?.timeStringWithTime(times: NSInteger(totalTime))
                     self?.slider?.value = Float(currentTime / totalTime)

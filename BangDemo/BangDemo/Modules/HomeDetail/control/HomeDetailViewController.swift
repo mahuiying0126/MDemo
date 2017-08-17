@@ -11,11 +11,14 @@ import SwiftyJSON
 class HomeDetailViewController: UIViewController,DetailTopBaseViewDelegate,topButtonClickDelegate,buyCourseOrPlayViewDelegate,CourseListDelegate,MPlayerViewDelegate,addCommentCompleteDelegate {
     
     var detailCourse : String?
-    var infoModel : DetailInfoModel?
-    var courseModel : DetailCourseModel?
-    
+    private var infoModel : DetailInfoModel?
+    private var courseModel : DetailCourseModel?
     /** *播放器视图 */
-    var playerView : MPlayerView?
+    private var playerView : MPlayerView?
+    /** *播放视频点击的分区 */
+    private var  tempSection : NSInteger = 0
+    /** *播放视频点击的行 */
+    private var  tempRow : NSInteger = 0
     
     //隐藏电池栏
     override var prefersStatusBarHidden: Bool{
@@ -35,19 +38,53 @@ class HomeDetailViewController: UIViewController,DetailTopBaseViewDelegate,topBu
         loadDetailData()
         loadCommentData()
         
+        
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
+        UIApplication.shared.beginReceivingRemoteControlEvents()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         //取消隐藏导航栏
         self.navigationController?.setNavigationBarHidden(false, animated: true)
+        UIApplication.shared.endReceivingRemoteControlEvents()
     }
     
-    //MARK:数据请求
+    override func remoteControlReceived(with event: UIEvent?) {
+        switch event!.subtype {
+        case .remoteControlPlay:// play按钮
+            MYLog("播放")
+            self.playerView?.playPlayer()
+            break
+
+        case .remoteControlPause:// pause按钮
+            MYLog("暂停")
+            self.playerView?.pausePlayer()
+            break
+
+        case .remoteControlNextTrack:  // next
+            
+          print(self.tempRow,self.tempSection)
+          let model = HomeDetailViewModel().handlCourseDataForNext(currentRow: &self.tempRow, currentSection: &self.tempSection, courseData: &self.listDeatilArray)
+          self.listTableView.reloadTableViewFromRemoteControlEvents(self.listDeatilArray)
+          self.didSelectCourseList(index: IndexPath.init(row: self.tempRow, section: self.tempSection), model: model)
+            
+            break
+        case .remoteControlPreviousTrack:  // previous
+            
+            let model = HomeDetailViewModel().handlCourseDataForPrevious(currentRow: &self.tempRow, currentSection: &self.tempSection, courseData: &self.listDeatilArray)
+            self.listTableView.reloadTableViewFromRemoteControlEvents(self.listDeatilArray)
+            self.didSelectCourseList(index: IndexPath.init(row: self.tempRow, section: self.tempSection), model: model)
+            break
+        default:
+            break
+        }
+    }
+    
+    //MARK: 数据请求
+    ///课程数据请求
     func loadDetailData()  {
         HomeDetailViewModel().loadingHomeCourseData(parameter: detailCourse!) { [weak self](someInfoModel, coursModel, coursPackageArray, listDeatilData) in
             self?.infoModel = someInfoModel
@@ -64,13 +101,14 @@ class HomeDetailViewController: UIViewController,DetailTopBaseViewDelegate,topBu
             self?.MCourseListData()
         }
     }
-    
+    ///评论课程数据
     func loadCommentData() {
         HomeDetailViewModel().loadCommentData(courseID: detailCourse!, currentPage: 1, isLoadMore: true) {[weak self] (commentData, totlePage) in
             self?.commentTableView.commentData(commentData, courseID: (self?.detailCourse)!, pointID: (self?.infoModel?.defaultKpointId)!)
         }
     }
     
+    //MARK: 视图数据填充
     ///顶部视图,播放按钮,数据实现
     func settopBaseViewData() {
         ///顶部图片路径
@@ -82,7 +120,6 @@ class HomeDetailViewController: UIViewController,DetailTopBaseViewDelegate,topBu
         self.teacherList.teacherListData((self.courseModel)!)
     }
     ///课程列表数据,和分区头,课程包数据
-    
     func MCourseListData()  {
         let number  = NSInteger(Float(self.coursePackageArray.count) / 2.0 + 0.6)
         let height = number * 40 + 5*(number+1)
@@ -91,17 +128,15 @@ class HomeDetailViewController: UIViewController,DetailTopBaseViewDelegate,topBu
         flowLayout.scrollDirection = .vertical
         
         let coursePackView = MCoursePackageView.init(frame: frame, collectionViewLayout: flowLayout)
-        let tempPackageArray = DetailCoursePackageModel.mj_objectArray(withKeyValuesArray: self.coursePackageArray)
+        let tempPackageArray  = DetailCoursePackageModel.mj_objectArray(withKeyValuesArray: self.coursePackageArray) as! Array<Any>
         
-        coursePackView.packageFromData(dataArray: tempPackageArray!)
+        coursePackView.packageFromData(tempPackageArray)
         self.listTableView.tableHeaderView = coursePackView
         
         self.listTableView.CourseListData(self.listDeatilArray)
     }
     
-    
-    //MARK: Public 公共方法&代理
-    ///返回,播放按钮代理事件
+    //MARK:返回,播放按钮代理事件
     func topBaseViewBackVsPlay(tage: Int){
         switch tage {
         case 1:
@@ -109,17 +144,17 @@ class HomeDetailViewController: UIViewController,DetailTopBaseViewDelegate,topBu
             break
         case 2:
             ///中间大播放按钮
-            let courseModel  = self.listDeatilArray[0] as! DetailCourseListModel
+            let courseModel  = self.listDeatilArray.first as! DetailCourseListModel
             let tempArray = courseModel.childKpoints
             let model = tempArray?.first as! DetailCourseChildModel
-            self.didSelectCourseList(index: IndexPath(), model: model)
+            self.didSelectCourseList(index: IndexPath.init(row: 0, section: 0), model: model)
             break
             
         default:
             break
         }
     }
-    ///收藏代理
+    ///MARK:收藏代理
     func collectionAndDownClick(buttonTag:Int){
         
         MYLog(buttonTag)
@@ -137,7 +172,7 @@ class HomeDetailViewController: UIViewController,DetailTopBaseViewDelegate,topBu
         }
         
     }
-    ///segment代理
+    ///MARK:segment代理
     func threeSegmentBtn(segmentIndex: Int){
         switch segmentIndex {
         case 0:
@@ -159,13 +194,18 @@ class HomeDetailViewController: UIViewController,DetailTopBaseViewDelegate,topBu
     func purchaseNowOrPlay(){
         MYLog("购买按钮点击")
     }
+    //MARK:添加评论完成代理回掉
+    func addCommentComplete(){
+        loadCommentData()
+    }
     //MARK:课程列表,分区头点击事件
-    
     func didClickListCellHeader(indexSection : Int , model : DetailCourseListModel){
         MYLog("点击了课程列表分区头\(indexSection)")
     }
-    
+    ///MARK:课程列表,单元格点击事件
     func didSelectCourseList(index : IndexPath , model : DetailCourseChildModel){
+        self.tempSection = index.section
+        self.tempRow = index.row
         var checkResultDict : JSON!
         if NSInteger(USERID)! > 0 {
             ///用户登录了
@@ -174,7 +214,6 @@ class HomeDetailViewController: UIViewController,DetailTopBaseViewDelegate,topBu
             ///提示去登录
             return
         }
-    
         if checkResultDict["success"].boolValue {
             let entity = checkResultDict["entity"]
             let fileStyle = entity["fileType"]
@@ -235,6 +274,7 @@ class HomeDetailViewController: UIViewController,DetailTopBaseViewDelegate,topBu
                 self?.playerView = MPlayerView.shared.initWithFrame(frame: CGRect.init(x: 0, y: 0, width: Screen_width, height: Screen_width * 9/16), videoUrl: videoUrl, type: type)
                 self?.playerView?.mPlayerDelegate = self
             }
+            
             self?.playerView?.videoParseCode = url
             self?.view.addSubview((self?.playerView)!)
         }
@@ -248,12 +288,6 @@ class HomeDetailViewController: UIViewController,DetailTopBaseViewDelegate,topBu
     func setBackgroundTime(_ currTime: Float, _ totTime: Float) {
         //        print("~~~~~当前时间!!!!!!总时间",currTime,totTime);
     }
-    
-    func addCommentComplete(){
-        loadCommentData()
-    }
-    
-    
     
     //MARK: lazy 懒加载
     /// 返回按钮,播放按钮
@@ -318,14 +352,14 @@ class HomeDetailViewController: UIViewController,DetailTopBaseViewDelegate,topBu
         
     }()
     
-    lazy var listDeatilArray : NSArray = {
+    lazy var listDeatilArray : Array<Any> = {
         
-        let tempArray = NSArray()
+        let tempArray = Array<Any>()
         return tempArray
     }()
     
-    lazy var coursePackageArray : NSArray = {
-        let tempArray = NSArray()
+    lazy var coursePackageArray : Array<Any> = {
+        let tempArray = Array<Any>()
         
         return tempArray
     }()

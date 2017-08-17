@@ -12,7 +12,7 @@ class MCoursePackageView: UICollectionView ,UICollectionViewDelegate, UICollecti
 
     let identityPackage = "coursePackage"
     /** *课程包数据 */
-    var coursePackArray : NSArray?
+    var coursePackArray : Array<Any>?
     
     
     override init(frame: CGRect, collectionViewLayout layout: UICollectionViewLayout) {
@@ -28,8 +28,8 @@ class MCoursePackageView: UICollectionView ,UICollectionViewDelegate, UICollecti
         
     }
     
-    func packageFromData(dataArray:NSArray)  {
-        let model = dataArray.firstObject as!DetailCoursePackageModel
+    func packageFromData(_ dataArray:Array<Any>)  {
+        let model = dataArray.first as!DetailCoursePackageModel
         model.isSelect = true
         coursePackArray = dataArray
         self.reloadData()
@@ -37,7 +37,8 @@ class MCoursePackageView: UICollectionView ,UICollectionViewDelegate, UICollecti
     
     //MARK: UICollectionViewDataSource
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return coursePackArray!.count
+        return (self.coursePackArray?.count)!
+        
     }
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell{
         

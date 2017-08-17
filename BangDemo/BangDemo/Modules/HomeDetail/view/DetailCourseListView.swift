@@ -28,7 +28,7 @@ protocol CourseListDelegate : class {
 
 class DetailCourseListView: UITableView ,UITableViewDelegate,UITableViewDataSource{
     
-    var courseDataArray : NSArray?
+    var courseDataArray : Array<Any> = []
     weak var courseDelegate : CourseListDelegate?
     
     override init(frame: CGRect, style: UITableViewStyle) {
@@ -42,30 +42,29 @@ class DetailCourseListView: UITableView ,UITableViewDelegate,UITableViewDataSour
         self.showsHorizontalScrollIndicator = false
     }
     
-    func CourseListData(_ dataArray:NSArray)  {
+    func CourseListData(_ dataArray:Array<Any>)  {
         self.courseDataArray = dataArray
         //将第一个分区展开
-        if self.courseDataArray != nil {
-            let model  = self.courseDataArray!.firstObject as! DetailCourseListModel
-            model.isSelected = true
-        }
+        let model  = self.courseDataArray.first as! DetailCourseListModel
+        model.isSelected = true
         
+        self.reloadData()
+    }
+    
+    func reloadTableViewFromRemoteControlEvents(_ dataArray:Array<Any>) {
+        self.courseDataArray = dataArray
         self.reloadData()
     }
     
     ///分区数
     func numberOfSections(in tableView: UITableView) -> Int {
     
-        if self.courseDataArray != nil {
-            return self.courseDataArray!.count
-        }else{
-            return 0
-        }
+        return self.courseDataArray.count
     }
     
     ///行数
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let model  = self.courseDataArray![section] as! DetailCourseListModel
+        let model  = self.courseDataArray[section] as! DetailCourseListModel
         let tempArray = model.childKpoints
         if model.isSelected {
             return (tempArray?.count)!
@@ -78,7 +77,7 @@ class DetailCourseListView: UITableView ,UITableViewDelegate,UITableViewDataSour
         let cellID = "course"
         
         let cell : MCourseListTableViewCell = MCourseListTableViewCell.init(style: .default, reuseIdentifier: cellID)
-        let courseModel  = self.courseDataArray![indexPath.section] as! DetailCourseListModel
+        let courseModel  = self.courseDataArray[indexPath.section] as! DetailCourseListModel
         let tempArray = courseModel.childKpoints
         let model = tempArray?[indexPath.row] as! DetailCourseChildModel
         cell.updataCellModel(model)
@@ -90,7 +89,7 @@ class DetailCourseListView: UITableView ,UITableViewDelegate,UITableViewDataSour
         let view = UIView.init(frame: CGRect.init(x: 0, y: 0, width:Screen_width, height: 40 * Ratio_height))
         view.backgroundColor = Whit
         
-        let tmpModel :DetailCourseListModel = self.courseDataArray![section] as! DetailCourseListModel
+        let tmpModel :DetailCourseListModel = self.courseDataArray[section] as! DetailCourseListModel
         let lineView = UIImageView()
         lineView.image = MIMAGE("课程分割线")
         view.addSubview(lineView)
@@ -136,14 +135,15 @@ class DetailCourseListView: UITableView ,UITableViewDelegate,UITableViewDataSour
     ///cell点击事件
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        let courseModel  = self.courseDataArray![indexPath.section] as! DetailCourseListModel
+
+        let courseModel  = self.courseDataArray[indexPath.section] as! DetailCourseListModel
         let tempArray = courseModel.childKpoints
         let model = tempArray?[indexPath.row] as! DetailCourseChildModel
         if !model.isSelected {
             model.isSelected = !model.isSelected
            self.courseDelegate?.didSelectCourseList(index: indexPath, model: model)
         }
-        for (index,item) in (self.courseDataArray?.enumerated())! {
+        for (index,item) in (self.courseDataArray.enumerated()) {
             if index == indexPath.section {
                 //当前分区
                 let listModel = item as! DetailCourseListModel
@@ -179,7 +179,7 @@ class DetailCourseListView: UITableView ,UITableViewDelegate,UITableViewDataSour
     
     func tapListHeadView(btn:UIButton)  {
         let section = btn.tag - 1941
-        let tmpModel :DetailCourseListModel = self.courseDataArray![section] as! DetailCourseListModel
+        let tmpModel :DetailCourseListModel = self.courseDataArray[section] as! DetailCourseListModel
         tmpModel.isSelected = !tmpModel.isSelected
         self.reloadData()
         
