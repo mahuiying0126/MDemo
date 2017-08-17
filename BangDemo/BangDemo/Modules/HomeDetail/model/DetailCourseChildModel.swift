@@ -45,6 +45,9 @@ class DetailCourseChildModel: NSObject {
     /** 是否被点击*/
     var isSelected : Bool = false
     
+    /** *课程 title */
+    var courseTitle : String?
+    
     override static func mj_replacedKeyFromPropertyName() -> [AnyHashable : Any]! {
         
         return ["ID":"id","Name":"name"]

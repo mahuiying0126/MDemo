@@ -76,6 +76,7 @@ class MHomeViewController: UIViewController ,noticDelegate{
             ///cell点击事件
             let homeDetail = HomeDetailViewController()
             homeDetail.detailCourse = cellModel.courseId
+            homeDetail.courseTitle = cellModel.courseName
             self?.navigationController?.pushViewController(homeDetail, animated:true)
         }
         collectionView.backgroundColor = Whit
@@ -100,6 +101,7 @@ class MHomeViewController: UIViewController ,noticDelegate{
             let homeDetail = HomeDetailViewController()
             let model = self?.adviertArray[index] as! HomeBannerModel
             homeDetail.detailCourse = model.courseId
+            homeDetail.courseTitle = model.title
             self?.navigationController?.pushViewController(homeDetail, animated:true)
         }
         return headView;

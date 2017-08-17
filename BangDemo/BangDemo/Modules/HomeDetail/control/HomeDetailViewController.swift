@@ -10,7 +10,10 @@ import UIKit
 import SwiftyJSON
 class HomeDetailViewController: UIViewController,DetailTopBaseViewDelegate,topButtonClickDelegate,buyCourseOrPlayViewDelegate,CourseListDelegate,MPlayerViewDelegate,addCommentCompleteDelegate {
     
+    /** 课程 id**/
     var detailCourse : String?
+    /** *课程标题 */
+    var  courseTitle : String?
     private var infoModel : DetailInfoModel?
     private var courseModel : DetailCourseModel?
     /** *播放器视图 */
@@ -36,7 +39,7 @@ class HomeDetailViewController: UIViewController,DetailTopBaseViewDelegate,topBu
         
         self.view.addSubview(self.topBaseView)
         loadDetailData()
-        loadCommentData()
+//        loadCommentData()
         
         
     }
@@ -66,7 +69,6 @@ class HomeDetailViewController: UIViewController,DetailTopBaseViewDelegate,topBu
 
         case .remoteControlNextTrack:  // next
             
-          print(self.tempRow,self.tempSection)
           let model = HomeDetailViewModel().handlCourseDataForNext(currentRow: &self.tempRow, currentSection: &self.tempSection, courseData: &self.listDeatilArray)
           self.listTableView.reloadTableViewFromRemoteControlEvents(self.listDeatilArray)
           self.didSelectCourseList(index: IndexPath.init(row: self.tempRow, section: self.tempSection), model: model)
@@ -99,6 +101,8 @@ class HomeDetailViewController: UIViewController,DetailTopBaseViewDelegate,topBu
             self?.settopBaseViewData()
             self?.setTeacherListData()
             self?.MCourseListData()
+            ///将讨论内容加载放这,为了拿到 pointID
+            self?.loadCommentData()
         }
     }
     ///评论课程数据
@@ -206,6 +210,13 @@ class HomeDetailViewController: UIViewController,DetailTopBaseViewDelegate,topBu
     func didSelectCourseList(index : IndexPath , model : DetailCourseChildModel){
         self.tempSection = index.section
         self.tempRow = index.row
+        model.courseTitle = self.courseTitle
+        
+        if MNetworkUtils.isNoNet() {
+            MBProgressHUD.showError("已于网络断开连接")
+            return
+        }
+        
         var checkResultDict : JSON!
         if NSInteger(USERID)! > 0 {
             ///用户登录了
@@ -222,7 +233,7 @@ class HomeDetailViewController: UIViewController,DetailTopBaseViewDelegate,topBu
                 ///视频
                 if videoStyle.string == PlayerMedia96KType {
                     ///96K视频
-                    playVideoWithUrl(url: entity["videoUrl"].string!, type: MediaVideoType)
+                    playVideoWithUrl(url: entity["videoUrl"].string!, type: MediaVideoType,model: model)
                 }else if videoStyle.string == MediaUnknownType {
                     ///CC视频
                     MBProgressHUD.showMBPAlertView("视频格式不正确", withSecond: 1.0)
@@ -231,7 +242,7 @@ class HomeDetailViewController: UIViewController,DetailTopBaseViewDelegate,topBu
                 
             }else if fileStyle.string == MediaAudioType {
                 ///音频
-                playVideoWithUrl(url: entity["videoUrl"].string!, type: MediaAudioType)
+                playVideoWithUrl(url: entity["videoUrl"].string!, type: MediaAudioType,model: model)
             }
             
 
@@ -247,7 +258,7 @@ class HomeDetailViewController: UIViewController,DetailTopBaseViewDelegate,topBu
 
     }
     
-    private func playVideoWithUrl(url:String,type:String) {
+    private func playVideoWithUrl(url:String,type:String,model:DetailCourseChildModel) {
         
         if MNetworkUtils.isNoNet() {
             MBProgressHUD.showMBPAlertView("无可用网络", withSecond: 1.0)
@@ -258,13 +269,13 @@ class HomeDetailViewController: UIViewController,DetailTopBaseViewDelegate,topBu
             
         }else if MNetworkUtils.isEnableWIFI() {
             ///Wifi 直接播放
-            playMeidoWithUrl(url: url, type: type)
+            playMeidoWithUrl(url: url, type: type,model: model)
             
         }
         
     }
     
-    private func playMeidoWithUrl(url:String,type:String){
+    private func playMeidoWithUrl(url:String,type:String,model:DetailCourseChildModel){
         ParsingEncrypteString().parseStringWith(urlString: url, fileType: type, isLocal: false) {[weak self] (videoUrl) in
             if self?.playerView != nil {
                 self?.playerView?.removeFromSuperview()
@@ -276,6 +287,7 @@ class HomeDetailViewController: UIViewController,DetailTopBaseViewDelegate,topBu
             }
             
             self?.playerView?.videoParseCode = url
+            self?.playerView?.model = model
             self?.view.addSubview((self?.playerView)!)
         }
     }
@@ -284,9 +296,8 @@ class HomeDetailViewController: UIViewController,DetailTopBaseViewDelegate,topBu
     func closePlayer() {
         ///还可以做一些操作,比如清除单元格状态
         self.playerView = nil
-    }
-    func setBackgroundTime(_ currTime: Float, _ totTime: Float) {
-        //        print("~~~~~当前时间!!!!!!总时间",currTime,totTime);
+        ///将远程事件取消
+        UIApplication.shared.endReceivingRemoteControlEvents()
     }
     
     //MARK: lazy 懒加载

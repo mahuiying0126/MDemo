@@ -65,13 +65,21 @@ class MNetRequestSeting: NSObject {
             let data = NSKeyedUnarchiver.unarchiveObject(withFile: path)
             ///如果没有网络,以前有缓存则直接返回缓存的
             if MNetworkUtils.isNoNet() {
-                let response = JSON(data!)
-                successBlock(response)
-                HUD.removeFromSuperview()
-                return
+                if isFileExist {
+                    let response = JSON(data!)
+                    if (response.null != nil) {
+                        successBlock(response)
+                    }
+                    
+                    HUD.removeFromSuperview()
+                    return
+                }else{
+                    HUD.removeFromSuperview()
+                    MBProgressHUD.showError("已于网络断开连接")
+                    return
+                }
+                
             }
-            
-            
             ///如果存在,再检查文件有没有过期,日期间隔根据自己定的
             if isFileExist && !seting.isRefresh {
                 
@@ -137,6 +145,11 @@ class MNetRequestSeting: NSObject {
             }
         } else{
             ///默认,不缓存
+            if MNetworkUtils.isNoNet() {
+                HUD.removeFromSuperview()
+                MBProgressHUD.showError("已于网络断开连接")
+                return
+            }
             MNetRequest.netRequest(requestSet: seting, success: {(responseData) in
                 
                 if (seting.jsonValidator != nil){
@@ -162,7 +175,8 @@ class MNetRequestSeting: NSObject {
     }
     
     func requestDataForSynchronous(hostUrl:String) -> JSON {
-    
+        
+        
         let url = URL(string:hostUrl)
         //创建请求对象
         let request = URLRequest(url: url!)
@@ -184,6 +198,9 @@ class MNetRequestSeting: NSObject {
         _ = semaphore.wait(timeout: DispatchTime.distantFuture)
         return JSON(responDic)
     }
+    
+    
+    
     ///将数据保存到本地
     private func saveCashDataForArchiver(response : [String : AnyObject],seting:MNetRequestSeting){
         let path = self.cacheFilePath()

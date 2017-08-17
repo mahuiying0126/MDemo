@@ -35,7 +35,7 @@ class DetailCommentView: UITableView ,UITableViewDelegate,UITableViewDataSource{
         self.showsHorizontalScrollIndicator = false
     }
     
-    func commentData(_ data : NSArray,courseID:String,pointID:String)  {
+    func commentData(_ data : Array<Any>,courseID:String,pointID:String)  {
         self.courseId = courseID
         self.pointId = pointID
         self.commentData.removeAll()
@@ -72,18 +72,23 @@ class DetailCommentView: UITableView ,UITableViewDelegate,UITableViewDataSource{
     @objc func addComment()  {
         commentHead?.addCommentTextView?.resignFirstResponder()
         if Int(USERID)! > 0 {
-            let addComment = MNetRequestSeting()
-            addComment.hostUrl = Courseassessadd()
-            addComment.paramet = ["courseAssess.courseId":self.courseId!,"courseAssess.kpointId":self.pointId!,"userId":USERID,"courseAssess.content":commentHead!.addCommentTextView!.text!]
-            addComment.requestDataFromNetSet(seting: addComment, successBlock: { [weak self] (responseData) in
-                if responseData["success"].boolValue {
-                    self?.commentCompleteDelegate?.addCommentComplete()
-                    self?.commentHead?.addCommentTextView?.text = ""
-                    MBProgressHUD.showSuccess(responseData["message"].string)
+            if self.courseId != nil && self.pointId != nil {
+                let addComment = MNetRequestSeting()
+                addComment.hostUrl = Courseassessadd()
+                addComment.paramet = ["courseAssess.courseId":self.courseId!,"courseAssess.kpointId":self.pointId!,"userId":USERID,"courseAssess.content":commentHead!.addCommentTextView!.text!]
+                addComment.requestDataFromNetSet(seting: addComment, successBlock: { [weak self] (responseData) in
+                    if responseData["success"].boolValue {
+                        self?.commentCompleteDelegate?.addCommentComplete()
+                        self?.commentHead?.addCommentTextView?.text = ""
+                        MBProgressHUD.showSuccess(responseData["message"].string)
+                    }
+                }) { (merror) in
+                    MBProgressHUD.showError("添加评论失败!")
                 }
-            }) { (merror) in
-                MBProgressHUD.showError("添加评论失败!")
+            }else{
+                MBProgressHUD.showError("添加评论失败!") 
             }
+            
             
         }else{
             MBProgressHUD.showMBPAlertView("您还没有登录!", withSecond: 1.5)

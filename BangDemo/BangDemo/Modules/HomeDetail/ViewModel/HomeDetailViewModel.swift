@@ -35,7 +35,7 @@ class HomeDetailViewModel: NSObject {
         
     }
     
-    func loadCommentData(courseID:String,currentPage:NSInteger,isLoadMore:Bool,successBlock:@escaping(_ listData:NSArray,_ totlePage:NSInteger) -> ()) {
+    func loadCommentData(courseID:String,currentPage:NSInteger,isLoadMore:Bool,successBlock:@escaping(_ listData:Array<Any>,_ totlePage:NSInteger) -> ()) {
         
         let comment = MNetRequestSeting()
         comment.isHidenHUD = false
@@ -47,8 +47,8 @@ class HomeDetailViewModel: NSObject {
                 let page = tempDict["page"] as! NSDictionary
                 let totlpage = page["totalPageSize"] as! NSInteger
                 
-                let tempArray = CommentUserModel.mj_objectArray(withKeyValuesArray: tempDict["assessList"] as! NSArray)
-                successBlock(tempArray!,totlpage)
+                let tempArray = CommentUserModel.mj_objectArray(withKeyValuesArray: tempDict["assessList"]) as! Array<Any>
+                successBlock(tempArray,totlpage)
                 
             }
         }) { (error) in

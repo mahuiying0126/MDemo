@@ -22,7 +22,6 @@ import MediaPlayer
 /// - PanDirectionVerticalMoved: 纵向移动
 enum PanDirection{
     case HorizontalMoved
-    
     case VerticalMoved
 }
 
@@ -47,8 +46,15 @@ enum PlayerStatus {
 @objc protocol MPlayerViewDelegate {
     
     func closePlayer()
-    func setBackgroundTime(_ currTime:Float,_ totTime:Float)
+    
 }
+
+extension MPlayerViewDelegate {
+    
+    func setBackgroundTime(_ currTime:Float,_ totTime:Float){}
+    
+}
+
 final class MPlayerView: UIView,UIGestureRecognizerDelegate {
     /** *播放器*/
     var player : AVPlayer?
@@ -133,9 +139,12 @@ final class MPlayerView: UIView,UIGestureRecognizerDelegate {
     private var timeObserve : Any?
     private var resolutionView : ResolutionView?
     /** *是否播放完毕 */
-    var playEnd : Bool = false
+    private var playEnd : Bool = false
     /** *当前倍速 */
     var rateValue : Float = 1.0
+    
+    /** *课程的 model, 用于锁屏播放 */
+    var model : DetailCourseChildModel?
     
     /// 创建播放器单例
     static let shared = MPlayerView()
@@ -157,7 +166,7 @@ final class MPlayerView: UIView,UIGestureRecognizerDelegate {
      ///   - type: 类型:音频 || 视频
      ///   - parseString: 需要解析的码
     func initWithFrame(frame:CGRect,videoUrl:String,type:String) -> MPlayerView {
-        self.backgroundColor = UIColor.black
+        self.backgroundColor = .black
         //开启屏幕旋转
         let appde = UIApplication.shared.delegate as! AppDelegate
         appde.allowRotation = true
@@ -243,9 +252,9 @@ final class MPlayerView: UIView,UIGestureRecognizerDelegate {
     func setLockView(){
         
         MPNowPlayingInfoCenter.default().nowPlayingInfo = [
-            MPMediaItemPropertyTitle:"第一夫人",
-            MPMediaItemPropertyArtist:"张杰",
-//            MPMediaItemPropertyArtwork:MPMediaItemArtwork(image: UIImage(named: "img.jpeg")!),
+            MPMediaItemPropertyTitle:model?.Name ?? "",
+            MPMediaItemPropertyArtist:model?.courseTitle ?? "",
+            MPMediaItemPropertyArtwork:MPMediaItemArtwork(image: UIImage(named: "大波浪")!),
             MPNowPlayingInfoPropertyPlaybackRate:1.0,
             MPMediaItemPropertyPlaybackDuration:self.totalTime,
             MPNowPlayingInfoPropertyElapsedPlaybackTime:self.currentTime
