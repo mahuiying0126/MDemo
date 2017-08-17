@@ -35,6 +35,12 @@ class DetailCommentView: UITableView ,UITableViewDelegate,UITableViewDataSource{
         self.showsHorizontalScrollIndicator = false
     }
     
+    /// 课程评论数据接口
+    ///
+    /// - Parameters:
+    ///   - data: 课程评论
+    ///   - courseID: 课程 ID
+    ///   - pointID:  节点 ID
     func commentData(_ data : Array<Any>,courseID:String,pointID:String)  {
         self.courseId = courseID
         self.pointId = pointID

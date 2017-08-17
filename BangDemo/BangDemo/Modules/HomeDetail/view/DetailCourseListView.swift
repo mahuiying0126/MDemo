@@ -42,6 +42,9 @@ class DetailCourseListView: UITableView ,UITableViewDelegate,UITableViewDataSour
         self.showsHorizontalScrollIndicator = false
     }
     
+    /// 课程列表的接口
+    ///
+    /// - Parameter dataArray: 课程列表的数据
     func CourseListData(_ dataArray:Array<Any>)  {
         self.courseDataArray = dataArray
         //将第一个分区展开
@@ -51,6 +54,9 @@ class DetailCourseListView: UITableView ,UITableViewDelegate,UITableViewDataSour
         self.reloadData()
     }
     
+    /// 用于锁屏事件,来处理锁屏按钮调用后的接口
+    ///
+    /// - Parameter dataArray: 处理后的列表数据
     func reloadTableViewFromRemoteControlEvents(_ dataArray:Array<Any>) {
         self.courseDataArray = dataArray
         self.reloadData()

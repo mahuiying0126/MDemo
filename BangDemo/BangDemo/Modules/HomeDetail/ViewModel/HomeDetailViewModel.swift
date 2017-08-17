@@ -10,6 +10,12 @@ import UIKit
 import SwiftyJSON
 class HomeDetailViewModel: NSObject {
 
+    
+    /// 加载详情页数据
+    ///
+    /// - Parameters:
+    ///   - parameter: 参数
+    ///   - success: 成功回调
     func loadingHomeCourseData(parameter: String ,success : @escaping (_ infoModel : DetailInfoModel,_ courseModel : DetailCourseModel,_ coursePackageArray : Array<Any>,_ listDeatilArray : Array<Any>)->()){
         
         let homeCourse = MNetRequestSeting()
@@ -30,11 +36,16 @@ class HomeDetailViewModel: NSObject {
         }) { (error) in
             
         }
-        
-        
-        
     }
     
+    
+    /// 加载课程评论数据
+    ///
+    /// - Parameters:
+    ///   - courseID: 课程 id
+    ///   - currentPage:  当前页
+    ///   - isLoadMore: 是否加载更多
+    ///   - successBlock: 成功回调
     func loadCommentData(courseID:String,currentPage:NSInteger,isLoadMore:Bool,successBlock:@escaping(_ listData:Array<Any>,_ totlePage:NSInteger) -> ()) {
         
         let comment = MNetRequestSeting()
@@ -56,6 +67,13 @@ class HomeDetailViewModel: NSObject {
         }
     }
     
+    /// 处理音视频锁屏播放事件
+    ///
+    /// - Parameters:
+    ///   - currentRow: 播放的当前行
+    ///   - currentSection: 播放的当前分区
+    ///   - courseData: 播放列表总数据
+    /// - Returns: 返回点击下一个按钮的下一个 model
     func handlCourseDataForNext(currentRow: inout NSInteger,currentSection: inout NSInteger,courseData: inout Array<Any>) -> DetailCourseChildModel  {
         
         let courseModel  = courseData[currentSection] as! DetailCourseListModel
@@ -88,6 +106,15 @@ class HomeDetailViewModel: NSObject {
         }
         
     }
+    
+    
+    /// 处理音视频锁屏播放事件
+    ///
+    /// - Parameters:
+    ///   - currentRow: 播放的当前行
+    ///   - currentSection: 播放的当前分区
+    ///   - courseData: 播放列表总数据
+    /// - Returns: 返回点击上一个按钮的上一个 model
     func handlCourseDataForPrevious(currentRow: inout NSInteger,currentSection: inout NSInteger,courseData: inout Array<Any>) -> DetailCourseChildModel  {
 
         let courseModel  = courseData[currentSection] as! DetailCourseListModel

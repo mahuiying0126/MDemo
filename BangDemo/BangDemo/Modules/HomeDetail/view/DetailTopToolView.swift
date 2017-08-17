@@ -135,6 +135,7 @@ class DetailTopToolView: UIView {
         
     }
     
+    /// 重新刷新课程列表及老师数据
     private func refreshCourseData() {
         let homeCourse = MNetRequestSeting()
         homeCourse.hostUrl = courseinfo()

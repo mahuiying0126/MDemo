@@ -23,6 +23,10 @@ class TeacherHeaderView: UIView {
         self.backgroundColor = Whit
         self.setUpUIView()
     }
+    
+    /// 老师页面头部数据
+    ///
+    /// - Parameter model: 老师界面数据 model
     func setTeacherHeadModel(_ model:DetailCourseModel){
         courseName?.text = model.name!
         let currentText = String.init(format: "¥ %@", model.currentprice!)

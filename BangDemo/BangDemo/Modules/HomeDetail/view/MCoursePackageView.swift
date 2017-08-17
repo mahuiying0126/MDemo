@@ -28,6 +28,9 @@ class MCoursePackageView: UICollectionView ,UICollectionViewDelegate, UICollecti
         
     }
     
+    /// 课程包数据接口
+    ///
+    /// - Parameter dataArray: 课程包数据
     func packageFromData(_ dataArray:Array<Any>)  {
         let model = dataArray.first as!DetailCoursePackageModel
         model.isSelect = true
