@@ -113,6 +113,7 @@ class MNetworkUtils: NSObject {
         return urlWithParamterString
     }
     
+    ///WIFI 是否可用
     final class func isEnableWIFI() -> Bool {
     
         let netReachability = NetworkReachabilityManager()?.networkReachabilityStatus
@@ -123,6 +124,7 @@ class MNetworkUtils: NSObject {
     return false
     }
     
+    ///WWAN 是否可用
     final class func isEnableWWAN() -> Bool {
         let netReachability = NetworkReachabilityManager()?.networkReachabilityStatus
         if netReachability == NetworkReachabilityManager.NetworkReachabilityStatus.reachable(.wwan) {
@@ -130,7 +132,7 @@ class MNetworkUtils: NSObject {
         }
         return false
     }
-    
+    ///网络是否可用; YES->网络不可用
     final class func isNoNet()->Bool {
         let netReachability = NetworkReachabilityManager()?.networkReachabilityStatus
         if netReachability == NetworkReachabilityManager.NetworkReachabilityStatus.notReachable {

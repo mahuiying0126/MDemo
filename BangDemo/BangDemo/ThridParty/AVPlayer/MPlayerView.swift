@@ -960,7 +960,7 @@ final class MPlayerView: UIView,UIGestureRecognizerDelegate {
             topImageView?.addSubview(tempCloseBtn)
             tempCloseBtn.snp.makeConstraints({ (make) in
                 make.left.equalTo(self.snp.left).offset(5)
-                make.top.equalTo(self.snp.top).offset(0)
+                make.top.equalTo(self.snp.top).offset(5)
                 make.size.equalTo(CGSize.init(width: 40, height: 40))
             })
             return tempCloseBtn

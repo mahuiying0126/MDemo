@@ -38,10 +38,10 @@ class DetailTopToolView: UIView {
             
             let btn = UIButton().buttonTitle(title: btnNormalIcons[i], image: btnNormalIcons[i], selectImage: btnSelectedIcons[i], backGroundColor: Whit, Frame: CGRect.init(x: Screen_width / 3 * CGFloat(i) , y: 0, width: Screen_width/3 - CGFloat(1)  , height: 40))
             btn.tag = i
-            btn.setTitleColor(UIColor.gray, for: .normal)
+            btn.setTitleColor(.gray, for: .normal)
             btn.setTitleColor(navColor, for: .selected)
             btn.titleLabel?.font = FONT(15)
-            btn.titleEdgeInsets = UIEdgeInsets.init(top: 0, left: 5, bottom: 0, right: 0)
+            btn.titleEdgeInsets = .init(top: 0, left: 5, bottom: 0, right: 0)
             btn.addTarget(self, action: #selector(detailThreeBtnClick(sender:)), for: .touchUpInside)
             self.addSubview(btn)
             if i == 1 {
@@ -70,8 +70,11 @@ class DetailTopToolView: UIView {
         if sender.tag == 1 {
             if sender.isSelected {
                 ///已经是已收藏状态,再点击就是取消收藏
+                ///在这里直接取反,为了避免图标闪动
+                sender.isSelected = false
                 collectionCleanCourse()
             }else{
+                sender.isSelected = true
                 collectionCourse()
             }
         }else{
@@ -82,9 +85,8 @@ class DetailTopToolView: UIView {
     }
     
     func threeSegmentBtnClick(sender:UISegmentedControl) {
-        if self.topViewButtonDelegate != nil {
-            self.topViewButtonDelegate?.threeSegmentBtn(segmentIndex: sender.selectedSegmentIndex)
-        }
+       
+        self.topViewButtonDelegate?.threeSegmentBtn(segmentIndex: sender.selectedSegmentIndex)
     }
     
     private func collectionCleanCourse() {
@@ -99,9 +101,11 @@ class DetailTopToolView: UIView {
                 ///再将本地缓存重新刷新
                 self?.refreshCourseData()
             }else{
+                self?.collectionBtn?.isSelected = true
                 MBProgressHUD.showError("取消失败!")
             }
-        }) { (merror) in
+        }) { [weak self](merror) in
+            self?.collectionBtn?.isSelected = true
             MBProgressHUD.showError("取消失败!")
         }
     }
@@ -117,9 +121,11 @@ class DetailTopToolView: UIView {
                      ///再将本地缓存重新刷新
                     self?.refreshCourseData()
                 }else{
+                    self?.collectionBtn?.isSelected = false
                     MBProgressHUD.showError("收藏失败!")
                 }
-            }) { (merror) in
+            }) { [weak self](merror) in
+                self?.collectionBtn?.isSelected = false
                 MBProgressHUD.showError("收藏失败!")
             }
             

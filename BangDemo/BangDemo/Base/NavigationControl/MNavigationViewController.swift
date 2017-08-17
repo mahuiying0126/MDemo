@@ -21,6 +21,7 @@ class MNavigationViewController: UINavigationController {
         navigationBar.titleTextAttributes =  [
             NSForegroundColorAttributeName: Whit,
             ]
+        navigationBar.isTranslucent = false
         navigationBar.backgroundColor = navColor
         
         let item = UIBarButtonItem.appearance()
@@ -33,8 +34,8 @@ class MNavigationViewController: UINavigationController {
         var disableTextAttrs = Dictionary<String, Any>()
         disableTextAttrs[NSForegroundColorAttributeName] = ColorFromRGB(153.0, 153.0, 153.0 , 0.7)
         disableTextAttrs[NSFontAttributeName] = FONT(15.0)
-        self.navigationBar.isTranslucent = false
-
+//        self.navigationBar.isTranslucent = false
+        self.navigationController?.navigationBar.isTranslucent = false
         item.setTitleTextAttributes(disableTextAttrs, for: UIControlState.disabled)
     }
 

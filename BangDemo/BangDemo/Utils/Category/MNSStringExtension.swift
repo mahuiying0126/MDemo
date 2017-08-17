@@ -44,6 +44,7 @@ extension NSString{
     func sizeForFont(font : inout UIFont,size:CGSize,lineBreakMode:NSLineBreakMode) -> CGSize {
         
         var result = CGSize()
+        
         if isEqual(font) {
             font = .systemFont(ofSize: 12)
         }

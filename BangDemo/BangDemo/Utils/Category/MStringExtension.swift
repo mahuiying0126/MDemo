@@ -63,10 +63,11 @@ extension String {
     }
     
     func checkPointIsAbleToPlay() ->  JSON{
+        
         let checkPoint = MNetRequestSeting()
         checkPoint.hostUrl = checkKpoint()
         checkPoint.isHidenHUD = true
-        checkPoint.paramet = ["kpointId":self,"userId":"1","uuId":KEY_UUID]
+        checkPoint.paramet = ["kpointId":self,"userId":USERID,"uuId":KEY_UUID]
         let url = MNetworkUtils.printRequestUrlString(urlString: checkPoint.hostUrl!, Paramter: checkPoint.paramet! as NSDictionary)
         let poindInfo = checkPoint.requestDataForSynchronous(hostUrl: url)
         
