@@ -67,7 +67,7 @@ class MNetRequestSeting: NSObject {
             if MNetworkUtils.isNoNet() {
                 if isFileExist {
                     let response = JSON(data!)
-                    if (response.null != nil) {
+                    if (!response.isEmpty) {
                         successBlock(response)
                     }
                     

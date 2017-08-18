@@ -25,6 +25,12 @@ class HomeNoticeModel: NSObject {
     }
 
     //MARK: 加载公告数据
+    
+    /// 加载公告数据接口
+    ///
+    /// - Parameters:
+    ///   - success: 成功回调
+    ///   - failture: 失败回调
     func loadNoticeData(success: @escaping(_ response : Array<Any>) -> (),failture : @escaping (_ error : Error)->() )  {
     
         let notic = MNetRequestSeting()

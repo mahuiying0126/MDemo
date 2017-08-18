@@ -28,6 +28,12 @@ class HomeCourseModel: NSObject {
     }
     
     //MARK: 加载课程列表数据
+    
+    /// 加载首页课程接口
+    ///
+    /// - Parameters:
+    ///   - success: 成功回调
+    ///   - failture: 失败回调
     func loadRecommandCourseData(success : @escaping (_ response : Array<Any>) ->(),failture : @escaping (_ error : Error)->()){
         
         let recommand = MNetRequestSeting()

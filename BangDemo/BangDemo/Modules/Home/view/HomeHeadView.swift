@@ -61,7 +61,10 @@ class HomeHeadView: UIView {
         }
     }
     
-    public func BannerIcons( _ bannerArray : Array<Any>){
+     /// 首页 banner 页面数据接口
+     ///
+     /// - Parameter bannerArray:  banner 数据
+     func BannerIcons( _ bannerArray : Array<Any>){
         var imageArr = Array<Any>()
         for model in bannerArray {
             let model = model as! HomeBannerModel
@@ -73,7 +76,10 @@ class HomeHeadView: UIView {
     }
     
     
-    public func setupNoticeArray(_ array : Array<Any>){
+    /// 首页公告页面接口
+    ///
+    /// - Parameter array: 公告数据
+    func setupNoticeArray(_ array : Array<Any>){
         self.noticeArray = array
         if array.count != 0 {
             

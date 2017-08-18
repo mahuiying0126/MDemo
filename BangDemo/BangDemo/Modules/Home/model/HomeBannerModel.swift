@@ -24,6 +24,11 @@ class HomeBannerModel: NSObject {
         return ["ID":"id"]
     }
     
+    /// 加载首页 banner 数据接口
+    ///
+    /// - Parameters:
+    ///   - success: 成功回调
+    ///   - failture: 失败回调  
     func loadingBannerData(success : @escaping (_ response : Array<Any>)->(),failture : @escaping (_ error : Error)->()){
         
         let bunder = MNetRequestSeting()

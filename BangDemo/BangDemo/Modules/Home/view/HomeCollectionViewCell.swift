@@ -70,6 +70,9 @@ class HomeCollectionViewCell: UICollectionViewCell {
         
     }
     
+    /// 填充 cell 数据
+    ///
+    /// - Parameter model:  cell 的 mode
     func cellForModel(model:HomeCourseModel) {
         
         let url = URL(string: imageUrlString+(model.mobileLogo)!)!
