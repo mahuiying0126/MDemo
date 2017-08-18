@@ -74,33 +74,35 @@ class HomeDetailViewModel: NSObject {
     ///   - currentSection: 播放的当前分区
     ///   - courseData: 播放列表总数据
     /// - Returns: 返回点击下一个按钮的下一个 model
-    func handlCourseDataForNext(currentRow: inout NSInteger,currentSection: inout NSInteger,courseData: inout Array<Any>) -> DetailCourseChildModel  {
-        
-        let courseModel  = courseData[currentSection] as! DetailCourseListModel
+    func handlCourseDataForNext(indexArray:inout Array<IndexPath>,courseData: inout Array<Any>) -> DetailCourseChildModel  {
+        var currentIndex = indexArray.first!
+        let courseModel  = courseData[currentIndex.section] as! DetailCourseListModel
         let tempArray = courseModel.childKpoints
-        let rowModel = tempArray?[currentRow] as! DetailCourseChildModel
+        let rowModel = tempArray?[currentIndex.row] as! DetailCourseChildModel
         rowModel.isSelected = false
-        if currentRow == (tempArray?.count)! - 1 {
+        if currentIndex.row == (tempArray?.count)! - 1 {
             ///说明当前的行在边界,下一曲的话,行=0 再判断分区
             courseModel.isSelected = false
-            currentRow = 0
-            if currentSection == courseData.count - 1{
+            currentIndex.row = 0
+            if currentIndex.section == courseData.count - 1{
                 //说明分区也在边界,在边界就让分区=0
-                currentSection = 0
+                currentIndex.section = 0
             }else{
-                currentSection += 1
+                currentIndex.section += 1
             }
-            let courModel  = courseData[currentSection] as! DetailCourseListModel
+            let courModel  = courseData[currentIndex.section] as! DetailCourseListModel
             courModel.isSelected = true;
             let Array = courModel.childKpoints
-            let model = Array?[currentRow] as! DetailCourseChildModel
+            let model = Array?[currentIndex.row] as! DetailCourseChildModel
             model.isSelected = true
+            indexArray.append(currentIndex)
             return model
         }else{
             ///说明当前行在本区,只需要将行+1,分区不变
-            currentRow += 1
-            let model = tempArray?[currentRow] as! DetailCourseChildModel
+            currentIndex.row += 1
+            let model = tempArray?[currentIndex.row] as! DetailCourseChildModel
             model.isSelected = true
+            indexArray.append(currentIndex)
             return model
             
         }
@@ -115,18 +117,18 @@ class HomeDetailViewModel: NSObject {
     ///   - currentSection: 播放的当前分区
     ///   - courseData: 播放列表总数据
     /// - Returns: 返回点击上一个按钮的上一个 model
-    func handlCourseDataForPrevious(currentRow: inout NSInteger,currentSection: inout NSInteger,courseData: inout Array<Any>) -> DetailCourseChildModel  {
-
-        let courseModel  = courseData[currentSection] as! DetailCourseListModel
+    func handlCourseDataForPrevious(indexArray:inout Array<IndexPath>,courseData: inout Array<Any>) -> DetailCourseChildModel  {
+        var currentIndex = indexArray.first!
+        let courseModel  = courseData[currentIndex.section] as! DetailCourseListModel
         let tempArray = courseModel.childKpoints
-        let rowModel = tempArray?[currentRow] as! DetailCourseChildModel
+        let rowModel = tempArray?[currentIndex.row] as! DetailCourseChildModel
         rowModel.isSelected = false
-        if currentRow == 0 {
+        if currentIndex.row == 0 {
             ///说明当前的行在边界,上一曲的话要判断分区在哪?
-            if currentSection == 0 {
+            if currentIndex.section == 0 {
                 //如果行=0 分区=0,只能说明在第一分区,第一行,再上一个还都是0
-                currentSection = 0
-                currentRow = 0
+                currentIndex.section = 0
+                currentIndex.row = 0
                 rowModel.isSelected = true
                 return rowModel
                 
@@ -134,22 +136,24 @@ class HomeDetailViewModel: NSObject {
                 //将上一个分区关掉
                 courseModel.isSelected = false
                 //说明没有在第一分区,将分区-1
-                currentSection -= 1
+                currentIndex.section -= 1
                 //拿到-1后分区的行数
-                let courModel  = courseData[currentSection] as! DetailCourseListModel
+                let courModel  = courseData[currentIndex.section] as! DetailCourseListModel
                 courModel.isSelected = true;
                 let Array = courModel.childKpoints
-                currentRow = (Array?.count)! - 1
-                let model = Array?[currentRow] as! DetailCourseChildModel
+                currentIndex.row = (Array?.count)! - 1
+                let model = Array?[currentIndex.row] as! DetailCourseChildModel
                 model.isSelected = true
+                indexArray.append(currentIndex)
                 return model
             }
             
         }else{
             ///说明当前行在本区,只需要将行-1,分区不变
-            currentRow -= 1
-            let model = tempArray?[currentRow] as! DetailCourseChildModel
+            currentIndex.row -= 1
+            let model = tempArray?[currentIndex.row] as! DetailCourseChildModel
             model.isSelected = true
+            indexArray.append(currentIndex)
             return model
             
         }

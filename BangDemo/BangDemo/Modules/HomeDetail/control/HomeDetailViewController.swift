@@ -22,6 +22,7 @@ class HomeDetailViewController: UIViewController,DetailTopBaseViewDelegate,topBu
     private var  tempSection : NSInteger = 0
     /** *播放视频点击的行 */
     private var  tempRow : NSInteger = 0
+    private var tempIndex : IndexPath?
     
     //隐藏电池栏
     override var prefersStatusBarHidden: Bool{
@@ -68,16 +69,19 @@ class HomeDetailViewController: UIViewController,DetailTopBaseViewDelegate,topBu
             break
 
         case .remoteControlNextTrack:  // next
+            var indexArray : Array<IndexPath> = [self.tempIndex!]
             
-          let model = HomeDetailViewModel().handlCourseDataForNext(currentRow: &self.tempRow, currentSection: &self.tempSection, courseData: &self.listDeatilArray)
-          self.listTableView.reloadTableViewFromRemoteControlEvents(self.listDeatilArray)
-          self.didSelectCourseList(index: IndexPath.init(row: self.tempRow, section: self.tempSection), model: model)
+            let model = HomeDetailViewModel().handlCourseDataForNext(indexArray: &indexArray, courseData: &self.listDeatilArray)
+            
+            self.listTableView.reloadTableViewFromRemoteControlEvents(self.listDeatilArray,indexArray)
+            self.didSelectCourseList(index: IndexPath.init(row: self.tempRow, section: self.tempSection), model: model)
             
             break
         case .remoteControlPreviousTrack:  // previous
+            var indexArray : Array<IndexPath> = [self.tempIndex!]
+            let model = HomeDetailViewModel().handlCourseDataForPrevious(indexArray: &indexArray, courseData: &self.listDeatilArray)
             
-            let model = HomeDetailViewModel().handlCourseDataForPrevious(currentRow: &self.tempRow, currentSection: &self.tempSection, courseData: &self.listDeatilArray)
-            self.listTableView.reloadTableViewFromRemoteControlEvents(self.listDeatilArray)
+            self.listTableView.reloadTableViewFromRemoteControlEvents(self.listDeatilArray, indexArray)
             self.didSelectCourseList(index: IndexPath.init(row: self.tempRow, section: self.tempSection), model: model)
             break
         default:
@@ -208,8 +212,8 @@ class HomeDetailViewController: UIViewController,DetailTopBaseViewDelegate,topBu
     }
     ///MARK:课程列表,单元格点击事件
     func didSelectCourseList(index : IndexPath , model : DetailCourseChildModel){
-        self.tempSection = index.section
-        self.tempRow = index.row
+        
+        self.tempIndex = index
         model.courseTitle = self.courseTitle
         
         if MNetworkUtils.isNoNet() {

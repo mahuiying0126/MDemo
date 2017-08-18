@@ -52,7 +52,6 @@ class CommentCellFrameModel: NSObject {
         let name_w = (name as NSString).widthForFont(font: &font15)
         ///昵称 frame
         frameModel.nameFrame = .init(x: name_x, y: name_y!, width: name_w, height: 18)
-        
         let time_w = (cellModel.createTime! as NSString).widthForFont(font: &font13)
         let time_x = Screen_width - Spacing_heght15 - time_w
         ///时间 frame

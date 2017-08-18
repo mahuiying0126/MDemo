@@ -36,7 +36,7 @@ class MCommentTableViewCell: UITableViewCell {
         timeLabel?.textColor = .gray
         self.contentView.addSubview(timeLabel!)
         contentLabel = UILabel()
-        contentLabel?.font = FONT(17)
+        contentLabel?.font = FONT(14)
         contentLabel?.textColor = .gray
         contentLabel?.numberOfLines = 0
         self.contentView.addSubview(contentLabel!)
@@ -70,17 +70,12 @@ class MCommentTableViewCell: UITableViewCell {
         }
         self.nickLable?.frame = model.nameFrame!
         
-//        let mytime : NSMutableString = cellModel?.createTime as! NSMutableString
-//        
-//        if mytime.length > 3 {
-//            mytime.deleteCharacters(in: NSRange.init(location: mytime.length - 3, length: 3))
-//        }
         self.timeLabel?.text = cellModel?.createTime!
         
         self.timeLabel?.frame = model.timeFrame!
         
 //        let attribstr = try! NSAttributedString.init(data:(cellModel?.content?.data(using: String.Encoding.unicode))! , options: [NSDocumentTypeDocumentAttribute:NSHTMLTextDocumentType], documentAttributes: nil)
-        
+//        self.contentLabel?.text = cellModel?.content
         self.contentLabel?.attributedText = cellModel?.content?.getParagraphStyle(font: 14, color:.gray , headIndent: 0.0)
         
         self.contentLabel?.frame = model.contentFrame!
