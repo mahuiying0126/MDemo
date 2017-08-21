@@ -29,6 +29,16 @@ class MNetRequestSeting: NSObject {
         case NRequestMethodGET
     }
     
+    /// 同步请求环境
+    ///
+    /// - web:  web 同步请求
+    /// - json: 同步请求为 json
+    enum MSynchronousSet {
+        case web
+        case json
+    }
+    
+    
     /** *是否显示 HUD */
     var isHidenHUD : Bool = false
     /** *是否是HTTPS请求,默认是NO */
@@ -47,6 +57,8 @@ class MNetRequestSeting: NSObject {
     var paramet : [String:Any]?
     /** *验证json格式 */
     var jsonValidator : Any?
+    /** *同步请求样式 */
+    var  synchronStyle : MSynchronousSet = .json
     
     final func requestDataFromNetSet(seting:MNetRequestSeting,successBlock : @escaping (_ response : JSON)->(), failture : @escaping (_ error : Error)->()) {
         
@@ -174,21 +186,24 @@ class MNetRequestSeting: NSObject {
         
     }
     
-    func requestDataForSynchronous(hostUrl:String) -> JSON {
+    func requestDataForSynchronous(_ Synchron: MNetRequestSeting) -> Any {
         
-        
-        let url = URL(string:hostUrl)
+        let url = URL(string:Synchron.hostUrl!)
         //创建请求对象
         let request = URLRequest(url: url!)
         let session = URLSession.shared
-        var responDic = NSDictionary()
+        var responDic : Any!
         let semaphore = DispatchSemaphore(value: 0)
         let dataTask = session.dataTask(with: request,completionHandler: {(data, response, error) -> Void in
             if error != nil{
                 print(error!)
             }else{
+                if Synchron.synchronStyle == .web{
+                    responDic = data
+                }else{
+                   responDic = try! JSONSerialization.jsonObject(with: data!, options: JSONSerialization.ReadingOptions.allowFragments) as! Dictionary<String, Any>
+                }
                 
-                responDic = try! JSONSerialization.jsonObject(with: data!, options: JSONSerialization.ReadingOptions.allowFragments) as! NSDictionary
             }
             semaphore.signal()
         }) as URLSessionTask
@@ -196,7 +211,7 @@ class MNetRequestSeting: NSObject {
         //使用resume方法启动任务
         dataTask.resume()
         _ = semaphore.wait(timeout: DispatchTime.distantFuture)
-        return JSON(responDic)
+        return responDic
     }
     
     

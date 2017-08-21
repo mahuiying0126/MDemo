@@ -56,8 +56,9 @@ class TeacherHeaderView: UIView {
         }
         let courseIdString = String.init(format: "%@/%@.json", coursecontent(),model.courseID!)
         let url  = NSURL.init(string: courseIdString)! as URL
-        let request  = NSURLRequest.init(url: url) 
+        let request  = NSURLRequest.init(url: url)
         detailWebView?.loadRequest(request as URLRequest)
+        
     }
     func setUpUIView()  {
         courseName = UILabel()

@@ -14,7 +14,7 @@ protocol buyCourseOrPlayViewDelegate : class {
 
 class DetailTeacherView: UITableView,UITableViewDelegate,UITableViewDataSource,UIWebViewDelegate {
     
-    var detailTeacherArray = NSArray()
+    var detailTeacherArray : Array<Any> = []
     weak var buyOrPlayDelegate : buyCourseOrPlayViewDelegate?
     
     

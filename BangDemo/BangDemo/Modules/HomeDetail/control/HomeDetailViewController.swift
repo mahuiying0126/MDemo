@@ -40,9 +40,6 @@ class HomeDetailViewController: UIViewController,DetailTopBaseViewDelegate,topBu
         
         self.view.addSubview(self.topBaseView)
         loadDetailData()
-//        loadCommentData()
-        
-        
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
