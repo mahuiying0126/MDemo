@@ -18,10 +18,7 @@ class HomeDetailViewController: UIViewController,DetailTopBaseViewDelegate,topBu
     private var courseModel : DetailCourseModel?
     /** *播放器视图 */
     private var playerView : MPlayerView?
-    /** *播放视频点击的分区 */
-    private var  tempSection : NSInteger = 0
-    /** *播放视频点击的行 */
-    private var  tempRow : NSInteger = 0
+    /** *点击当前 indexPath*/
     private var tempIndex : IndexPath?
     
     //隐藏电池栏
@@ -206,7 +203,6 @@ class HomeDetailViewController: UIViewController,DetailTopBaseViewDelegate,topBu
     }
     ///MARK:课程列表,单元格点击事件
     func didSelectCourseList(index : IndexPath , model : DetailCourseChildModel){
-        print(index.section,index.row)
         self.tempIndex = index
         model.courseTitle = self.courseTitle
         
