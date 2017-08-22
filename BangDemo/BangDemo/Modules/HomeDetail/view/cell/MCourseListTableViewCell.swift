@@ -64,12 +64,13 @@ class MCourseListTableViewCell: UITableViewCell {
         }else{
             self.markLabel?.text = ""
         }
+        self.courseImage?.image = MIMAGE(model.isSelected ? "qbg-section-s" : "qbg-section-n")
         
-        if model.fileType == "AUDIO" {
-            self.courseImage?.image = MIMAGE(model.isSelected ? "选中音频" : "未选音频")
-        }else{
-            self.courseImage?.image = MIMAGE(model.isSelected ? "选中视频" : "未选视频")
-        }
+//        if model.fileType == "AUDIO" {
+//            self.courseImage?.image = MIMAGE(model.isSelected ? "选中音频" : "未选音频")
+//        }else{
+//            
+//        }
         
         
     }

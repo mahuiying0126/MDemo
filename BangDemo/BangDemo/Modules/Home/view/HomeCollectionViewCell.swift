@@ -73,20 +73,21 @@ class HomeCollectionViewCell: UICollectionViewCell {
     /// 填充 cell 数据
     ///
     /// - Parameter model:  cell 的 mode
-    func cellForModel(model:HomeCourseModel) {
+    func cellForModel(_ model:HomeCourseModel) {
         
-        let url = URL(string: imageUrlString+(model.mobileLogo)!)!
-        homeImage?.af_setImage(withURL: url,placeholderImage:UIImage(named:"加载中"))
+        let url = URL(string: imageUrlString + (model.mobileLogo)!)!
+        homeImage?.af_setImage(withURL: url, placeholderImage: MIMAGE("加载中"), progressQueue: .main, runImageTransitionIfCached:true)
+//        homeImage?.af_setImage(withURL: url,placeholderImage:UIImage(named:"加载中"))
         if  (model.currentPrice == nil)  {
            
-            self.homePrice?.attributedText = NSMutableAttributedString().attributedString(imageName: "标签", textStr: "免费", fontSize: 13.0, color: UIColor.orange)
+            homePrice?.attributedText = NSMutableAttributedString().attributedString(imageName: "标签", textStr: "免费", fontSize: 13.0, color: UIColor.orange)
         }else{
-            self.homePrice?.text = String.init(format: "¥ %.2f", Float(model.currentPrice!)!)
+            homePrice?.text = String.init(format: "¥ %.2f", Float(model.currentPrice!)!)
         }
         
-        self.homeTitle?.text = model.courseName
+        homeTitle?.text = model.courseName
         
-        self.homeCount?.text = ("播放量:") + (model.playCount!) as String;
+        homeCount?.text = ("播放量:") + (model.playCount!) as String;
     }
     
     

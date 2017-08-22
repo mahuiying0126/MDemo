@@ -27,37 +27,38 @@ class HomeHeadView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.backgroundColor = Whit
-        setSubView()
+        msubView()
         self.time .fire()
         self.noticeNum = 0
     }
     
-    func setSubView() {
-        self.silenceCarouselView = SilenceCarouselView()
-        self.addSubview(self.silenceCarouselView!)
-        self.noticeLabel = UILabel()
-        self.noticeLabel?.isUserInteractionEnabled = true
-        self.addSubview(self.noticeLabel!)
+    private func msubView() {
+        silenceCarouselView = SilenceCarouselView()
+        self.addSubview(silenceCarouselView!)
+        noticeLabel = UILabel()
+        noticeLabel?.isUserInteractionEnabled = true
+        self.addSubview(noticeLabel!)
         let gesture = UITapGestureRecognizer.init(target: self, action: #selector(noticClickEvent))
-        self.noticeLabel! .addGestureRecognizer(gesture)
+        noticeLabel! .addGestureRecognizer(gesture)
         let  line = UIView()
         line.backgroundColor = lineColor
         self.addSubview(line);
         
-        self.silenceCarouselView?.snp.makeConstraints({ (make) in
-            make.left.top.right.equalTo(self)
+        silenceCarouselView?.snp.makeConstraints({ (make) in
+            make.left.top.equalTo(self)
+            make.right.equalTo(self.snp.right)
             make.height.equalTo(Screen_width * 0.5)
         })
         
-        self.noticeLabel?.snp.makeConstraints({ (make) in
+        noticeLabel?.snp.makeConstraints({ (make) in
             make.left.equalTo(self).offset(12)
             make.right.equalTo(self).offset(-5)
-            make.top.equalTo((self.silenceCarouselView?.snp.bottom)!)
+            make.top.equalTo(silenceCarouselView!.snp.bottom)
             make.height.equalTo(25)
         })
         line.snp.makeConstraints { (make) in
             make.left.right.bottom.equalTo(self);
-            make.top.equalTo((self.noticeLabel?.snp.bottom)!)
+            make.top.equalTo(noticeLabel!.snp.bottom)
         }
     }
     

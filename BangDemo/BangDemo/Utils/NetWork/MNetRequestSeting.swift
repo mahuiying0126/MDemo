@@ -60,6 +60,7 @@ class MNetRequestSeting: NSObject {
     /** *同步请求样式 */
     var  synchronStyle : MSynchronousSet = .json
     
+    
     final func requestDataFromNetSet(seting:MNetRequestSeting,successBlock : @escaping (_ response : JSON)->(), failture : @escaping (_ error : Error)->()) {
         
         let HUD = MBProgressHUD.showAdded(to: UIApplication.shared.windows.last!, animated: true)
@@ -126,7 +127,9 @@ class MNetRequestSeting: NSObject {
                         //文件创建时间小于当前时间,返回缓存数据
                         
                         let response = JSON(data!)
-                        successBlock(response)
+                        if (!response.isEmpty) {
+                            successBlock(response)
+                        }
                         HUD.removeFromSuperview()
                     }
                     
@@ -246,22 +249,25 @@ class MNetRequestSeting: NSObject {
     }
     ///文件路径
     private func cacheFilePath() -> String{
-        let cacheFileName = self.cacheFileName()
-        let path = self.cacheBasePath()
-        return path + "/" + cacheFileName
-    }
-    
-    //将请求路径和参数拼接成文件名称
-    private func cacheFileName() -> String {
         var requestInfo = String()
         if self.paramet != nil {
             requestInfo = String.init(format: "%@","%@", self.hostUrl!,self.paramet!)
         }else{
             requestInfo = self.hostUrl!
         }
+
+        let cacheFileName = MNetworkUtils.md5StringFromString(string: requestInfo)
         
-        return MNetworkUtils.md5StringFromString(string: requestInfo)
+        let path = self.cacheBasePath()
+        
+        return path + "/" + cacheFileName
     }
+    
+    //将请求路径和参数拼接成文件名称
+//    private func cacheFileName() -> String {
+//        
+//        return
+//    }
     ///根路径
     private func cacheBasePath() -> String{
         

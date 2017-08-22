@@ -28,7 +28,7 @@ class MHomeViewModel: NSObject,UICollectionViewDataSource, UICollectionViewDeleg
         let cell :HomeCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: MHomeViewController.reuseIdentifier, for: indexPath as IndexPath) as! HomeCollectionViewCell
         let array  = self.dataArray[indexPath.section] as! NSArray
         let model  = array[indexPath.row] as! HomeCourseModel
-        cell.cellForModel(model: model)
+        cell.cellForModel(model)
         return cell
         
     }

@@ -66,20 +66,18 @@ class HomeDetailViewController: UIViewController,DetailTopBaseViewDelegate,topBu
             break
 
         case .remoteControlNextTrack:  // next
-            var indexArray : Array<IndexPath> = [self.tempIndex!]
             
-            let model = HomeDetailViewModel().handlCourseDataForNext(indexArray: &indexArray, courseData: &self.listDeatilArray)
+            let model = HomeDetailViewModel().handlCourseDataForNext(currentIndex: &self.tempIndex!, courseData: &self.listDeatilArray)
             
-            self.listTableView.reloadTableViewFromRemoteControlEvents(self.listDeatilArray,indexArray)
-            self.didSelectCourseList(index: IndexPath.init(row: self.tempRow, section: self.tempSection), model: model)
+            self.listTableView.reloadTableViewFromRemoteControlEvents(self.listDeatilArray)
+            self.didSelectCourseList(index: self.tempIndex!, model: model)
             
             break
         case .remoteControlPreviousTrack:  // previous
-            var indexArray : Array<IndexPath> = [self.tempIndex!]
-            let model = HomeDetailViewModel().handlCourseDataForPrevious(indexArray: &indexArray, courseData: &self.listDeatilArray)
+            let model = HomeDetailViewModel().handlCourseDataForPrevious(currentIndex: &self.tempIndex!, courseData: &self.listDeatilArray)
             
-            self.listTableView.reloadTableViewFromRemoteControlEvents(self.listDeatilArray, indexArray)
-            self.didSelectCourseList(index: IndexPath.init(row: self.tempRow, section: self.tempSection), model: model)
+            self.listTableView.reloadTableViewFromRemoteControlEvents(self.listDeatilArray)
+            self.didSelectCourseList(index: self.tempIndex!, model: model)
             break
         default:
             break
@@ -137,7 +135,6 @@ class HomeDetailViewController: UIViewController,DetailTopBaseViewDelegate,topBu
         
         coursePackView.packageFromData(tempPackageArray)
         self.listTableView.tableHeaderView = coursePackView
-        
         self.listTableView.CourseListData(self.listDeatilArray)
     }
     
@@ -209,7 +206,7 @@ class HomeDetailViewController: UIViewController,DetailTopBaseViewDelegate,topBu
     }
     ///MARK:课程列表,单元格点击事件
     func didSelectCourseList(index : IndexPath , model : DetailCourseChildModel){
-        
+        print(index.section,index.row)
         self.tempIndex = index
         model.courseTitle = self.courseTitle
         

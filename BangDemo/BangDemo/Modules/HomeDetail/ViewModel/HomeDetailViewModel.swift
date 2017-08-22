@@ -74,8 +74,7 @@ class HomeDetailViewModel: NSObject {
     ///   - currentSection: 播放的当前分区
     ///   - courseData: 播放列表总数据
     /// - Returns: 返回点击下一个按钮的下一个 model
-    func handlCourseDataForNext(indexArray:inout Array<IndexPath>,courseData: inout Array<Any>) -> DetailCourseChildModel  {
-        var currentIndex = indexArray.first!
+    func handlCourseDataForNext(currentIndex:inout IndexPath,courseData: inout Array<Any>) -> DetailCourseChildModel  {
         let courseModel  = courseData[currentIndex.section] as! DetailCourseListModel
         let tempArray = courseModel.childKpoints
         let rowModel = tempArray?[currentIndex.row] as! DetailCourseChildModel
@@ -95,14 +94,12 @@ class HomeDetailViewModel: NSObject {
             let Array = courModel.childKpoints
             let model = Array?[currentIndex.row] as! DetailCourseChildModel
             model.isSelected = true
-            indexArray.append(currentIndex)
             return model
         }else{
             ///说明当前行在本区,只需要将行+1,分区不变
             currentIndex.row += 1
             let model = tempArray?[currentIndex.row] as! DetailCourseChildModel
             model.isSelected = true
-            indexArray.append(currentIndex)
             return model
             
         }
@@ -117,8 +114,7 @@ class HomeDetailViewModel: NSObject {
     ///   - currentSection: 播放的当前分区
     ///   - courseData: 播放列表总数据
     /// - Returns: 返回点击上一个按钮的上一个 model
-    func handlCourseDataForPrevious(indexArray:inout Array<IndexPath>,courseData: inout Array<Any>) -> DetailCourseChildModel  {
-        var currentIndex = indexArray.first!
+    func handlCourseDataForPrevious(currentIndex : inout IndexPath,courseData: inout Array<Any>) -> DetailCourseChildModel  {
         let courseModel  = courseData[currentIndex.section] as! DetailCourseListModel
         let tempArray = courseModel.childKpoints
         let rowModel = tempArray?[currentIndex.row] as! DetailCourseChildModel
@@ -144,7 +140,6 @@ class HomeDetailViewModel: NSObject {
                 currentIndex.row = (Array?.count)! - 1
                 let model = Array?[currentIndex.row] as! DetailCourseChildModel
                 model.isSelected = true
-                indexArray.append(currentIndex)
                 return model
             }
             
@@ -153,7 +148,6 @@ class HomeDetailViewModel: NSObject {
             currentIndex.row -= 1
             let model = tempArray?[currentIndex.row] as! DetailCourseChildModel
             model.isSelected = true
-            indexArray.append(currentIndex)
             return model
             
         }

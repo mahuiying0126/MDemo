@@ -13,6 +13,7 @@ import SwiftyJSON
 
 public let baseUrlString = "http://t.268xue.com/app/"
 public let imageUrlString = "http://static.268xue.com"
+public let shareUrl = "http://t.268xue.com/"
 
 
 /* 首页bunder**/

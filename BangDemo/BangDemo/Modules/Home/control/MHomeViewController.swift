@@ -46,11 +46,10 @@ class MHomeViewController: UIViewController ,noticDelegate{
                 group.leave()
         }
         
-        group.notify(queue: .main) { 
-            self.homeCollectionView .reloadData()
+        group.notify(queue: .main) { [weak self] in
+            self?.homeCollectionView .reloadData()
         }
     }
-    //MARK: Public 公共方法
     /// 点击跳转到公告详情页面
     /// - Parameter model: 点击公告model
     func clickNoticIndex(model:HomeNoticeModel){
@@ -72,12 +71,12 @@ class MHomeViewController: UIViewController ,noticDelegate{
         
         collectionView.delegate = self.homeDelegate
         collectionView.dataSource = self.homeDelegate
-        self.homeDelegate.cellDidSelectEvent = { [weak self] (cellModel) in
+        self.homeDelegate.cellDidSelectEvent = {(cellModel) in
             ///cell点击事件
             let homeDetail = HomeDetailViewController()
             homeDetail.detailCourse = cellModel.courseId
             homeDetail.courseTitle = cellModel.courseName
-            self?.navigationController?.pushViewController(homeDetail, animated:true)
+            self.navigationController?.pushViewController(homeDetail, animated:true)
         }
         collectionView.backgroundColor = Whit
         collectionView.contentInset = UIEdgeInsets.init(top:Screen_width*0.5 + 25 + 10, left: 0, bottom: 0, right: 0)
@@ -96,13 +95,13 @@ class MHomeViewController: UIViewController ,noticDelegate{
         headView.noticdelegate = self
         self.homeCollectionView.addSubview(headView)
         headView.silenceCarouselView?.silenceCarouselViewTapBlock = {
-            [weak self](carouselView, index) in
+            (index) in
             //轮播图点击事件,进入详情
             let homeDetail = HomeDetailViewController()
-            let model = self?.adviertArray[index] as! HomeBannerModel
+            let model = self.adviertArray[index] as! HomeBannerModel
             homeDetail.detailCourse = model.courseId
             homeDetail.courseTitle = model.title
-            self?.navigationController?.pushViewController(homeDetail, animated:true)
+            self.navigationController?.pushViewController(homeDetail, animated:true)
         }
         return headView;
         

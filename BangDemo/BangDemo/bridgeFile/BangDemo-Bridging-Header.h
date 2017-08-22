@@ -9,4 +9,7 @@
 #import "DownloadManager.h"
 #import "MediaServer.h"
 #import "DeviceTool.h"
+//md5加密需声明次文件
 #import <CommonCrypto/CommonDigest.h>
+#import <UShareUI/UShareUI.h>
+#import <UMSocialCore/UMSocialCore.h>

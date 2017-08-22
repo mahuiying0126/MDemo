@@ -9,7 +9,7 @@
 import UIKit
 import AlamofireImage
 /// 点击事件回调
-typealias SilenceCarouselViewTapBlock = (_ carouselView: SilenceCarouselView, _ index:Int) -> ()
+typealias SilenceCarouselViewTapBlock = (_ index:Int) -> ()
 
 
 /// 轮播控件
@@ -198,7 +198,7 @@ open class SilenceCarouselView: UIView,UIScrollViewDelegate {
      */
     func clickImg() -> (){
         if self.silenceCarouselViewTapBlock != nil {
-            self.silenceCarouselViewTapBlock!(self,self.pageControl!.currentPage)
+            self.silenceCarouselViewTapBlock!(self.pageControl!.currentPage)
         }
     }
     

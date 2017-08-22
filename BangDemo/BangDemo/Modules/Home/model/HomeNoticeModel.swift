@@ -42,10 +42,8 @@ class HomeNoticeModel: NSObject {
                 if(responseData["success"].boolValue){
                     if(responseData["entity"].array != nil){
                         let entity = responseData["entity"];
-                        let noticeArray = HomeNoticeModel.mj_objectArray(withKeyValuesArray: entity.rawValue)
-                        if(noticeArray != nil){
-                            success(noticeArray as! Array<Any>)
-                        }
+                        let noticeArray = HomeNoticeModel.mj_objectArray(withKeyValuesArray: entity.rawValue) as! Array<Any>
+                        success(noticeArray)
                     }
                 }
             }

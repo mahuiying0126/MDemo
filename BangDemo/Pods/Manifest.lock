@@ -7,6 +7,21 @@ PODS:
   - MJExtension (3.0.13)
   - SnapKit (3.2.0)
   - SwiftyJSON (3.1.4)
+  - UMengUShare/Core (6.4.3):
+    - UMengUShare/Network
+  - UMengUShare/Network (6.4.3)
+  - UMengUShare/Social/QQ (6.4.3):
+    - UMengUShare/Core
+    - UMengUShare/Social/ReducedQQ
+  - UMengUShare/Social/ReducedQQ (6.4.3):
+    - UMengUShare/Core
+  - UMengUShare/Social/ReducedWeChat (6.4.3):
+    - UMengUShare/Core
+  - UMengUShare/Social/WeChat (6.4.3):
+    - UMengUShare/Core
+    - UMengUShare/Social/ReducedWeChat
+  - UMengUShare/UI (6.4.3):
+    - UMengUShare/Core
 
 DEPENDENCIES:
   - Alamofire
@@ -16,6 +31,9 @@ DEPENDENCIES:
   - MJExtension
   - SnapKit
   - SwiftyJSON
+  - UMengUShare/Social/QQ
+  - UMengUShare/Social/WeChat
+  - UMengUShare/UI
 
 SPEC CHECKSUMS:
   Alamofire: dc44b1600b800eb63da6a19039a0083d62a6a62d
@@ -25,7 +43,8 @@ SPEC CHECKSUMS:
   MJExtension: 5932755f451458eefa24239358817f8d291240c7
   SnapKit: 1ca44df72cfa543218d177cb8aab029d10d86ea7
   SwiftyJSON: c2842d878f95482ffceec5709abc3d05680c0220
+  UMengUShare: d39cb682598df87ebdd3c055d03d00eb0102d42c
 
-PODFILE CHECKSUM: 98659b6604b3f096887553ce9b2fc54b600d63a5
+PODFILE CHECKSUM: b4e79279d9c75aa53217ff218700fe07b7f10594
 
 COCOAPODS: 1.2.0

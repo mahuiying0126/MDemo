@@ -46,7 +46,6 @@
 		6D7822381EDFB5A600717F8E /* MMainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D7822371EDFB5A600717F8E /* MMainViewController.swift */; };
 		6D78223A1EDFB5ED00717F8E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D7822391EDFB5ED00717F8E /* AppDelegate.swift */; };
 		6D78224F1EDFB69300717F8E /* MCourseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D78223C1EDFB69300717F8E /* MCourseViewController.swift */; };
-		6D7822501EDFB69300717F8E /* MDownViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D78223E1EDFB69300717F8E /* MDownViewController.swift */; };
 		6D7822511EDFB69300717F8E /* MHomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D7822411EDFB69300717F8E /* MHomeViewController.swift */; };
 		6D7822521EDFB69300717F8E /* HomeBannerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D7822431EDFB69300717F8E /* HomeBannerModel.swift */; };
 		6D7822531EDFB69300717F8E /* HomeCourseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D7822441EDFB69300717F8E /* HomeCourseModel.swift */; };
@@ -77,6 +76,10 @@
 		6D7F93EB1F4282310021FBA0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6D7F93E91F4282310021FBA0 /* LaunchScreen.storyboard */; };
 		6D7F93EF1F42E2ED0021FBA0 /* MVideoOrAudioSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D7F93EE1F42E2ED0021FBA0 /* MVideoOrAudioSet.swift */; };
 		6D8C7F841F012C750007FD55 /* MCourseListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D8C7F831F012C750007FD55 /* MCourseListTableViewCell.swift */; };
+		6D9602D91F4AB99A00C852EA /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 6D9602D81F4AB99A00C852EA /* libz.tbd */; };
+		6D9602DB1F4ABE6A00C852EA /* MThirdPartyDefinition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D9602DA1F4ABE6A00C852EA /* MThirdPartyDefinition.swift */; };
+		6D9602DF1F4AC7B200C852EA /* MDownViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D9602DE1F4AC7B200C852EA /* MDownViewController.swift */; };
+		6D9602E11F4AC85A00C852EA /* MSelectDownViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D9602E01F4AC85A00C852EA /* MSelectDownViewController.swift */; };
 		6D97C77B1F3ABCAA00EF8D96 /* MUIImageExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D97C77A1F3ABCAA00EF8D96 /* MUIImageExtension.swift */; };
 		6D97C77D1F3ABD4900EF8D96 /* MUIImageViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D97C77C1F3ABD4900EF8D96 /* MUIImageViewExtension.swift */; };
 		6DE6D8831F14E6F800BD6F6B /* MCoursePackageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DE6D8821F14E6F800BD6F6B /* MCoursePackageView.swift */; };
@@ -165,7 +168,6 @@
 		6D7822371EDFB5A600717F8E /* MMainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MMainViewController.swift; sourceTree = "<group>"; };
 		6D7822391EDFB5ED00717F8E /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6D78223C1EDFB69300717F8E /* MCourseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MCourseViewController.swift; sourceTree = "<group>"; };
-		6D78223E1EDFB69300717F8E /* MDownViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MDownViewController.swift; sourceTree = "<group>"; };
 		6D7822411EDFB69300717F8E /* MHomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MHomeViewController.swift; sourceTree = "<group>"; };
 		6D7822431EDFB69300717F8E /* HomeBannerModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeBannerModel.swift; sourceTree = "<group>"; };
 		6D7822441EDFB69300717F8E /* HomeCourseModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeCourseModel.swift; sourceTree = "<group>"; };
@@ -198,6 +200,10 @@
 		6D7F93EC1F42823A0021FBA0 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6D7F93EE1F42E2ED0021FBA0 /* MVideoOrAudioSet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MVideoOrAudioSet.swift; sourceTree = "<group>"; };
 		6D8C7F831F012C750007FD55 /* MCourseListTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MCourseListTableViewCell.swift; sourceTree = "<group>"; };
+		6D9602D81F4AB99A00C852EA /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
+		6D9602DA1F4ABE6A00C852EA /* MThirdPartyDefinition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MThirdPartyDefinition.swift; sourceTree = "<group>"; };
+		6D9602DE1F4AC7B200C852EA /* MDownViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MDownViewController.swift; sourceTree = "<group>"; };
+		6D9602E01F4AC85A00C852EA /* MSelectDownViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MSelectDownViewController.swift; sourceTree = "<group>"; };
 		6D97C77A1F3ABCAA00EF8D96 /* MUIImageExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MUIImageExtension.swift; sourceTree = "<group>"; };
 		6D97C77C1F3ABD4900EF8D96 /* MUIImageViewExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MUIImageViewExtension.swift; sourceTree = "<group>"; };
 		6DE6D8821F14E6F800BD6F6B /* MCoursePackageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MCoursePackageView.swift; sourceTree = "<group>"; };
@@ -232,6 +238,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6D52CB511F033BA000763CF1 /* libc++.tbd in Frameworks */,
+				6D52CB551F033BAE00763CF1 /* SystemConfiguration.framework in Frameworks */,
+				6D9602D91F4AB99A00C852EA /* libz.tbd in Frameworks */,
+				6D52CB591F033BC100763CF1 /* libsqlite3.tbd in Frameworks */,
+				6D52CB531F033BA800763CF1 /* CoreTelephony.framework in Frameworks */,
+				6D52CB651F033BF900763CF1 /* CoreGraphics.framework in Frameworks */,
 				6D52CB731F033C3500763CF1 /* UIKit.framework in Frameworks */,
 				6D52CB711F033C2B00763CF1 /* QuartzCore.framework in Frameworks */,
 				6D52CB6F1F033C2300763CF1 /* OpenGLES.framework in Frameworks */,
@@ -239,18 +251,13 @@
 				6D52CB6B1F033C0E00763CF1 /* Foundation.framework in Frameworks */,
 				6D52CB691F033C0500763CF1 /* CoreVideo.framework in Frameworks */,
 				6D52CB671F033BFF00763CF1 /* CoreMedia.framework in Frameworks */,
-				6D52CB651F033BF900763CF1 /* CoreGraphics.framework in Frameworks */,
 				6D52CB631F033BEF00763CF1 /* AudioToolbox.framework in Frameworks */,
 				6D52CB611F033BE800763CF1 /* AVFoundation.framework in Frameworks */,
 				6D52CB5F1F033BE200763CF1 /* libiconv.tbd in Frameworks */,
 				6D52CB5D1F033BDB00763CF1 /* libstdc++.tbd in Frameworks */,
 				6D52CB5B1F033BD200763CF1 /* libbz2.tbd in Frameworks */,
 				6DE7A7DF1F271FF3005D06BD /* 2017-03-15-2 libSDK.a in Frameworks */,
-				6D52CB591F033BC100763CF1 /* libsqlite3.tbd in Frameworks */,
 				6D52CB571F033BB700763CF1 /* CoreFoundation.framework in Frameworks */,
-				6D52CB551F033BAE00763CF1 /* SystemConfiguration.framework in Frameworks */,
-				6D52CB531F033BA800763CF1 /* CoreTelephony.framework in Frameworks */,
-				6D52CB511F033BA000763CF1 /* libc++.tbd in Frameworks */,
 				6D52CB4F1F033B9800763CF1 /* ImageIO.framework in Frameworks */,
 				6D4CA9FC1EE963AF00A9364D /* Security.framework in Frameworks */,
 				C6A5EE152E017EFD1A3DBE81 /* Pods_BangDemo.framework in Frameworks */,
@@ -438,7 +445,8 @@
 		6D78223D1EDFB69300717F8E /* Down */ = {
 			isa = PBXGroup;
 			children = (
-				6D78223E1EDFB69300717F8E /* MDownViewController.swift */,
+				6D9602DD1F4AC79300C852EA /* control */,
+				6D9602DC1F4AC77D00C852EA /* view */,
 			);
 			path = Down;
 			sourceTree = "<group>";
@@ -580,6 +588,7 @@
 				6D7822741EDFB78F00717F8E /* CommonFile.swift */,
 				6DEC3A7B1F3DBD68008CBC32 /* MColorAndTextSet.swift */,
 				6D7F93EE1F42E2ED0021FBA0 /* MVideoOrAudioSet.swift */,
+				6D9602DA1F4ABE6A00C852EA /* MThirdPartyDefinition.swift */,
 			);
 			path = Comment;
 			sourceTree = "<group>";
@@ -641,6 +650,22 @@
 				6D7F93E91F4282310021FBA0 /* LaunchScreen.storyboard */,
 			);
 			path = Base.lproj;
+			sourceTree = "<group>";
+		};
+		6D9602DC1F4AC77D00C852EA /* view */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = view;
+			sourceTree = "<group>";
+		};
+		6D9602DD1F4AC79300C852EA /* control */ = {
+			isa = PBXGroup;
+			children = (
+				6D9602DE1F4AC7B200C852EA /* MDownViewController.swift */,
+				6D9602E01F4AC85A00C852EA /* MSelectDownViewController.swift */,
+			);
+			path = control;
 			sourceTree = "<group>";
 		};
 		6DAE81AF1EC3299D00B6E0A5 /* bridgeFile */ = {
@@ -706,6 +731,7 @@
 		A223B5DEEA2E51A3E1419B3F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				6D9602D81F4AB99A00C852EA /* libz.tbd */,
 				6D52CB721F033C3500763CF1 /* UIKit.framework */,
 				6D52CB701F033C2B00763CF1 /* QuartzCore.framework */,
 				6D52CB6E1F033C2300763CF1 /* OpenGLES.framework */,
@@ -950,6 +976,7 @@
 				6D4CA9FA1EE9637B00A9364D /* SSKeychain.m in Sources */,
 				6D7822691EDFB6CD00717F8E /* DetailTopToolView.swift in Sources */,
 				6D7822591EDFB69300717F8E /* MRecordViewController.swift in Sources */,
+				6D9602E11F4AC85A00C852EA /* MSelectDownViewController.swift in Sources */,
 				6D7822641EDFB6CD00717F8E /* HomeDetailViewController.swift in Sources */,
 				6DE7A7DE1F271FF3005D06BD /* ParsingEncrypteString.swift in Sources */,
 				6D53F7271F1E07AF00AA484F /* CoursePackageCollectionViewCell.swift in Sources */,
@@ -960,9 +987,10 @@
 				6DF9A75F1F3428CB005DDACB /* HomeDetailViewModel.swift in Sources */,
 				6D78223A1EDFB5ED00717F8E /* AppDelegate.swift in Sources */,
 				6D7822531EDFB69300717F8E /* HomeCourseModel.swift in Sources */,
+				6D9602DB1F4ABE6A00C852EA /* MThirdPartyDefinition.swift in Sources */,
+				6D9602DF1F4AC7B200C852EA /* MDownViewController.swift in Sources */,
 				6D7822381EDFB5A600717F8E /* MMainViewController.swift in Sources */,
 				6D5D26081EE0EE3400F66937 /* DetailCourseListModel.swift in Sources */,
-				6D7822501EDFB69300717F8E /* MDownViewController.swift in Sources */,
 				6D53F7291F1E105000AA484F /* DetailCoursePackageModel.swift in Sources */,
 				6D7822351EDFB57600717F8E /* MNavigationViewController.swift in Sources */,
 				6D97C77B1F3ABCAA00EF8D96 /* MUIImageExtension.swift in Sources */,
@@ -1161,6 +1189,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/BangDemo/ThridParty/AVPlayer/PlayerSDK/SDK",
 				);
+				OTHER_LIBTOOLFLAGS = "-ObjC";
 				OTHER_SWIFT_FLAGS = "$(inherited)";
 				PODS_ROOT = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = com.magic.bang;
@@ -1195,6 +1224,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/BangDemo/ThridParty/AVPlayer/PlayerSDK/SDK",
 				);
+				OTHER_LIBTOOLFLAGS = "-ObjC";
 				OTHER_SWIFT_FLAGS = "$(inherited)";
 				PODS_ROOT = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = com.magic.bang;

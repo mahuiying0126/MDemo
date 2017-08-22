@@ -41,11 +41,9 @@ class HomeBannerModel: NSObject {
                 if(entity["indexCenterBanner"].array != nil){
                     let indexCenterBanners = entity["indexCenterBanner"]
                     //mj转模型
-                    let adviertArray = HomeBannerModel.mj_objectArray(withKeyValuesArray: indexCenterBanners.rawValue)
+                    let adviertArray = HomeBannerModel.mj_objectArray(withKeyValuesArray: indexCenterBanners.rawValue) as! Array<Any>
                     //bunder图片
-                    if(adviertArray != nil) {
-                        success(adviertArray as! Array<Any>)
-                    }
+                    success(adviertArray)
                 }
             }
         }) { (error) in

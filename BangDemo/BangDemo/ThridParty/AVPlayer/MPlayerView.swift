@@ -965,6 +965,7 @@ final class MPlayerView: UIView,UIGestureRecognizerDelegate {
                 make.top.equalTo(bottomImageView!)
                 make.size.equalTo(CGSize.init(width: isLOCAL ? 0 : 40, height: 40))
             })
+
             self.fullScreenBtn?.isSelected = true
             self.isFullScreen = true
             break
@@ -1105,7 +1106,7 @@ final class MPlayerView: UIView,UIGestureRecognizerDelegate {
                 make.top.equalTo(self).offset(10)
                 make.right.equalTo(self).offset(-5)
                 make.width.equalTo(40)
-                make.height.equalTo(130)
+                make.height.equalTo(140)
             })
             
             return tempRateView

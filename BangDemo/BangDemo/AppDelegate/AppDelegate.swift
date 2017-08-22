@@ -73,6 +73,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         manager?.startListening()
     }
     
+    func thirdPartyDataInfo()  {
+        let umDefault = UMSocialManager.default()
+        
+        umDefault?.umSocialAppkey = UMENG_APIKEY
+        UMSocialGlobal.shareInstance().isClearCacheWhenGetUserInfo = true
+        umDefault?.setPlaform(.QQ, appKey: QQAppID, appSecret: QQAppKEY, redirectURL: shareUrl)
+        umDefault?.setPlaform(.wechatSession, appKey: WeChatAppID, appSecret: WeChatAppSecrect, redirectURL: shareUrl)
+        
+    }
+    
+    func application(_ application: UIApplication, open url: URL, sourceApplication: String?, annotation: Any) -> Bool {
+        let result = UMSocialManager.default().handleOpen(url, sourceApplication: sourceApplication, annotation: annotation)
+        if !result {
+            // 其他如支付等SDK的回调
+        }
+        return result
+    }
     
     func applicationWillResignActive(_ application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.

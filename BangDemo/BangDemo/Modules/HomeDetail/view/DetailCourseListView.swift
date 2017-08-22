@@ -57,11 +57,9 @@ class DetailCourseListView: UITableView ,UITableViewDelegate,UITableViewDataSour
     /// 用于锁屏事件,来处理锁屏按钮调用后的接口
     ///
     /// - Parameter dataArray: 处理后的列表数据
-    func reloadTableViewFromRemoteControlEvents(_ dataArray:Array<Any>,_ indexArray:Array<IndexPath>) {
+    func reloadTableViewFromRemoteControlEvents(_ dataArray:Array<Any>) {
         self.courseDataArray = dataArray
-//        self.beginUpdates()
-//        self.reloadRows(at: indexArray, with: .none)
-//        self.endUpdates()
+
         self.reloadData()
     }
     
@@ -144,7 +142,6 @@ class DetailCourseListView: UITableView ,UITableViewDelegate,UITableViewDataSour
     ///cell点击事件
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-
         let courseModel  = self.courseDataArray[indexPath.section] as! DetailCourseListModel
         let tempArray = courseModel.childKpoints
         let model = tempArray?[indexPath.row] as! DetailCourseChildModel
