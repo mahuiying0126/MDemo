@@ -2,6 +2,9 @@ PODS:
   - Alamofire (4.4.0)
   - AlamofireImage (3.2.0):
     - Alamofire (~> 4.1)
+  - FMDB (2.6.2):
+    - FMDB/standard (= 2.6.2)
+  - FMDB/standard (2.6.2)
   - IQKeyboardManagerSwift (4.0.9)
   - MBProgressHUD (1.0.0)
   - MJExtension (3.0.13)
@@ -26,6 +29,7 @@ PODS:
 DEPENDENCIES:
   - Alamofire
   - AlamofireImage
+  - FMDB
   - IQKeyboardManagerSwift
   - MBProgressHUD
   - MJExtension
@@ -38,6 +42,7 @@ DEPENDENCIES:
 SPEC CHECKSUMS:
   Alamofire: dc44b1600b800eb63da6a19039a0083d62a6a62d
   AlamofireImage: 157ed682cc81d3b9db4fb90c1f12180ac552d93b
+  FMDB: 854a0341b4726e53276f2a8996f06f1b80f9259a
   IQKeyboardManagerSwift: 2eefe6c429b86aa08bfbc1b5c891164d754adf91
   MBProgressHUD: 4890f671c94e8a0f3cf959aa731e9de2f036d71a
   MJExtension: 5932755f451458eefa24239358817f8d291240c7
@@ -45,6 +50,6 @@ SPEC CHECKSUMS:
   SwiftyJSON: c2842d878f95482ffceec5709abc3d05680c0220
   UMengUShare: d39cb682598df87ebdd3c055d03d00eb0102d42c
 
-PODFILE CHECKSUM: b4e79279d9c75aa53217ff218700fe07b7f10594
+PODFILE CHECKSUM: 8b2eb98ef7640e5d4559608b111ed05968200bec
 
 COCOAPODS: 1.2.0

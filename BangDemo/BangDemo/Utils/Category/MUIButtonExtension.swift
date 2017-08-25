@@ -9,10 +9,10 @@
 import Foundation
 
 enum ButtonEdgeInsetsStyle {
-    case ButtonEdgeInsetsStyleTop // image在上，label在下
-    case ButtonEdgeInsetsStyleLeft // image在左，label在右
-    case ButtonEdgeInsetsStyleBottom // image在下，label在上
-    case ButtonEdgeInsetsStyleRight // image在右，label在左
+    case imageTop // image在上，label在下
+    case imageLeft // image在左，label在右
+    case imageBotton // image在下，label在上
+    case imageRight // image在右，label在左
 }
 
 extension UIButton {
@@ -45,17 +45,8 @@ extension UIButton {
         // 1. 得到imageView和titleLabel的宽、高
         let imageWith = self.imageView?.frame.size.width
         let imageHeight = self.imageView?.frame.size.height
-        var labelWidth : CGFloat
-        var labelHeight :CGFloat
-        
-        if (Double.init(UIDevice.current.systemVersion)! >= 8.0) {
-            // 由于iOS8中titleLabel的size为0，用下面的这种设置
-            labelWidth = (self.titleLabel?.intrinsicContentSize.width)!
-            labelHeight = (self.titleLabel?.intrinsicContentSize.height)!
-        }else{
-            labelWidth = (self.titleLabel?.frame.size.width)!
-            labelHeight = (self.titleLabel?.frame.size.height)!
-        }
+        let labelWidth = (self.titleLabel?.intrinsicContentSize.width)!
+        let labelHeight = (self.titleLabel?.intrinsicContentSize.height)!
         // 2. 声明全局的imageEdgeInsets和labelEdgeInsets
         
         var imageEdgeInsets:UIEdgeInsets = .zero
@@ -63,20 +54,20 @@ extension UIButton {
         
         // 3. 根据style和space得到imageEdgeInsets和labelEdgeInsets的值
         switch style {
-        case .ButtonEdgeInsetsStyleTop:
+        case .imageTop:
             imageEdgeInsets = UIEdgeInsetsMake(-labelHeight-imageTitleSpace/2.0, 0, 0, -labelWidth)
             labelEdgeInsets = UIEdgeInsetsMake(0, -imageWith!, -imageHeight! - imageTitleSpace/2.0, 0)
             break
-        case .ButtonEdgeInsetsStyleLeft:
+        case .imageLeft:
             imageEdgeInsets = UIEdgeInsetsMake(0, -imageTitleSpace/2.0, 0, imageTitleSpace/2.0)
             labelEdgeInsets = UIEdgeInsetsMake(0, imageTitleSpace/2.0, 0, -imageTitleSpace/2.0)
             break
             
-        case .ButtonEdgeInsetsStyleBottom:
+        case .imageBotton:
             imageEdgeInsets = UIEdgeInsetsMake(0, 0, -labelHeight-imageTitleSpace/2.0, -labelWidth)
             labelEdgeInsets = UIEdgeInsetsMake(-imageHeight!-imageTitleSpace/2.0, -imageWith!, 0, 0)
             break
-        case .ButtonEdgeInsetsStyleRight:
+        case .imageRight:
             imageEdgeInsets = UIEdgeInsetsMake(0, labelWidth+imageTitleSpace/2.0, 0, -labelWidth-imageTitleSpace/2.0)
             labelEdgeInsets = UIEdgeInsetsMake(0, -imageWith!-imageTitleSpace/2.0, 0, imageWith!+imageTitleSpace/2.0)
             break

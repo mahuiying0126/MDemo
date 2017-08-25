@@ -42,6 +42,10 @@
 		6D5D260F1EE14A1600F66937 /* DetailTeacherListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D5D260E1EE14A1600F66937 /* DetailTeacherListModel.swift */; };
 		6D64A1FB1F3BF3BB002354E1 /* MNetworkUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D64A1FA1F3BF3BB002354E1 /* MNetworkUtils.swift */; };
 		6D64A2001F3C6506002354E1 /* MNetRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D64A1FF1F3C6506002354E1 /* MNetRequest.swift */; };
+		6D6CDBCD1F4EE7730046C4F1 /* MDownViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D6CDBCA1F4EE7730046C4F1 /* MDownViewController.swift */; };
+		6D6CDBCE1F4EE7730046C4F1 /* MSelectDownViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D6CDBCB1F4EE7730046C4F1 /* MSelectDownViewController.swift */; };
+		6D6CDBD21F4EE81B0046C4F1 /* MPersonalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D6CDBD11F4EE81B0046C4F1 /* MPersonalViewController.swift */; };
+		6D6E2A8F1F4D13C000FE8D65 /* DownloadingModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D6E2A8E1F4D13C000FE8D65 /* DownloadingModel.swift */; };
 		6D7822351EDFB57600717F8E /* MNavigationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D7822341EDFB57600717F8E /* MNavigationViewController.swift */; };
 		6D7822381EDFB5A600717F8E /* MMainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D7822371EDFB5A600717F8E /* MMainViewController.swift */; };
 		6D78223A1EDFB5ED00717F8E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D7822391EDFB5ED00717F8E /* AppDelegate.swift */; };
@@ -78,8 +82,7 @@
 		6D8C7F841F012C750007FD55 /* MCourseListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D8C7F831F012C750007FD55 /* MCourseListTableViewCell.swift */; };
 		6D9602D91F4AB99A00C852EA /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 6D9602D81F4AB99A00C852EA /* libz.tbd */; };
 		6D9602DB1F4ABE6A00C852EA /* MThirdPartyDefinition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D9602DA1F4ABE6A00C852EA /* MThirdPartyDefinition.swift */; };
-		6D9602DF1F4AC7B200C852EA /* MDownViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D9602DE1F4AC7B200C852EA /* MDownViewController.swift */; };
-		6D9602E11F4AC85A00C852EA /* MSelectDownViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D9602E01F4AC85A00C852EA /* MSelectDownViewController.swift */; };
+		6D9602E51F4C2DB800C852EA /* MFMDBTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D9602E41F4C2DB800C852EA /* MFMDBTool.swift */; };
 		6D97C77B1F3ABCAA00EF8D96 /* MUIImageExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D97C77A1F3ABCAA00EF8D96 /* MUIImageExtension.swift */; };
 		6D97C77D1F3ABD4900EF8D96 /* MUIImageViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D97C77C1F3ABD4900EF8D96 /* MUIImageViewExtension.swift */; };
 		6DE6D8831F14E6F800BD6F6B /* MCoursePackageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DE6D8821F14E6F800BD6F6B /* MCoursePackageView.swift */; };
@@ -164,6 +167,10 @@
 		6D5D260E1EE14A1600F66937 /* DetailTeacherListModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailTeacherListModel.swift; sourceTree = "<group>"; };
 		6D64A1FA1F3BF3BB002354E1 /* MNetworkUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MNetworkUtils.swift; sourceTree = "<group>"; };
 		6D64A1FF1F3C6506002354E1 /* MNetRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MNetRequest.swift; sourceTree = "<group>"; };
+		6D6CDBCA1F4EE7730046C4F1 /* MDownViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MDownViewController.swift; sourceTree = "<group>"; };
+		6D6CDBCB1F4EE7730046C4F1 /* MSelectDownViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MSelectDownViewController.swift; sourceTree = "<group>"; };
+		6D6CDBD11F4EE81B0046C4F1 /* MPersonalViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MPersonalViewController.swift; sourceTree = "<group>"; };
+		6D6E2A8E1F4D13C000FE8D65 /* DownloadingModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DownloadingModel.swift; sourceTree = "<group>"; };
 		6D7822341EDFB57600717F8E /* MNavigationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MNavigationViewController.swift; sourceTree = "<group>"; };
 		6D7822371EDFB5A600717F8E /* MMainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MMainViewController.swift; sourceTree = "<group>"; };
 		6D7822391EDFB5ED00717F8E /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -202,8 +209,7 @@
 		6D8C7F831F012C750007FD55 /* MCourseListTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MCourseListTableViewCell.swift; sourceTree = "<group>"; };
 		6D9602D81F4AB99A00C852EA /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		6D9602DA1F4ABE6A00C852EA /* MThirdPartyDefinition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MThirdPartyDefinition.swift; sourceTree = "<group>"; };
-		6D9602DE1F4AC7B200C852EA /* MDownViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MDownViewController.swift; sourceTree = "<group>"; };
-		6D9602E01F4AC85A00C852EA /* MSelectDownViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MSelectDownViewController.swift; sourceTree = "<group>"; };
+		6D9602E41F4C2DB800C852EA /* MFMDBTool.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MFMDBTool.swift; sourceTree = "<group>"; };
 		6D97C77A1F3ABCAA00EF8D96 /* MUIImageExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MUIImageExtension.swift; sourceTree = "<group>"; };
 		6D97C77C1F3ABD4900EF8D96 /* MUIImageViewExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MUIImageViewExtension.swift; sourceTree = "<group>"; };
 		6DE6D8821F14E6F800BD6F6B /* MCoursePackageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MCoursePackageView.swift; sourceTree = "<group>"; };
@@ -359,6 +365,72 @@
 			path = cell;
 			sourceTree = "<group>";
 		};
+		6D6CDBC61F4EE71C0046C4F1 /* Personal */ = {
+			isa = PBXGroup;
+			children = (
+				6D6CDBC81F4EE7730046C4F1 /* Down */,
+				6D6CDBC71F4EE7500046C4F1 /* Personal */,
+			);
+			path = Personal;
+			sourceTree = "<group>";
+		};
+		6D6CDBC71F4EE7500046C4F1 /* Personal */ = {
+			isa = PBXGroup;
+			children = (
+				6D6CDBD01F4EE7DD0046C4F1 /* control */,
+				6D6CDBCF1F4EE7CB0046C4F1 /* view */,
+			);
+			path = Personal;
+			sourceTree = "<group>";
+		};
+		6D6CDBC81F4EE7730046C4F1 /* Down */ = {
+			isa = PBXGroup;
+			children = (
+				6D6CDBC91F4EE7730046C4F1 /* control */,
+				6D6CDBCC1F4EE7730046C4F1 /* view */,
+			);
+			path = Down;
+			sourceTree = "<group>";
+		};
+		6D6CDBC91F4EE7730046C4F1 /* control */ = {
+			isa = PBXGroup;
+			children = (
+				6D6CDBCA1F4EE7730046C4F1 /* MDownViewController.swift */,
+				6D6CDBCB1F4EE7730046C4F1 /* MSelectDownViewController.swift */,
+			);
+			path = control;
+			sourceTree = "<group>";
+		};
+		6D6CDBCC1F4EE7730046C4F1 /* view */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = view;
+			sourceTree = "<group>";
+		};
+		6D6CDBCF1F4EE7CB0046C4F1 /* view */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = view;
+			sourceTree = "<group>";
+		};
+		6D6CDBD01F4EE7DD0046C4F1 /* control */ = {
+			isa = PBXGroup;
+			children = (
+				6D6CDBD11F4EE81B0046C4F1 /* MPersonalViewController.swift */,
+			);
+			path = control;
+			sourceTree = "<group>";
+		};
+		6D6E2A8D1F4D116700FE8D65 /* downModel */ = {
+			isa = PBXGroup;
+			children = (
+				6D6E2A8E1F4D13C000FE8D65 /* DownloadingModel.swift */,
+			);
+			path = downModel;
+			sourceTree = "<group>";
+		};
 		6D78222D1EDF9CAF00717F8E /* Define */ = {
 			isa = PBXGroup;
 			children = (
@@ -400,10 +472,10 @@
 		6D7822311EDF9CF700717F8E /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				6D78223F1EDFB69300717F8E /* Home */,
 				6D78225A1EDFB6CD00717F8E /* HomeDetail */,
 				6D78223B1EDFB69300717F8E /* Course */,
-				6D78223D1EDFB69300717F8E /* Down */,
-				6D78223F1EDFB69300717F8E /* Home */,
+				6D6CDBC61F4EE71C0046C4F1 /* Personal */,
 				6D78224A1EDFB69300717F8E /* Message */,
 				6D78224D1EDFB69300717F8E /* Record */,
 			);
@@ -440,15 +512,6 @@
 				6D78223C1EDFB69300717F8E /* MCourseViewController.swift */,
 			);
 			path = Course;
-			sourceTree = "<group>";
-		};
-		6D78223D1EDFB69300717F8E /* Down */ = {
-			isa = PBXGroup;
-			children = (
-				6D9602DD1F4AC79300C852EA /* control */,
-				6D9602DC1F4AC77D00C852EA /* view */,
-			);
-			path = Down;
 			sourceTree = "<group>";
 		};
 		6D78223F1EDFB69300717F8E /* Home */ = {
@@ -621,7 +684,9 @@
 		6D78228C1EDFB97B00717F8E /* FileTool */ = {
 			isa = PBXGroup;
 			children = (
+				6D6E2A8D1F4D116700FE8D65 /* downModel */,
 				6D78228D1EDFB98800717F8E /* PlistFileTool.swift */,
+				6D9602E41F4C2DB800C852EA /* MFMDBTool.swift */,
 			);
 			path = FileTool;
 			sourceTree = "<group>";
@@ -650,22 +715,6 @@
 				6D7F93E91F4282310021FBA0 /* LaunchScreen.storyboard */,
 			);
 			path = Base.lproj;
-			sourceTree = "<group>";
-		};
-		6D9602DC1F4AC77D00C852EA /* view */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = view;
-			sourceTree = "<group>";
-		};
-		6D9602DD1F4AC79300C852EA /* control */ = {
-			isa = PBXGroup;
-			children = (
-				6D9602DE1F4AC7B200C852EA /* MDownViewController.swift */,
-				6D9602E01F4AC85A00C852EA /* MSelectDownViewController.swift */,
-			);
-			path = control;
 			sourceTree = "<group>";
 		};
 		6DAE81AF1EC3299D00B6E0A5 /* bridgeFile */ = {
@@ -975,8 +1024,8 @@
 				6D2B46AB1EE249BE00F4F077 /* TeacherHeaderView.swift in Sources */,
 				6D4CA9FA1EE9637B00A9364D /* SSKeychain.m in Sources */,
 				6D7822691EDFB6CD00717F8E /* DetailTopToolView.swift in Sources */,
+				6D6CDBCD1F4EE7730046C4F1 /* MDownViewController.swift in Sources */,
 				6D7822591EDFB69300717F8E /* MRecordViewController.swift in Sources */,
-				6D9602E11F4AC85A00C852EA /* MSelectDownViewController.swift in Sources */,
 				6D7822641EDFB6CD00717F8E /* HomeDetailViewController.swift in Sources */,
 				6DE7A7DE1F271FF3005D06BD /* ParsingEncrypteString.swift in Sources */,
 				6D53F7271F1E07AF00AA484F /* CoursePackageCollectionViewCell.swift in Sources */,
@@ -988,7 +1037,6 @@
 				6D78223A1EDFB5ED00717F8E /* AppDelegate.swift in Sources */,
 				6D7822531EDFB69300717F8E /* HomeCourseModel.swift in Sources */,
 				6D9602DB1F4ABE6A00C852EA /* MThirdPartyDefinition.swift in Sources */,
-				6D9602DF1F4AC7B200C852EA /* MDownViewController.swift in Sources */,
 				6D7822381EDFB5A600717F8E /* MMainViewController.swift in Sources */,
 				6D5D26081EE0EE3400F66937 /* DetailCourseListModel.swift in Sources */,
 				6D53F7291F1E105000AA484F /* DetailCoursePackageModel.swift in Sources */,
@@ -1012,12 +1060,15 @@
 				6D7822651EDFB6CD00717F8E /* DetailCommentView.swift in Sources */,
 				6DF9A7671F346E17005DDACB /* CommentUserModel.swift in Sources */,
 				6D64A1FB1F3BF3BB002354E1 /* MNetworkUtils.swift in Sources */,
+				6D6CDBD21F4EE81B0046C4F1 /* MPersonalViewController.swift in Sources */,
 				6D78228E1EDFB98800717F8E /* PlistFileTool.swift in Sources */,
 				6D97C77D1F3ABD4900EF8D96 /* MUIImageViewExtension.swift in Sources */,
 				6DEC3A7C1F3DBD68008CBC32 /* MColorAndTextSet.swift in Sources */,
 				6D4CA9FF1EE9643C00A9364D /* KyeUDIDTool.swift in Sources */,
+				6D6CDBCE1F4EE7730046C4F1 /* MSelectDownViewController.swift in Sources */,
 				6D7822541EDFB69300717F8E /* HomeNoticeModel.swift in Sources */,
 				6D8C7F841F012C750007FD55 /* MCourseListTableViewCell.swift in Sources */,
+				6D6E2A8F1F4D13C000FE8D65 /* DownloadingModel.swift in Sources */,
 				6D7822681EDFB6CD00717F8E /* DetailTopBaseView.swift in Sources */,
 				6D7822571EDFB69300717F8E /* HomeHeadView.swift in Sources */,
 				6D7F93EF1F42E2ED0021FBA0 /* MVideoOrAudioSet.swift in Sources */,
@@ -1025,6 +1076,7 @@
 				6DE7A7DC1F271FF3005D06BD /* DeviceTool.m in Sources */,
 				6D7ED02E1F25E69400A94F91 /* MHomeViewModel.swift in Sources */,
 				6D3330B51F37F2B500D4F341 /* MNSStringExtension.swift in Sources */,
+				6D9602E51F4C2DB800C852EA /* MFMDBTool.swift in Sources */,
 				6DF806AE1F3B1C26001EAF53 /* MCommentHeadView.swift in Sources */,
 				6D7822511EDFB69300717F8E /* MHomeViewController.swift in Sources */,
 				6D7822891EDFB8B300717F8E /* HTTPInterface.swift in Sources */,
@@ -1194,7 +1246,7 @@
 				PODS_ROOT = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = com.magic.bang;
 				PRODUCT_NAME = MDemo;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited)";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) -D MDEBUG";
 				SWIFT_INCLUDE_PATHS = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "BangDemo/bridgeFile/BangDemo-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";

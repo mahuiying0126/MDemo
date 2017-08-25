@@ -12,14 +12,16 @@ import Alamofire
 
 func MYLog<T>(_ message : T, file : String = #file, funcName : String = #function, lineNum : Int = #line) {
     
-    #if DEBUG
+    #if MDEBUG
         
         let fileName = (file as NSString).lastPathComponent
         
-        print("控制器:\(fileName)---第(\(lineNum))行--打印信息---\(message)")
+        print("控制器:\(fileName)---第(\(lineNum))行--打印信息--- \n\n\(message) \n\n---")
         
     #endif
 }
+
+
 
 
 public let Screen_height = UIScreen.main.bounds.size.height

@@ -13,3 +13,4 @@
 #import <CommonCrypto/CommonDigest.h>
 #import <UShareUI/UShareUI.h>
 #import <UMSocialCore/UMSocialCore.h>
+#import "FMDB.h"

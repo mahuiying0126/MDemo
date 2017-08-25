@@ -1,20 +1,21 @@
 //
-//  MSelectDownViewController.swift
+//  MDownViewController.swift
 //  BangDemo
 //
-//  Created by yizhilu on 2017/8/21.
+//  Created by yizhilu on 2017/5/9.
 //  Copyright © 2017年 Magic. All rights reserved.
 //
 
 import UIKit
 
-class MSelectDownViewController: UIViewController {
+class MDownViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
         self.view.backgroundColor = Whit
+        self.title = "离线下载"
     }
 
     override func didReceiveMemoryWarning() {

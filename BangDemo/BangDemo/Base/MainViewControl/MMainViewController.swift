@@ -28,7 +28,7 @@ class MMainViewController: UITabBarController {
         addChildViewControl(viewController: MHomeViewController(), title: "首页", image: "推荐未选", selectImage: "推荐已选")
         addChildViewControl(viewController: MCourseViewController(), title: "课程", image: "课程未选", selectImage: "课程选中")
         addChildViewControl(viewController: MRecordViewController(), title: "记录", image: "记录未选", selectImage: "记录已选")
-        addChildViewControl(viewController: MDownViewController(), title: "下载", image: "下载未选", selectImage: "下载已选")
+        addChildViewControl(viewController: MPersonalViewController(), title: "我的", image: "我的未选", selectImage: "我的已选")
         
     }
     

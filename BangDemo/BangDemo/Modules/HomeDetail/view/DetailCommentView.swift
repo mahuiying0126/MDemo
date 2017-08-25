@@ -20,6 +20,7 @@ class DetailCommentView: UITableView ,UITableViewDelegate,UITableViewDataSource{
     private var pointId : String?
     /** *课程评论数据 */
     var commentData = Array<Any>()
+    private let cellID = "CommentID"
     ///提交评论的代理
     weak var commentCompleteDelegate : addCommentCompleteDelegate?
     
@@ -33,6 +34,7 @@ class DetailCommentView: UITableView ,UITableViewDelegate,UITableViewDataSource{
         self.separatorStyle = .none
         self.showsVerticalScrollIndicator = false
         self.showsHorizontalScrollIndicator = false
+        self.register(MCommentTableViewCell.self, forCellReuseIdentifier: cellID)
     }
     
     /// 课程评论数据接口
@@ -60,8 +62,9 @@ class DetailCommentView: UITableView ,UITableViewDelegate,UITableViewDataSource{
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cellID = "CommentID"
-        let cell = MCommentTableViewCell.init(style: .default, reuseIdentifier: cellID)
+        
+        let cell  = tableView.dequeueReusableCell(withIdentifier: cellID) as! MCommentTableViewCell
+//        let cell = MCommentTableViewCell.init(style: .default, reuseIdentifier: cellID)
         
         let cellFrame = self.commentData[indexPath.row] as!CommentCellFrameModel
         cell.updatCellFrame(model: cellFrame)

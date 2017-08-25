@@ -16,7 +16,7 @@ class HomeDetailViewModel: NSObject {
     /// - Parameters:
     ///   - parameter: 参数
     ///   - success: 成功回调
-    func loadingHomeCourseData(parameter: String ,success : @escaping (_ infoModel : DetailInfoModel,_ courseModel : DetailCourseModel,_ coursePackageArray : Array<Any>,_ listDeatilArray : Array<Any>)->()){
+    func loadingHomeCourseData(parameter: String ,success : @escaping (_ infoModel : DetailInfoModel,_ courseModel : DetailCourseModel,_ coursePackageArray : Array<Any>,_ listDeatilArray : Array<Any>, _ selectArray : Array<Any>)->()){
         
         let homeCourse = MNetRequestSeting()
         homeCourse.hostUrl = courseinfo()
@@ -28,9 +28,11 @@ class HomeDetailViewModel: NSObject {
                 let tempDict : NSDictionary = responseData["entity"].rawValue as! NSDictionary
                 let infoModel = DetailInfoModel .mj_object(withKeyValues: tempDict)!
                 let courseModel = DetailCourseModel.mj_object(withKeyValues: tempDict["course"])!
-                let coursePackageArray = (tempDict["coursePackageList"]  as! NSArray)
-                let listDeatilArray = DetailCourseListModel.mj_objectArray(withKeyValuesArray: tempDict["courseKpoints"])!
-                success(infoModel,courseModel,coursePackageArray as! Array<Any>,listDeatilArray as! Array<Any>)
+                let coursePackageArray = (tempDict["coursePackageList"] as! Array<Any>)
+                let listDeatilArray  = DetailCourseListModel.mj_objectArray(withKeyValuesArray: tempDict["courseKpoints"])! as! Array<Any>
+                let array = DetailCourseListModel.mj_objectArray(withKeyValuesArray: tempDict["courseKpoints"])! as! Array<Any>
+
+                success(infoModel,courseModel,coursePackageArray ,listDeatilArray,array)
                 
             }
         }) { (error) in

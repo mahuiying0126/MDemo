@@ -32,14 +32,15 @@ class HomeDetailViewController: UIViewController,DetailTopBaseViewDelegate,topBu
         
         // Do any additional setup after loading the view.
         self.view.backgroundColor = Whit
-        //隐藏导航栏
-        self.navigationController?.setNavigationBarHidden(true, animated: false)
+        
         
         self.view.addSubview(self.topBaseView)
         loadDetailData()
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        //隐藏导航栏
+        self.navigationController?.setNavigationBarHidden(true, animated: false)
         UIApplication.shared.beginReceivingRemoteControlEvents()
     }
     
@@ -48,6 +49,9 @@ class HomeDetailViewController: UIViewController,DetailTopBaseViewDelegate,topBu
         //取消隐藏导航栏
         self.navigationController?.setNavigationBarHidden(false, animated: true)
         UIApplication.shared.endReceivingRemoteControlEvents()
+        //消失关闭播放器
+        self.playerView?.closPlaer()
+        self.playerView = nil
     }
     
     override func remoteControlReceived(with event: UIEvent?) {
@@ -84,11 +88,13 @@ class HomeDetailViewController: UIViewController,DetailTopBaseViewDelegate,topBu
     //MARK: 数据请求
     ///课程数据请求
     func loadDetailData()  {
-        HomeDetailViewModel().loadingHomeCourseData(parameter: detailCourse!) { [weak self](someInfoModel, coursModel, coursPackageArray, listDeatilData) in
+        HomeDetailViewModel().loadingHomeCourseData(parameter: detailCourse!) { [weak self](someInfoModel, coursModel, coursPackageArray, listDeatilData,selectArray) in
             self?.infoModel = someInfoModel
             self?.courseModel = coursModel
             self?.coursePackageArray = coursPackageArray
             self?.listDeatilArray = listDeatilData
+            self?.selectListArray = selectArray
+        
             self?.courseModel?.courseID = self?.detailCourse!
             if(self?.infoModel?.isFav == false && Int(USERID) != 0){
                 self?.topViewTool.collectionBtn?.isSelected = true
@@ -132,6 +138,7 @@ class HomeDetailViewController: UIViewController,DetailTopBaseViewDelegate,topBu
         
         coursePackView.packageFromData(tempPackageArray)
         self.listTableView.tableHeaderView = coursePackView
+       
         self.listTableView.CourseListData(self.listDeatilArray)
     }
     
@@ -160,7 +167,12 @@ class HomeDetailViewController: UIViewController,DetailTopBaseViewDelegate,topBu
         switch buttonTag {
         case 0:
             ///下载
-            
+            let selectDown = MSelectDownViewController()
+          
+            selectDown.selectList = self.selectListArray
+            ///顶部图片路径
+            selectDown.imageUrl = String.init(format: "%@%@", imageUrlString,(self.courseModel?.mobileLogo)!)
+            self.navigationController?.pushViewController(selectDown, animated: true)
             break
         case 2:
             ///分享
@@ -198,19 +210,17 @@ class HomeDetailViewController: UIViewController,DetailTopBaseViewDelegate,topBu
         loadCommentData()
     }
     //MARK:课程列表,分区头点击事件
-    func didClickListCellHeader(indexSection : Int , model : DetailCourseListModel){
-        MYLog("点击了课程列表分区头\(indexSection)")
-    }
+//    func didClickListCellHeader(indexSection : Int , model : DetailCourseListModel){
+//        MYLog("点击了课程列表分区头\(indexSection)")
+//    }
     ///MARK:课程列表,单元格点击事件
+    
     func didSelectCourseList(index : IndexPath , model : DetailCourseChildModel){
-        self.tempIndex = index
-        model.courseTitle = self.courseTitle
         
         if MNetworkUtils.isNoNet() {
             MBProgressHUD.showError("已于网络断开连接")
             return
         }
-        
         var checkResultDict : JSON!
         if NSInteger(USERID)! > 0 {
             ///用户登录了
@@ -220,6 +230,9 @@ class HomeDetailViewController: UIViewController,DetailTopBaseViewDelegate,topBu
             return
         }
         if checkResultDict["success"].boolValue {
+            self.tempIndex = index
+            model.courseTitle = self.courseTitle
+            
             let entity = checkResultDict["entity"]
             let fileStyle = entity["fileType"]
             let videoStyle = entity["videoType"]
@@ -302,7 +315,6 @@ class HomeDetailViewController: UIViewController,DetailTopBaseViewDelegate,topBu
         
         self.view.addSubview(self.topViewTool)
         self.detailScrollView.addSubview(self.teacherList)
-        
         self.detailScrollView.addSubview(self.listTableView)
         self.detailScrollView.addSubview(self.commentTableView)
         return topView
@@ -342,8 +354,9 @@ class HomeDetailViewController: UIViewController,DetailTopBaseViewDelegate,topBu
     /// 课程列表
     lazy var listTableView : DetailCourseListView = {
         
-        let tempList = DetailCourseListView.init(frame: CGRect.init(x: Screen_width, y: 0, width: Screen_width, height: self.detailScrollView.frame.height), style: UITableViewStyle.plain)
+        let tempList = DetailCourseListView(frame: CGRect.init(x: Screen_width, y: 0, width: Screen_width, height: self.detailScrollView.frame.height), style: UITableViewStyle.plain)
         tempList.courseDelegate = self
+        tempList.cellID = "cellID"
         return tempList
         
     }()
@@ -361,6 +374,11 @@ class HomeDetailViewController: UIViewController,DetailTopBaseViewDelegate,topBu
         
         let tempArray = Array<Any>()
         return tempArray
+    }()
+    
+    lazy var selectListArray :Array<Any> = {
+        let select = Array<Any>()
+        return select
     }()
     
     lazy var coursePackageArray : Array<Any> = {

@@ -15,6 +15,9 @@ protocol buyCourseOrPlayViewDelegate : class {
 class DetailTeacherView: UITableView,UITableViewDelegate,UITableViewDataSource,UIWebViewDelegate {
     
     var detailTeacherArray : Array<Any> = []
+    
+    private let cellId = "teacher"
+
     weak var buyOrPlayDelegate : buyCourseOrPlayViewDelegate?
     
     
@@ -26,6 +29,7 @@ class DetailTeacherView: UITableView,UITableViewDelegate,UITableViewDataSource,U
         self.showsVerticalScrollIndicator = false
         self.showsHorizontalScrollIndicator = false
         self.tableHeaderView = self.headView
+        self.register(TeacherTableViewCell.self, forCellReuseIdentifier: cellId)
         self.headView.detailWebView?.delegate = self
         self.headView.downUpBtn?.addTarget(self, action: #selector(downBtnClick(sender:)), for: .touchUpInside)
         self.headView.purchaseBtn?.addTarget(self, action: #selector(purchaseNowBtnClick(sender:)), for: .touchUpInside)
@@ -51,9 +55,9 @@ class DetailTeacherView: UITableView,UITableViewDelegate,UITableViewDataSource,U
         return detailTeacherArray.count
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cellId = "teacher"
         
-        let cell :TeacherTableViewCell = TeacherTableViewCell.init(style: .default, reuseIdentifier: cellId)
+        let cell  = tableView.dequeueReusableCell(withIdentifier: cellId) as!TeacherTableViewCell
+        
         
         let tempDic : NSDictionary = self.detailTeacherArray[indexPath.row] as! NSDictionary
         let model  = DetailTeacherListModel.mj_object(withKeyValues: tempDic)!

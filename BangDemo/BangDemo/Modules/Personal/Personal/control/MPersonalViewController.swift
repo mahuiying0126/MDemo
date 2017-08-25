@@ -1,20 +1,20 @@
 //
-//  MDownViewController.swift
+//  MPersonalViewController.swift
 //  BangDemo
 //
-//  Created by yizhilu on 2017/5/9.
+//  Created by yizhilu on 2017/8/24.
 //  Copyright © 2017年 Magic. All rights reserved.
 //
 
 import UIKit
 
-class MDownViewController: UIViewController {
+class MPersonalViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        self.view.backgroundColor = Whit;
+        self.view.backgroundColor = Whit
     }
 
     override func didReceiveMemoryWarning() {

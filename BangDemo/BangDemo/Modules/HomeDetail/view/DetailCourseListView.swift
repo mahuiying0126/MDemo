@@ -7,7 +7,7 @@
 //
 
 import UIKit
-
+import SwiftyJSON
 protocol CourseListDelegate : class {
     
     /// 课程cell点击事件
@@ -16,20 +16,28 @@ protocol CourseListDelegate : class {
     ///   - indexPath: 当前cell IndexPath
     ///   - model: 点击当前cell的model
     func didSelectCourseList(index : IndexPath , model : DetailCourseChildModel)
-    
+}
+
+extension CourseListDelegate {
     /// 课程分区头点击事件
     ///
     /// - Parameters:
     ///   - indexSection: 点击当前分区
     ///   - model: 当前分区的model
-    func didClickListCellHeader(indexSection : Int , model : DetailCourseListModel)
+    func didClickListCellHeader(indexSection : Int , model : DetailCourseListModel){}
 }
 
 
 class DetailCourseListView: UITableView ,UITableViewDelegate,UITableViewDataSource{
     
-    var courseDataArray : Array<Any> = []
+    private var courseDataArray : Array<Any> = []
+    
     weak var courseDelegate : CourseListDelegate?
+    
+    /** *是否从下载页面调用 */
+    var isSelectView : Bool = false
+    
+    var cellID : String = "cell"
     
     override init(frame: CGRect, style: UITableViewStyle) {
         super.init(frame: frame, style: style)
@@ -37,7 +45,8 @@ class DetailCourseListView: UITableView ,UITableViewDelegate,UITableViewDataSour
         self.dataSource = self
         self.backgroundColor = Whit
         self.separatorStyle = .none
-        
+//        MYLog(self.cellID)
+//        self.register(MCourseListTableViewCell.self, forCellReuseIdentifier: self.cellID)
         self.showsVerticalScrollIndicator = false
         self.showsHorizontalScrollIndicator = false
     }
@@ -46,11 +55,14 @@ class DetailCourseListView: UITableView ,UITableViewDelegate,UITableViewDataSour
     ///
     /// - Parameter dataArray: 课程列表的数据
     func CourseListData(_ dataArray:Array<Any>)  {
+        self.courseDataArray.removeAll()
         self.courseDataArray = dataArray
         //将第一个分区展开
-        let model  = self.courseDataArray.first as! DetailCourseListModel
-        model.isSelected = true
-        
+        if self.courseDataArray.count > 0 {
+            let model  = self.courseDataArray.first as! DetailCourseListModel
+            model.isSelected = true
+        }
+    
         self.reloadData()
     }
     
@@ -81,9 +93,12 @@ class DetailCourseListView: UITableView ,UITableViewDelegate,UITableViewDataSour
     }
     ///cell内容
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath)-> UITableViewCell {
-        let cellID = "course"
         
-        let cell : MCourseListTableViewCell = MCourseListTableViewCell.init(style: .default, reuseIdentifier: cellID)
+        var cell : MCourseListTableViewCell! = tableView.dequeueReusableCell(withIdentifier: cellID) as? MCourseListTableViewCell
+        if cell == nil {
+            cell = MCourseListTableViewCell(style: .default, reuseIdentifier: self.cellID)
+        }
+        
         let courseModel  = self.courseDataArray[indexPath.section] as! DetailCourseListModel
         let tempArray = courseModel.childKpoints
         let model = tempArray?[indexPath.row] as! DetailCourseChildModel
@@ -141,36 +156,47 @@ class DetailCourseListView: UITableView ,UITableViewDelegate,UITableViewDataSour
     }
     ///cell点击事件
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
+        if MNetworkUtils.isNoNet() {
+            MBProgressHUD.showError("已于网络断开连接")
+            return
+        }
         let courseModel  = self.courseDataArray[indexPath.section] as! DetailCourseListModel
         let tempArray = courseModel.childKpoints
         let model = tempArray?[indexPath.row] as! DetailCourseChildModel
-        if !model.isSelected {
-            model.isSelected = !model.isSelected
-           self.courseDelegate?.didSelectCourseList(index: indexPath, model: model)
-        }
-        for (index,item) in (self.courseDataArray.enumerated()) {
-            if index == indexPath.section {
-                //当前分区
-                let listModel = item as! DetailCourseListModel
-                for (currentIndex,currentItem) in (listModel.childKpoints?.enumerated())! {
-                    if indexPath.row != currentIndex {
+        
+        if !isSelectView {
+            if !model.isSelected {
+                model.isSelected = !model.isSelected
+                self.courseDelegate?.didSelectCourseList(index: indexPath, model: model)
+            }
+            for (index,item) in (self.courseDataArray.enumerated()) {
+                if index == indexPath.section {
+                    //当前分区
+                    let listModel = item as! DetailCourseListModel
+                    for (currentIndex,currentItem) in (listModel.childKpoints?.enumerated())! {
+                        if indexPath.row != currentIndex {
+                            let model = currentItem as! DetailCourseChildModel
+                            model.isSelected = false
+                        }
+                    }
+                }else{
+                    //其他分区
+                    let listModel = item as! DetailCourseListModel
+                    for currentItem in listModel.childKpoints! {
                         let model = currentItem as! DetailCourseChildModel
                         model.isSelected = false
+                        
                     }
                 }
-            }else{
-               //其他分区
-                let listModel = item as! DetailCourseListModel
-                for currentItem in listModel.childKpoints! {
-                    let model = currentItem as! DetailCourseChildModel
-                    model.isSelected = false
-                    
-                }
             }
+            self.reloadData()
+        }else{
+          
+            self.courseDelegate?.didSelectCourseList(index: indexPath, model: model)
         }
         
-        self.reloadData()
+        
+        
         
         
     }
