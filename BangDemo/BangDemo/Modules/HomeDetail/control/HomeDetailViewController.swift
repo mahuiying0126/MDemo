@@ -283,7 +283,7 @@ class HomeDetailViewController: UIViewController,DetailTopBaseViewDelegate,topBu
     }
     
     private func playMeidoWithUrl(url:String,type:String,model:DetailCourseChildModel){
-        ParsingEncrypteString().parseStringWith(urlString: url, fileType: type, isLocal: false) {[weak self] (videoUrl) in
+        ParsingEncrypteString.parseStringWith(urlString: url, fileType: type, isLocal: false) {[weak self] (videoUrl) in
             if self?.playerView != nil {
                 self?.playerView?.removeFromSuperview()
                 self?.playerView?.currentTime = 0

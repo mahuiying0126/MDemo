@@ -57,7 +57,7 @@ class ResolutionView: UIView {
         self.isHidden = true
         if MPlayerView.shared.chanel == CHANNEL_LOW   {
             MPlayerView.shared.chanel = CHANNEL_HIGH
-            ParsingEncrypteString().exchangeSDorHDWithUrl(videoId: MPlayerView.shared.videoParseCode!, type: MPlayerView.shared.videoType!, channel: MPlayerView.shared.chanel, local: MPlayerView.shared.isLOCAL, success: {(videoUrl) in
+            ParsingEncrypteString.exchangeSDorHDWithUrl(videoId: MPlayerView.shared.videoParseCode!, type: MPlayerView.shared.videoType!, channel: MPlayerView.shared.chanel, local: MPlayerView.shared.isLOCAL, success: {(videoUrl) in
                 MPlayerView.shared.exchangeWithURL(videoURLStr: videoUrl)
                 
             })
@@ -73,7 +73,7 @@ class ResolutionView: UIView {
         self.isHidden = true
         if MPlayerView.shared.chanel == CHANNEL_HIGH {
             MPlayerView.shared.chanel = CHANNEL_LOW
-            ParsingEncrypteString().exchangeSDorHDWithUrl(videoId: MPlayerView.shared.videoParseCode!, type: MPlayerView.shared.videoType!, channel: MPlayerView.shared.chanel, local: MPlayerView.shared.isLOCAL, success: { (videoUrl) in
+            ParsingEncrypteString.exchangeSDorHDWithUrl(videoId: MPlayerView.shared.videoParseCode!, type: MPlayerView.shared.videoType!, channel: MPlayerView.shared.chanel, local: MPlayerView.shared.isLOCAL, success: { (videoUrl) in
                 MPlayerView.shared.exchangeWithURL(videoURLStr: videoUrl)
                 
             })

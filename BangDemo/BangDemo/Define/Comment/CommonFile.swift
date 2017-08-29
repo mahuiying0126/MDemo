@@ -33,13 +33,17 @@ public let Ratio_width = UIScreen.main.bounds.size.width / 375.0
 public let Spacing_width15 : CGFloat = 15
 public let Spacing_heght15 : CGFloat = 15
 
+public let Spacing10 : CGFloat = 10
+
 
 public func MIMAGE(_ imageName:String)->UIImage{
     
     return UIImage.init(named: imageName)!
 }
 
-public let LibraryDirectory : String = NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.libraryDirectory, FileManager.SearchPathDomainMask.userDomainMask, true) .last!
+public let LibraryDirectory  = NSHomeDirectory() + "/Library"
+
+public let LibraryFor96k = NSHomeDirectory() + "/Library" + "/96k"
 
 public let userDefault = UserDefaults.standard
 

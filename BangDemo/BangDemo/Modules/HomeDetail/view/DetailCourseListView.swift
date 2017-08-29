@@ -103,6 +103,9 @@ class DetailCourseListView: UITableView ,UITableViewDelegate,UITableViewDataSour
         let tempArray = courseModel.childKpoints
         let model = tempArray?[indexPath.row] as! DetailCourseChildModel
         cell.updataCellModel(model)
+        if !isSelectView {
+            cell.downState?.isHidden = true
+        }
         return cell
         
     }

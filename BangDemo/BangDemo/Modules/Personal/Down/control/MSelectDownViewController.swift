@@ -14,8 +14,7 @@ class MSelectDownViewController: UIViewController,CourseListDelegate {
     var  selectList : Array<Any>?
     /** *课程图片 */
     var  imageUrl : String?
-    /** *替换数据 */
-    var  tempArray : Array<Any>?
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,7 +23,7 @@ class MSelectDownViewController: UIViewController,CourseListDelegate {
         self.view.backgroundColor = Whit
         self.title = "下载列表"
         createFoot()
-//        self.tempArray = self.selectList
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -37,16 +36,25 @@ class MSelectDownViewController: UIViewController,CourseListDelegate {
             
         }else{
             ///开始下载
-         let downView = MDownViewController()
+         let downView = MDownViewController.shareInstance
             self.navigationController?.pushViewController(downView, animated: true)
-            
+    
         }
     }
     
     ///点击代理
     func didSelectCourseList(index : IndexPath , model : DetailCourseChildModel){
+        //d96f8e8d3ac033673695df6d192ce4b7
+        //86029f91b95721adae004393f1848ca5
+        //9b430dc1efd1b40ab90cc230a19511b6
+        let tempUrl = ["d96f8e8d3ac033673695df6d192ce4b7","86029f91b95721adae004393f1848ca5","9b430dc1efd1b40ab90cc230a19511b6"]
         
         if !model.isSelected {
+            if MNetworkUtils.isNoNet() {
+                ///没有网络
+                MBProgressHUD.showMBPAlertView("已于网络断开连接", withSecond: 2.0)
+                return
+            }
             let isDownloading = MFMDBTool.shareInstance.cheackFromDownloadingTableIsExist(model.ID!)
             if isDownloading {
                 MBProgressHUD.showMBPAlertView("正在下载中", withSecond: 1.5)
@@ -62,19 +70,45 @@ class MSelectDownViewController: UIViewController,CourseListDelegate {
                 let entity = checkResultDict?["entity"]
                 let fileStyle = entity?["fileType"]
                 let videoStyle = entity?["videoType"]
-                model.isSelected = !model.isSelected
-                let downModel = DownloadingModel.conversionsModel(model)
-                downModel.videoType = videoStyle?.rawString()//96K
-                downModel.fileType = fileStyle?.rawString()//Video
-                downModel.videoUrl = entity?["videoUrl"].string
-                downModel.imageUrl = self.imageUrl
-                MFMDBTool.shareInstance.addDownloadingModel(downModel)
+                if MNetworkUtils.isEnableWWAN() {
+                    ///4G网络下
+                    let alertControl = UIAlertController.init(title: "提示", message: "当前4G网络是否下载?", preferredStyle: .alert)
+                    let allow = UIAlertAction.init(title: "是", style: .default, handler: { (action) in
+                    model.isSelected = !model.isSelected
+                    ///将要下载的 model 转化为 downModel
+                    let downModel = DownloadingModel.conversionsModel(model)
+                    downModel.videoType = videoStyle?.rawString()//96K
+                    downModel.fileType = fileStyle?.rawString()//Video
+                    downModel.videoUrl = entity?["videoUrl"].string
+                    downModel.imageUrl = self.imageUrl
+                    MFMDBTool.shareInstance.addDownloadingModel(downModel)
+                    })
+                    
+                    let cancel = UIAlertAction.init(title: "否", style: .cancel, handler: nil)
+                    alertControl.addAction(allow)
+                    alertControl.addAction(cancel)
+                    self.present(alertControl, animated: true, completion: nil)
+                }else{
+                    ///wifi下
+                    model.isSelected = !model.isSelected
+                    ///将要下载的 model 转化为 downModel
+                    let downModel = DownloadingModel.conversionsModel(model)
+                    downModel.videoType = videoStyle?.rawString()//96K
+                    downModel.fileType = fileStyle?.rawString()//Video
+//                    downModel.videoUrl = entity?["videoUrl"].string
+                    downModel.videoUrl = tempUrl[index.row]
+                    downModel.imageUrl = self.imageUrl
+                    MFMDBTool.shareInstance.addDownloadingModel(downModel)
+                }
+                
                 
             }else{
                 MBProgressHUD.showMBPAlertView("该视频暂时无法下载", withSecond: 1.0)
             }
-        }else{
+        }
+        else{
             MFMDBTool.shareInstance.removeDownloadingModel(model.ID!)
+            MBProgressHUD.showMBPAlertView("已从下载列表中移除", withSecond: 1.5)
         }
         self.tableView.reloadRows(at: [index], with: .none)
         

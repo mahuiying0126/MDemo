@@ -9,6 +9,8 @@
 import UIKit
 
 class DownloadingModel: NSObject {
+    
+  
     /** *课程 ID */
     var courseId : String?
     /** *节点 ID */
@@ -32,9 +34,13 @@ class DownloadingModel: NSObject {
     /** *父节点 id */
     var parentId : String?
     /** *总大小 */
-    var totalSize : String?
+    var totalSize : Float?
     /** *当前大小 */
-    var currentSize : String?
+    var currentSize : Float?
+    /** *是否主动暂停 */
+    var isManualSuspen : Bool = false
+    /** *视频状态 */
+    var  videoState : Int = 2
     
     class func conversionsModel(_ model : DetailCourseChildModel) ->DownloadingModel{
         let downModel = DownloadingModel()

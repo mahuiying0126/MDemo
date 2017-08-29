@@ -190,12 +190,13 @@ class MNetRequestSeting: NSObject {
     }
     
     func requestDataForSynchronous(_ Synchron: MNetRequestSeting) -> Any {
+        var responDic : Any!
         
         let url = URL(string:Synchron.hostUrl!)
         //创建请求对象
         let request = URLRequest(url: url!)
         let session = URLSession.shared
-        var responDic : Any!
+        
         let semaphore = DispatchSemaphore(value: 0)
         let dataTask = session.dataTask(with: request,completionHandler: {(data, response, error) -> Void in
             if error != nil{

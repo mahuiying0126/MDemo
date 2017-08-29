@@ -33,7 +33,7 @@ class MFMDBTool: NSObject {
     /// 创建正在下载的表
     private func createDownTable(){
         dbQueue?.inDatabase({ (dataBase) in
-            let sql = "create table if not exists DownloadingList (courseId varchar(20),kPointId varchar(20),videoName varchar(100),courseName varchar(100),playcount varchar(20),teacherName varchar(100),videotype varchar(100),fileType varchar(100),videoUrl varchar(100),imageUrl varchar(100),parentId varchar(20),totalSize varchar(100),currentSize varchar(100),primary key (kPointId))"
+            let sql = "create table if not exists DownloadingList (courseId varchar(20),kPointId varchar(20),videoName varchar(100),courseName varchar(100),playcount varchar(20),teacherName varchar(100),videotype varchar(100),fileType varchar(100),videoUrl varchar(100),imageUrl varchar(100),parentId varchar(20),totalSize varchar(100),currentSize varchar(100),isManualSuspen varchar(100),videoState varchar(100),primary key (kPointId))"
             let result = dataBase?.executeUpdate(sql, withArgumentsIn: nil)
             if result! {
                 MYLog("正在下载表创建成功")
@@ -47,7 +47,7 @@ class MFMDBTool: NSObject {
     /// 创建下载完成的表
     private func createFinshTable(){
         dbQueue?.inDatabase({ (dataBase) in
-            let sql = "create table if not exists DownloadFinishedList (courseId varchar(20),kPointId varchar(20),videoName varchar(100),courseName varchar(100),playcount varchar(20),teacherName varchar(100),videotype varchar(100),fileType varchar(100),videoUrl varchar(100),imageUrl varchar(100),parentId varchar(20),totalSize varchar(100),currentSize varchar(100),primary key (kPointId))"
+            let sql = "create table if not exists DownloadFinishedList (courseId varchar(20),kPointId varchar(20),videoName varchar(100),courseName varchar(100),playcount varchar(20),teacherName varchar(100),videotype varchar(100),fileType varchar(100),videoUrl varchar(100),imageUrl varchar(100),parentId varchar(20),totalSize varchar(100),currentSize varchar(100),isManualSuspen varchar(100),videoState varchar(100),primary key (kPointId))"
             let result = dataBase?.executeUpdate(sql, withArgumentsIn: nil)
             if result! {
                 MYLog("下载完成表创建成功")
@@ -64,8 +64,8 @@ class MFMDBTool: NSObject {
     func addDownloadingModel(_ model : DownloadingModel) {
         
         dbQueue?.inDatabase({ (dataBase) in
-            let sql = "replace INTO DownloadingList (courseId,kPointId,videoName,courseName,playcount,teacherName,videotype,fileType,videoUrl,imageUrl,parentId,totalSize,currentSize) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)"
-            try?dataBase?.executeUpdate(sql, values: [model.courseId as Any,model.kPointID as Any,model.videoName as Any,model.courseName as Any,model.playcount as Any,model.teacherName as Any,model.videoType as Any,model.fileType as Any,model.videoUrl as Any,model.imageUrl as Any,model.parentId as Any,model.totalSize as Any,model.currentSize as Any])
+            let sql = "replace INTO DownloadingList (courseId,kPointId,videoName,courseName,playcount,teacherName,videotype,fileType,videoUrl,imageUrl,parentId,totalSize,currentSize,isManualSuspen,videoState) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)"
+            try?dataBase?.executeUpdate(sql, values: [model.courseId as Any,model.kPointID as Any,model.videoName as Any,model.courseName as Any,model.playcount as Any,model.teacherName as Any,model.videoType as Any,model.fileType as Any,model.videoUrl as Any,model.imageUrl as Any,model.parentId as Any,model.totalSize as Any,model.currentSize as Any,model.isManualSuspen as Any,model.videoState as Any])
         })
     }
     
@@ -74,8 +74,8 @@ class MFMDBTool: NSObject {
     /// - Parameter model:  已完成的 model
     func addFinshModel(_ model : DownloadingModel)  {
         dbQueue?.inDatabase({ (dataBase) in
-            let sql = "replace INTO DownloadFinishedList (courseId,kPointId,videoName,courseName,playcount,teacherName,videotype,fileType,videoUrl,imageUrl,parentId,totalSize,currentSize) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)"
-            try?dataBase?.executeUpdate(sql, values: [model.courseId as Any,model.kPointID as Any,model.videoName as Any,model.courseName as Any,model.playcount as Any,model.teacherName as Any,model.videoName as Any,model.fileType as Any,model.videoUrl as Any,model.imageUrl as Any,model.parentId as Any,model.totalSize as Any,model.currentSize as Any])
+            let sql = "replace INTO DownloadFinishedList (courseId,kPointId,videoName,courseName,playcount,teacherName,videotype,fileType,videoUrl,imageUrl,parentId,totalSize,currentSize,isManualSuspen,videoState) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)"
+            try?dataBase?.executeUpdate(sql, values: [model.courseId as Any,model.kPointID as Any,model.videoName as Any,model.courseName as Any,model.playcount as Any,model.teacherName as Any,model.videoType as Any,model.fileType as Any,model.videoUrl as Any,model.imageUrl as Any,model.parentId as Any,model.totalSize as Any,model.currentSize as Any,model.isManualSuspen as Any,model.videoState as Any])
         })
     }
     
@@ -152,40 +152,27 @@ class MFMDBTool: NSObject {
     ///
     /// - Returns: 数组里面是 model
     func listDataFromDownloaingTable() -> Array<DownloadingModel> {
-        var downArray = Array<DownloadingModel>()
-        dbQueue?.inDatabase({ (dataBase) in
-            let sql = "select * from DownloadingList"
-            let rs = dataBase?.executeQuery(sql, withArgumentsIn: nil)
-            while (rs?.next())! {
-                let model = DownloadingModel()
-                
-                model.courseId = rs?.string(forColumn: "courseId")
-                model.kPointID = rs?.string(forColumn: "kPointID")
-                model.videoName = rs?.string(forColumn: "videoName")
-                model.courseName = rs?.string(forColumn: "courseName")
-                model.playcount = rs?.string(forColumn: "playcount")
-                model.teacherName = rs?.string(forColumn: "teacherName")
-                model.videoType = rs?.string(forColumn: "videoType")
-                model.fileType = rs?.string(forColumn: "fileType")
-                model.videoUrl = rs?.string(forColumn: "videoUrl")
-                model.imageUrl = rs?.string(forColumn: "imageUrl")
-                model.parentId = rs?.string(forColumn: "parentId")
-                model.totalSize = rs?.string(forColumn: "totalSize")
-                model.currentSize = rs?.string(forColumn: "currentSize")
-                downArray.append(model)
-            }
-        })
-        
-        return downArray
+        let sql = "select * from DownloadingList"
+        return self.outPutData(sql)
     }
     
     /// 获取已完成下载数据
     ///
     /// - Returns: 数组里面是 model
     func listDataFromFinshTable() -> Array<DownloadingModel> {
+        
+        let sql = "select * from DownloadFinishedList"
+
+        return self.outPutData(sql)
+    }
+    
+    /// 查询数据库数据
+    ///
+    /// - Parameter sql: 查询表的 sql 语句
+    /// - Returns: 返回查询结果
+    private func outPutData( _ sql : String) -> Array<DownloadingModel> {
         var downArray = Array<DownloadingModel>()
         dbQueue?.inDatabase({ (dataBase) in
-            let sql = "select * from DownloadFinishedList"
             let rs = dataBase?.executeQuery(sql, withArgumentsIn: [0])
             while (rs?.next())! {
                 let model = DownloadingModel()
@@ -200,13 +187,29 @@ class MFMDBTool: NSObject {
                 model.videoUrl = rs?.string(forColumn: "videoUrl")
                 model.imageUrl = rs?.string(forColumn: "imageUrl")
                 model.parentId = rs?.string(forColumn: "parentId")
-                model.totalSize = rs?.string(forColumn: "totalSize")
-                model.currentSize = rs?.string(forColumn: "currentSize")
+
+                model.totalSize = Float((rs?.double(forColumn: "totalSize"))!)
+                model.currentSize = Float((rs?.double(forColumn: "currentSize"))!)
+                model.videoState = Int((rs?.int(forColumn: "videoState"))!)
+
+            
+                model.isManualSuspen = (rs?.bool(forColumn: "isManualSuspen"))!
+                
                 downArray.append(model)
             }
         })
-        
         return downArray
+    }
+    
+    
+    /// 更新正在下载的数据表
+    ///
+    /// - Parameter model: 当前下载的 model
+    func updataDownloadState(_ model : DownloadingModel)  {
+        dbQueue?.inDatabase({ (dataBase) in
+            let sql = "UPDATE DownloadingList SET totalSize=?,currentSize=?,isManualSuspen=?,videoState=? where kPointId=?"
+            dataBase?.executeUpdate(sql, withArgumentsIn: [model.totalSize as Any ,model.currentSize as Any,model.isManualSuspen,model.videoState,model.kPointID!])
+        })
     }
     
     required init?(coder aDecoder: NSCoder) {

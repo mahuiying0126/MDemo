@@ -8,6 +8,7 @@ PODS:
   - IQKeyboardManagerSwift (4.0.9)
   - MBProgressHUD (1.0.0)
   - MJExtension (3.0.13)
+  - ReachabilitySwift (3)
   - SnapKit (3.2.0)
   - SwiftyJSON (3.1.4)
   - UMengUShare/Core (6.4.3):
@@ -33,6 +34,7 @@ DEPENDENCIES:
   - IQKeyboardManagerSwift
   - MBProgressHUD
   - MJExtension
+  - ReachabilitySwift
   - SnapKit
   - SwiftyJSON
   - UMengUShare/Social/QQ
@@ -46,10 +48,11 @@ SPEC CHECKSUMS:
   IQKeyboardManagerSwift: 2eefe6c429b86aa08bfbc1b5c891164d754adf91
   MBProgressHUD: 4890f671c94e8a0f3cf959aa731e9de2f036d71a
   MJExtension: 5932755f451458eefa24239358817f8d291240c7
+  ReachabilitySwift: f5b9bb30a0777fac8f09ce8b067e32faeb29bb64
   SnapKit: 1ca44df72cfa543218d177cb8aab029d10d86ea7
   SwiftyJSON: c2842d878f95482ffceec5709abc3d05680c0220
   UMengUShare: d39cb682598df87ebdd3c055d03d00eb0102d42c
 
-PODFILE CHECKSUM: 8b2eb98ef7640e5d4559608b111ed05968200bec
+PODFILE CHECKSUM: 475e8582ba55fd34e590d9e786afb5406a119452
 
 COCOAPODS: 1.2.0

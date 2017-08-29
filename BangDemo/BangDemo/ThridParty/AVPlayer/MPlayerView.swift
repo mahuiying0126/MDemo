@@ -764,7 +764,7 @@ final class MPlayerView: UIView,UIGestureRecognizerDelegate {
     @objc private func repeatBtnClick(button:UIButton){
         button.isSelected = !button.isSelected
         self.playEnd = false
-        ParsingEncrypteString().parseStringWith(urlString: self.videoParseCode!, fileType: self.videoType!
+        ParsingEncrypteString.parseStringWith(urlString: self.videoParseCode!, fileType: self.videoType!
         , isLocal: isLOCAL) { [weak self](url) in
             self?.playWithUrl(url: url)
         }

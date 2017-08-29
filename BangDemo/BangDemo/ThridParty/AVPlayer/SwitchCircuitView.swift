@@ -53,7 +53,7 @@ class SwitchCircuitView: UIView {
         }else{
             self.switchCircuitLB?.text = "线路一"
         }
-        ParsingEncrypteString().exchangeViewWith(videoUrl: MPlayerView.shared.videoParseCode!, reconnect: true, videoType: MPlayerView.shared.videoType!) { (url) in
+        ParsingEncrypteString.exchangeViewWith(videoUrl: MPlayerView.shared.videoParseCode!, reconnect: true, videoType: MPlayerView.shared.videoType!) { (url) in
             MPlayerView.shared.exchangeWithURL(videoURLStr: url)
         }
     }

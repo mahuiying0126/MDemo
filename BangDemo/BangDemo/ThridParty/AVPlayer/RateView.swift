@@ -115,7 +115,7 @@ class RateView: UIImageView {
         videoBtn?.setImage(MIMAGE("选中视频"), for: .normal)
         if MPlayerView.shared.videoType == "AUDIO" {
             MPlayerView.shared.videoType = "VIDEO"
-            ParsingEncrypteString().parseStringWith(urlString: MPlayerView.shared.videoParseCode!, fileType: MPlayerView.shared.videoType!, isLocal: MPlayerView.shared.isLOCAL, success: { (url) in
+            ParsingEncrypteString.parseStringWith(urlString: MPlayerView.shared.videoParseCode!, fileType: MPlayerView.shared.videoType!, isLocal: MPlayerView.shared.isLOCAL, success: { (url) in
                 MPlayerView.shared.exchangeWithURL(videoURLStr: url)
             })
         }
@@ -135,7 +135,7 @@ class RateView: UIImageView {
         if MPlayerView.shared.videoType == "VIDEO" {
             MPlayerView.shared.videoType = "AUDIO"
 
-            ParsingEncrypteString().parseStringWith(urlString: MPlayerView.shared.videoParseCode!, fileType: MPlayerView.shared.videoType!, isLocal: MPlayerView.shared.isLOCAL, success: { (url) in
+            ParsingEncrypteString.parseStringWith(urlString: MPlayerView.shared.videoParseCode!, fileType: MPlayerView.shared.videoType!, isLocal: MPlayerView.shared.isLOCAL, success: { (url) in
                 MPlayerView.shared.exchangeWithURL(videoURLStr: url)
             })
         }

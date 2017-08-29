@@ -14,6 +14,9 @@ class MCourseListTableViewCell: UITableViewCell {
     
     var courseName : UILabel?
     
+    /** *下载状态 */
+    var  downState : UILabel?
+    
     var markLabel : UILabel?
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
@@ -29,7 +32,11 @@ class MCourseListTableViewCell: UITableViewCell {
         self.contentView.addSubview(courseName!)
         courseName?.textColor = UIColorFromRGB(0x555555)
         courseName?.font = FONT(15)
-        
+        downState = UILabel()
+        self.contentView.addSubview(downState!)
+        downState?.textColor = UIColorFromRGB(0x666666)
+        downState?.font = FONT(12)
+        downState?.text = ""
         markLabel = UILabel()
         self.contentView.addSubview(markLabel!)
         markLabel?.textColor = UIColorFromRGB(0x41DF77)
@@ -41,13 +48,22 @@ class MCourseListTableViewCell: UITableViewCell {
             
         })
         
-        courseName?.snp.makeConstraints({ (make) in
-            make.left.equalTo(courseImage!.snp.right).offset(10)
+        
+        markLabel?.snp.makeConstraints({ (make) in
+            make.right.equalTo(self).offset(-8)
             make.top.equalTo(self).offset(10)
             make.height.equalTo(18)
         })
-        markLabel?.snp.makeConstraints({ (make) in
-            make.right.equalTo(self).offset(-8)
+        
+        downState?.snp.makeConstraints({ (make) in
+            make.top.equalTo(self).offset(10)
+            make.right.equalTo(markLabel!.snp.left).offset(-8)
+            make.height.equalTo(18)
+        })
+
+        courseName?.snp.makeConstraints({ (make) in
+            make.left.equalTo(courseImage!.snp.right).offset(10)
+//            make.right.equalTo(downState!.snp.left).offset(-10)
             make.top.equalTo(self).offset(10)
             make.height.equalTo(18)
         })
@@ -66,12 +82,15 @@ class MCourseListTableViewCell: UITableViewCell {
         }
         self.courseImage?.image = MIMAGE(model.isSelected ? "qbg-section-s" : "qbg-section-n")
         
-//        if model.fileType == "AUDIO" {
-//            self.courseImage?.image = MIMAGE(model.isSelected ? "选中音频" : "未选音频")
-//        }else{
-//            
-//        }
-        
+        let isDownloading = MFMDBTool.shareInstance.cheackFromDownloadingTableIsExist(model.ID!)
+        if isDownloading {
+            self.downState?.text = "下载中"
+            
+        }
+        let isFinsh = MFMDBTool.shareInstance.cheackFromFinshTableIsExist(model.ID!)
+        if isFinsh {
+            self.downState?.text = "已完成"
+        }
         
     }
     

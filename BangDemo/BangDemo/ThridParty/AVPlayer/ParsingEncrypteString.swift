@@ -17,7 +17,7 @@ class ParsingEncrypteString: NSObject {
     ///   - fileType: 文件类型:VIDEO&AUDIO
     ///   - isLocal: 是否为本地播放
     ///   - success: 将码转为链接,block回调
-    func parseStringWith(urlString:String,fileType:String,isLocal:Bool,success: @escaping (_ videoUrl:String) -> ()) {
+   class func parseStringWith(urlString:String,fileType:String,isLocal:Bool,success: @escaping (_ videoUrl:String) -> ()) {
         MediaServer.setDebugMode(false)
         if isLocal {
             MediaServer.prepareLocalFileAsync(urlString, channel: CHANNEL_LOW, speed: SPEED_10X, completion: { (error, url) in
@@ -48,7 +48,7 @@ class ParsingEncrypteString: NSObject {
     ///   - reconnect: YES
     ///   - videoType: 视频类型:VIDEO & AUDIO
     ///   - success: 解码回调
-    func exchangeViewWith(videoUrl:String,reconnect:Bool,videoType:String,success:@escaping (_ videoID:String) -> ()){
+   class func exchangeViewWith(videoUrl:String,reconnect:Bool,videoType:String,success:@escaping (_ videoID:String) -> ()){
         MediaServer.setDebugMode(false)
         MediaServer.prepareNetworkStreamAsync(videoUrl, reconnect: reconnect) { (error,res) in
             if !(error != nil) {
@@ -71,7 +71,7 @@ class ParsingEncrypteString: NSObject {
     ///   - channel: 高清还是标清
     ///   - local: 是否为本地
     ///   - success: 解析成功回调
-    func exchangeSDorHDWithUrl(videoId:String,type:String,channel:Int32,local:Bool,success:@escaping(_ videoId:String) -> ()) {
+    class func exchangeSDorHDWithUrl(videoId:String,type:String,channel:Int32,local:Bool,success:@escaping(_ videoId:String) -> ()) {
         MediaServer.setDebugMode(false)
         if local {
             MediaServer.prepareLocalFileAsync(videoId, channel: channel, speed: SPEED_10X, completion: { (error, url) in
@@ -98,5 +98,37 @@ class ParsingEncrypteString: NSObject {
         }
     }
     
+    class func startDownloadForData(_ data : Array<DownloadingModel>) {
+        DownloadManager.setDebugMode(false)
+        DownloadManager.init(LibraryFor96k) { (merror) in
+            if (merror == nil) {
+                for model in data {
+                    DownloadManager.start(withName: model.videoUrl, channel: CHANNEL_LOW, speed: SPEED_10X)
+                }
+            }
+        }
+    }
+    
+//    class func mgetDownloadInfos() -> Array<DownloadInfo>{
+//        var downInfo = Array<DownloadInfo>()
+//        DownloadManager.init(LibraryFor96k) { (merror) in
+//            if merror == nil {
+//                downInfo = DownloadManager.listDownloadInfos()
+//            }
+//        }
+//        return downInfo
+//    }
+//    
+//    class func mgetCurrentDownInfoModel(_ videoUrl : String) -> DownloadInfo {
+//        var model = DownloadInfo()
+//        for info in self.mgetDownloadInfos() {
+//            let temp = NSString.init(string: info.id).components(separatedBy:".")
+//            if videoUrl == temp.first{
+//                model = info
+//                break
+//            }
+//        }
+//        return model
+//    }
     
 }
