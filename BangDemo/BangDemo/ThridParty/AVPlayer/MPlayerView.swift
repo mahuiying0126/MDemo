@@ -177,6 +177,9 @@ final class MPlayerView: UIView,UIGestureRecognizerDelegate {
         isFullScreen = false
         isLocked = false
         self.status = .PlayerBuffering
+        if videoUrl.contains("localhost") {
+            self.isLOCAL = true
+        }
         ///屏幕旋转监听
         self.listeningRotating()
         ///页面布局,菊花,倒计时
@@ -230,7 +233,8 @@ final class MPlayerView: UIView,UIGestureRecognizerDelegate {
      */
     private func getPlayItemWithURLString(url:String) -> AVPlayerItem{
         
-        let Item = AVPlayerItem.init(url: NSURL.init(string: url.addingPercentEncoding(withAllowedCharacters: NSCharacterSet.urlPathAllowed)!)! as URL)
+        let Item = AVPlayerItem.init(url: NSURL.init(string: url)! as URL)
+        
         
         if playerItem == Item {
             return playerItem!
@@ -527,6 +531,8 @@ final class MPlayerView: UIView,UIGestureRecognizerDelegate {
             self.resolutionView?.isHidden = true
             self.switchCircuitView?.isHidden = true
             self.centerPlayOrPauseBtn?.isHidden = true
+            self.ratelabel?.isHidden = true
+            self.rateBtn?.isHidden = true
             self.closeBtn?.isHidden = true
         }
         
@@ -546,7 +552,9 @@ final class MPlayerView: UIView,UIGestureRecognizerDelegate {
             self?.rateView?.isHidden = (self?.isLOCAL)! ? true : false
             self?.centerPlayOrPauseBtn?.isHidden = false
             self?.switchCircuitView?.isHidden = (self?.isLOCAL)! ? true : false
+            self?.ratelabel?.isHidden = (self?.isLOCAL)! ? false : true
             self?.closeBtn?.isHidden = false
+            self?.rateBtn?.isHidden = (self?.isLOCAL)! ? false : true
             if(!(self?.isFullScreen)!){
                 self?.resolutionView?.isHidden = true
             }
@@ -728,7 +736,7 @@ final class MPlayerView: UIView,UIGestureRecognizerDelegate {
             self.rateValue = 1.0
         }
         
-        if isLOCAL {
+        if self.isLOCAL {
             rateBtn?.setImage(MIMAGE("选中倍速"), for: .normal)
             ratelabel?.textColor = UIColorFromRGB(0xf6a54a)
             ratelabel?.text = String.init(format: "倍速 %.1fx", self.rateValue)
@@ -765,7 +773,7 @@ final class MPlayerView: UIView,UIGestureRecognizerDelegate {
         button.isSelected = !button.isSelected
         self.playEnd = false
         ParsingEncrypteString.parseStringWith(urlString: self.videoParseCode!, fileType: self.videoType!
-        , isLocal: isLOCAL) { [weak self](url) in
+        , isLocal:  self.isLOCAL) { [weak self](url) in
             self?.playWithUrl(url: url)
         }
     }
@@ -1038,7 +1046,7 @@ final class MPlayerView: UIView,UIGestureRecognizerDelegate {
         self.switchCircuitView = {
             let switchCircuitView = SwitchCircuitView()
             self.addSubview(switchCircuitView)
-            switchCircuitView.isHidden = isLOCAL ? true : false
+            switchCircuitView.isHidden = self.isLOCAL ? true : false
             switchCircuitView.snp.makeConstraints({ (make) in
                 make.left.equalTo(self.snp.left)
                 make.centerY.equalTo(self)
@@ -1066,7 +1074,7 @@ final class MPlayerView: UIView,UIGestureRecognizerDelegate {
             tempRate.setImage(MIMAGE("倍速-"), for: .normal)
             tempRate.addTarget(self, action: #selector(clickRateBtnEvent), for: .touchUpInside)
             
-            tempRate.isHidden = isLOCAL ? false : true
+            tempRate.isHidden = self.isLOCAL ? false : true
             self.addSubview(tempRate)
             tempRate.snp.makeConstraints({ (make) in
                 make.centerY.equalTo(self)
@@ -1083,7 +1091,7 @@ final class MPlayerView: UIView,UIGestureRecognizerDelegate {
             rateLabel.font = FONT(15)
             rateLabel.textColor = UIColor.white
             rateLabel.text = "倍速 1.0X"
-            rateLabel.isHidden = isLOCAL ? false : true
+            rateLabel.isHidden = self.isLOCAL ? false : true
             self.addSubview(rateLabel)
             rateLabel.snp.makeConstraints({ (make) in
                 make.right.equalTo(rateBtn!.snp.left).offset(-3)
@@ -1097,7 +1105,7 @@ final class MPlayerView: UIView,UIGestureRecognizerDelegate {
         self.rateView = {
             let tempRateView = RateView.init(frame: CGRect.init(x: 0, y: 0, width: 40, height: 140))
             tempRateView.image = MIMAGE("背景")
-            tempRateView.isHidden = isLocked ? true : false
+            tempRateView.isHidden = self.isLOCAL ? true : false
             tempRateView.rateLB?.text = "倍速 1.0x"
             self.addSubview(tempRateView)
             tempRateView.snp.makeConstraints({ (make) in
@@ -1162,6 +1170,7 @@ final class MPlayerView: UIView,UIGestureRecognizerDelegate {
             let resolBtn = UIButton.init(type: .custom)
             resolBtn.setTitle("高清", for: .normal)
             resolBtn.titleLabel?.font = FONT(14)
+            resolBtn.isHidden = self.isLOCAL ? true : false
             resolBtn.addTarget(self, action: #selector(resolutionBtnClick(button:)), for: .touchUpInside)
             bottomImageView?.addSubview(resolBtn)
             resolBtn.snp.makeConstraints({ (make) in

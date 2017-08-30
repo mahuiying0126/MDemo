@@ -12,6 +12,7 @@ class MSelectDownViewController: UIViewController,CourseListDelegate {
 
     /** *下载列表数据 */
     var  selectList : Array<Any>?
+    
     /** *课程图片 */
     var  imageUrl : String?
     
@@ -23,31 +24,39 @@ class MSelectDownViewController: UIViewController,CourseListDelegate {
         self.view.backgroundColor = Whit
         self.title = "下载列表"
         createFoot()
+        self.tableView.CourseListData(self.selectList!)
         
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+    }
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        for item in self.selectList! {
+            let listModel = item as! DetailCourseListModel
+            for currentItem in listModel.childKpoints! {
+                let model = currentItem as! DetailCourseChildModel
+                model.isSelected = false
+            }
+        }
         self.tableView.CourseListData(self.selectList!)
     }
     
     @objc func downButtonEvent(sender:UIButton){
-        if sender.tag == 0 {
-            
-        }else{
-            ///开始下载
-         let downView = MDownViewController.shareInstance
-            self.navigationController?.pushViewController(downView, animated: true)
-    
-        }
+//        if sender.tag == 0 {
+//            
+//        }else{
+//        
+//        }
+        ///开始下载
+        let downView = MDownViewController.shareInstance
+        self.navigationController?.pushViewController(downView, animated: true)
     }
     
     ///点击代理
     func didSelectCourseList(index : IndexPath , model : DetailCourseChildModel){
-        //d96f8e8d3ac033673695df6d192ce4b7
-        //86029f91b95721adae004393f1848ca5
-        //9b430dc1efd1b40ab90cc230a19511b6
-        let tempUrl = ["d96f8e8d3ac033673695df6d192ce4b7","86029f91b95721adae004393f1848ca5","9b430dc1efd1b40ab90cc230a19511b6"]
+//        let tempUrl = ["d96f8e8d3ac033673695df6d192ce4b7","86029f91b95721adae004393f1848ca5","9b430dc1efd1b40ab90cc230a19511b6"]
         
         if !model.isSelected {
             if MNetworkUtils.isNoNet() {
@@ -95,8 +104,8 @@ class MSelectDownViewController: UIViewController,CourseListDelegate {
                     let downModel = DownloadingModel.conversionsModel(model)
                     downModel.videoType = videoStyle?.rawString()//96K
                     downModel.fileType = fileStyle?.rawString()//Video
-//                    downModel.videoUrl = entity?["videoUrl"].string
-                    downModel.videoUrl = tempUrl[index.row]
+                    downModel.videoUrl = entity?["videoUrl"].string
+//                    downModel.videoUrl = tempUrl[index.row]
                     downModel.imageUrl = self.imageUrl
                     MFMDBTool.shareInstance.addDownloadingModel(downModel)
                 }

@@ -168,7 +168,6 @@ class HomeDetailViewController: UIViewController,DetailTopBaseViewDelegate,topBu
         case 0:
             ///下载
             let selectDown = MSelectDownViewController()
-          
             selectDown.selectList = self.selectListArray
             ///顶部图片路径
             selectDown.imageUrl = String.init(format: "%@%@", imageUrlString,(self.courseModel?.mobileLogo)!)

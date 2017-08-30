@@ -109,26 +109,4 @@ class ParsingEncrypteString: NSObject {
         }
     }
     
-//    class func mgetDownloadInfos() -> Array<DownloadInfo>{
-//        var downInfo = Array<DownloadInfo>()
-//        DownloadManager.init(LibraryFor96k) { (merror) in
-//            if merror == nil {
-//                downInfo = DownloadManager.listDownloadInfos()
-//            }
-//        }
-//        return downInfo
-//    }
-//    
-//    class func mgetCurrentDownInfoModel(_ videoUrl : String) -> DownloadInfo {
-//        var model = DownloadInfo()
-//        for info in self.mgetDownloadInfos() {
-//            let temp = NSString.init(string: info.id).components(separatedBy:".")
-//            if videoUrl == temp.first{
-//                model = info
-//                break
-//            }
-//        }
-//        return model
-//    }
-    
 }
