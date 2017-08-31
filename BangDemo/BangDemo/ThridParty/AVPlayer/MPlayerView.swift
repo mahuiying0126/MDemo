@@ -735,11 +735,11 @@ final class MPlayerView: UIView,UIGestureRecognizerDelegate {
         }else if self.rateValue > 1.5 {
             self.rateValue = 1.0
         }
-        
+        self.player?.rate = self.rateValue
         if self.isLOCAL {
             rateBtn?.setImage(MIMAGE("选中倍速"), for: .normal)
-            ratelabel?.textColor = UIColorFromRGB(0xf6a54a)
-            ratelabel?.text = String.init(format: "倍速 %.1fx", self.rateValue)
+            self.ratelabel?.textColor = UIColorFromRGB(0xf6a54a)
+            self.ratelabel?.text = String.init(format: "倍速 %.1fx", self.rateValue)
             
         }else{
             rateView?.rateLB?.text = String.init(format: "倍速 %.1fx", self.rateValue)
@@ -1098,7 +1098,7 @@ final class MPlayerView: UIView,UIGestureRecognizerDelegate {
                 make.centerY.equalTo(repeatBtn!)
                 make.height.equalTo(40)
             })
-            return ratelabel
+            return rateLabel
         }()
         
         ///右侧操作图
