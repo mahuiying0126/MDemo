@@ -11,6 +11,17 @@ import UIKit
 class MDownDataUtils: NSObject {
     static var downloadInfoM : Array<DownloadInfo> = []
     
+    class func startDownloadTaskWithModel(_ model : DownloadingModel){
+        DownloadManager.setDebugMode(false)
+        DownloadManager.init(LibraryFor96k) { (merror) in
+            if (merror == nil) {
+                DownloadManager.start(withName: model.videoUrl, channel: CHANNEL_LOW, speed: SPEED_10X)
+                self.downloadInfoM = DownloadManager.listDownloadInfos()
+            }
+        }
+    }
+    
+    ///检查每个下载任务的状态,来判定是否开启下载任务
     class func checkTheDownListVideoState(_ downData : inout Array<DownloadingModel>) {
         if downData.count > 0 {
             if MNetworkUtils.isEnableWIFI() {
@@ -34,22 +45,9 @@ class MDownDataUtils: NSObject {
         }
         
     }
+    ///下载任务暂停按钮操作方法
     class func checkVideoStateFromButtonEvent(downDataArray : inout Array<DownloadingModel>,row : Int) ->Int {
-        
-        ///点击一个开启下载,另一个暂停
-        for (index,iteam) in downDataArray.enumerated() {
-            if index != row {
-                let downInfo = self.mgetCurrentDownInfoModel(iteam.videoUrl!)
-                ///如果 stats 是下载状态就暂停,其他的没状态的肯定没开启下载
-                if downInfo.status == STATUS_DOWNLOADING || iteam.videoState == Int(STATUS_DOWNLOADING){
-                    DownloadManager.stop(downInfo.id)
-                    iteam.videoState = Int(STATUS_PAUSED)
-                    iteam.isManualSuspen = true
-                    ///每一次操作都要更新数据库,来保存相应的数据
-                    MFMDBTool.shareInstance.updataDownloadState(iteam)
-                }
-            }
-        }
+
         let downModel = downDataArray[row]
         let downloadInfo = self.mgetCurrentDownInfoModel(downModel.videoUrl!)
         MYLog(downloadInfo.status)
@@ -89,8 +87,22 @@ class MDownDataUtils: NSObject {
         downModel.totalSize = Float(downloadInfo.size)
         ///每一次操作都要更新数据库,来保存相应的数据
         MFMDBTool.shareInstance.updataDownloadState(downModel)
+        ///点击一个开启下载,如果有另一个正在下载就暂停
+        for (index,iteam) in downDataArray.enumerated() {
+            if index != row {
+                let downInfo = self.mgetCurrentDownInfoModel(iteam.videoUrl!)
+                ///如果 stats 是下载状态就暂停,其他的没状态的肯定没开启下载
+                if downInfo.status == STATUS_DOWNLOADING || iteam.videoState == Int(STATUS_DOWNLOADING){
+                    DownloadManager.stop(downInfo.id)
+                    iteam.videoState = Int(STATUS_PAUSED)
+                    iteam.isManualSuspen = true
+                    ///每一次操作都要更新数据库,来保存相应的数据
+                    MFMDBTool.shareInstance.updataDownloadState(iteam)
+                }
+            }
+        }
         return state
-
+        
     }
     
     ///获取每个下载任务的下载信息
@@ -105,7 +117,7 @@ class MDownDataUtils: NSObject {
         }
         return model
     }
-    
+    ///处理下载完后的数据
     class func handleDownCompleteData(_ downloadInfo : DownloadInfo){
         let videoUrl = NSString.init(string: downloadInfo.id).components(separatedBy:".")
         for item in MFMDBTool.shareInstance.listDataFromDownloaingTable() {
@@ -119,6 +131,7 @@ class MDownDataUtils: NSObject {
             }
         }
     }
+    ///网络切换至4G, 下载任务的操作
     class func handel4GChangeFromNet(){
         let downArray = MFMDBTool.shareInstance.listDataFromDownloaingTable()
         if downArray.count > 0 {
@@ -134,7 +147,7 @@ class MDownDataUtils: NSObject {
             }
         }
     }
-    
+    ///网络切换至没网,下载任务的操作
     class func handleNoNetFromNer(){
         let downArray = MFMDBTool.shareInstance.listDataFromDownloaingTable()
         if downArray.count > 0 {
