@@ -78,12 +78,12 @@ class MDownloadingTable: UITableView,UITableViewDelegate,UITableViewDataSource,D
             }
             
             self.downDataArray = temploadArray
-            self.reloadData()
         }else{
             self.downFinshArray.removeAll()
             self.downFinshArray = MFMDBTool.shareInstance.listDataFromFinshTable()
-            self.reloadData()
+            
         }
+        self.reloadData()
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
