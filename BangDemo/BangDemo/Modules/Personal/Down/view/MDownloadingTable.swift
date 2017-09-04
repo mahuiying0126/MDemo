@@ -18,14 +18,13 @@ class MDownloadingTable: UITableView,UITableViewDelegate,UITableViewDataSource,D
     
     /** *代理 */
     var  playLocalVidelDelgate : playViedoDelegate?
-    
     private let cellDownID : String = "downID"
     private let cellFinshID : String = "finshID"
     /** *是否正在下载页面 */
     private var  isDownloading : Bool = true
+    //如果第一次初始化时不进行 WiFi 网络下检测
     private var isFirst : Bool = false
     private var downDataArray : Array<DownloadingModel> = []
-    private var downloadInfoM : Array<DownloadInfo> = []
     private var downFinshArray : Array<DownloadingModel> = []
     /** *控制器 */
     var  viewControlM : UIViewController?
@@ -42,7 +41,7 @@ class MDownloadingTable: UITableView,UITableViewDelegate,UITableViewDataSource,D
             // 3、开启网络状态消息监听
             try reachability.startNotifier()
         }catch{
-            print("could not start reachability notifier")
+            MYLog("could not start reachability notifier")
         }
         
         self.delegate = self
@@ -53,30 +52,11 @@ class MDownloadingTable: UITableView,UITableViewDelegate,UITableViewDataSource,D
     func updataTableForData(_ isDowning : Bool)  {
         self.isDownloading = isDowning
         self.endEditing(false)
+        
         if isDowning {
             ///从数据库获取下载数据
-            let temploadArray =  MFMDBTool.shareInstance.listDataFromDownloaingTable()
-            if temploadArray.count > 0 {
-                if MNetworkUtils.isEnableWIFI() {
-                    ///如果是wifi网络下,统计一下正在下载数量
-                    var downingNuber = 0
-                    for item in temploadArray {
-                        ///正在运行,或者有暂停的
-                        if item.videoState == Int(STATUS_DOWNLOADING) || item.videoState == Int(STATUS_PAUSED) {
-                            downingNuber = 1
-                            break
-                        }
-                    }
-                    ///经过上面遍历,如果没有下载任务,默认开启第一个
-                    if downingNuber == 0 {
-                        let model  = temploadArray.first
-                        model?.videoState = Int(STATUS_DOWNLOADING)
-                        ///每一次操作都要更新数据库,来保存相应的数据
-                        MFMDBTool.shareInstance.updataDownloadState(model!)
-                    }
-                }
-            }
-            
+            var temploadArray =  MFMDBTool.shareInstance.listDataFromDownloaingTable()
+            MDownDataUtils.checkTheDownListVideoState(&temploadArray)
             self.downDataArray = temploadArray
         }else{
             self.downFinshArray.removeAll()
@@ -123,10 +103,10 @@ class MDownloadingTable: UITableView,UITableViewDelegate,UITableViewDataSource,D
     func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCellEditingStyle {
         return .delete
     }
-    override func setEditing(_ editing: Bool, animated: Bool) {
-        super.setEditing(editing, animated: animated)
-        self .setEditing(editing, animated: animated)
-    }
+//    override func setEditing(_ editing: Bool, animated: Bool) {
+//        super.setEditing(editing, animated: animated)
+//        self .setEditing(editing, animated: animated)
+//    }
     
     func tableView(_ tableView: UITableView, titleForDeleteConfirmationButtonForRowAt indexPath: IndexPath) -> String? {
         return "移除"
@@ -135,23 +115,22 @@ class MDownloadingTable: UITableView,UITableViewDelegate,UITableViewDataSource,D
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         DownloadManager.init(LibraryFor96k) {[weak self] (merror) in
             if (merror == nil) {
-                self?.downloadInfoM = DownloadManager.listDownloadInfos()
+                MDownDataUtils.downloadInfoM = DownloadManager.listDownloadInfos()
                 self?.beginUpdates()
                 if (self?.isDownloading)! {
                     ///删除下载的部分
                     let downingModel = self?.downDataArray[indexPath.row]
-                    let downInfo = self?.mgetCurrentDownInfoModel((downingModel?.videoUrl!)!)
-                    if downInfo?.status != 0 {
+                    let downInfo = MDownDataUtils.mgetCurrentDownInfoModel((downingModel?.videoUrl!)!)
+                    if downInfo.status != 0 {
                         //说明下载器里有这个下载任务再移除
-                        DownloadManager.delete(downInfo?.id)
+                        DownloadManager.delete(downInfo.id)
                     }
                     MFMDBTool.shareInstance.removeDownloadingModel((downingModel?.kPointID!)!)
                 }else{
                     ///删除本地文件
                     let finshModel = self?.downFinshArray[indexPath.row]
-                    self?.downloadInfoM = DownloadManager.listDownloadInfos()
-                    let downInfo = self?.mgetCurrentDownInfoModel((finshModel?.videoUrl!)!)
-                    DownloadManager.delete(downInfo?.id)
+                    let downInfo = MDownDataUtils.mgetCurrentDownInfoModel((finshModel?.videoUrl!)!)
+                    DownloadManager.delete(downInfo.id)
                     MFMDBTool.shareInstance.removeFinshModel((finshModel?.kPointID!)!)
                 }
                 self?.endUpdates()
@@ -211,31 +190,12 @@ class MDownloadingTable: UITableView,UITableViewDelegate,UITableViewDataSource,D
     ///
     /// - Parameter downloadInfo: 下载器 model
     private func checkDownloadComplete(_ downloadInfo : DownloadInfo) {
-        
-        let videoUrl = NSString.init(string: downloadInfo.id).components(separatedBy:".")
-        for item in MFMDBTool.shareInstance.listDataFromDownloaingTable() {
-            if videoUrl.first == item.videoUrl {
-                
-                ///完成将数据做最后一次更新
-                item.totalSize = Float(downloadInfo.size)
-                MFMDBTool.shareInstance.addFinshModel(item)
-                ///将正在下载列表任务移除
-            MFMDBTool.shareInstance.removeDownloadingModel(item.kPointID!)
-                break
-            }
-        }
+        ///将下载任务加入到完成的数据列表中
+        MDownDataUtils.handleDownCompleteData(downloadInfo)
         ///重新调用数据源
         loadDataArray()
         ///如果还有数据,且有正在等待下载任务,就开启
-        for item in self.downDataArray {
-            let downloadInfo = mgetCurrentDownInfoModel(item.videoUrl!)
-            if (downloadInfo.status != STATUS_DOWNLOADING || downloadInfo.status != STATUS_COMPLETED || downloadInfo.status != STATUS_DELETED) && (!item.isManualSuspen){
-                item.videoState = Int(STATUS_DOWNLOADING)
-                self.startDownloadWithModel(item)
-                MFMDBTool.shareInstance.updataDownloadState(item)
-                break;
-            }
-        }
+        startDownloadTask()
         
     }
     
@@ -258,57 +218,14 @@ class MDownloadingTable: UITableView,UITableViewDelegate,UITableViewDataSource,D
     
         let row = sender.tag - 520
         let downModel = self.downDataArray[row]
-        let downloadInfo = mgetCurrentDownInfoModel(downModel.videoUrl!)
-        MYLog(downloadInfo.status)
-        switch downloadInfo.status {
-        case STATUS_DOWNLOADING:
-            downModel.isManualSuspen = true
-            downModel.videoState = Int(STATUS_PAUSED)
-            DownloadManager.stop(downloadInfo.id)
-            break
-        case STATUS_PAUSED:
-            downModel.isManualSuspen = false
-            downModel.videoState = Int(STATUS_DOWNLOADING)
-            DownloadManager.start(downloadInfo.id)
-            break
-        case STATUS_STOPPED:
-            downModel.isManualSuspen = false
-            downModel.videoState = Int(STATUS_DOWNLOADING)
-            DownloadManager.start(downloadInfo.id)
-            break
-        case STATUS_ERROR:
-            downModel.isManualSuspen = false
-            downModel.videoState = Int(STATUS_DOWNLOADING)
-            DownloadManager.start(downloadInfo.id)
-            break
-        default:
-            ///上面所有状态都不符合,说明下载器里面没这个任务
-            
-            downModel.isManualSuspen = false
-            downModel.videoState = Int(STATUS_DOWNLOADING)
-            self.startDownloadWithModel(downModel)
-            break
+        ///点击逻辑操作
+        let state = MDownDataUtils.checkVideoStateFromButtonEvent(downDataArray: &self.downDataArray, row: row)
+        ///状态小于3说明下载器中无下载任务,要初始化当前下载信息
+        if state < 3 {
+           self.startDownloadWithModel(downModel)
         }
-        downModel.currentSize = Float(downloadInfo.progress)
-        downModel.totalSize = Float(downloadInfo.size)
-        ///点击一个开启下载,另一个暂停
-        for (index,iteam) in self.downDataArray.enumerated() {
-            if index != row {
-                let downInfo = mgetCurrentDownInfoModel(iteam.videoUrl!)
-                
-                ///如果 stats 是下载状态就暂停,其他的没状态的肯定没开启下载
-                if downInfo.status == STATUS_DOWNLOADING || iteam.videoState == Int(STATUS_DOWNLOADING){
-                    DownloadManager.stop(downInfo.id)
-                    iteam.videoState = Int(STATUS_PAUSED)
-                    iteam.isManualSuspen = true
-                    ///每一次操作都要更新数据库,来保存相应的数据
-                    MFMDBTool.shareInstance.updataDownloadState(iteam)
-                }
-            }
-        }
-        ///每一次操作都要更新数据库,来保存相应的数据
-        MFMDBTool.shareInstance.updataDownloadState(downModel)
     }
+    ///点击播放按钮执行代理
     @objc private func playViewWithModel(sender:UIButton){
         let model = self.downFinshArray[sender.tag - 1040]
         self.playLocalVidelDelgate?.playVideoWithVideoModel(model: model)
@@ -322,59 +239,39 @@ class MDownloadingTable: UITableView,UITableViewDelegate,UITableViewDataSource,D
             if reachability.isReachableViaWiFi { // 判断网络连接类型
                 MYLog("连接类型：WiFi")
                 if self.isFirst {
-                    let downArray = MFMDBTool.shareInstance.listDataFromDownloaingTable()
-                    if downArray.count > 0 {
-                        for item in downArray {
-                            let downloadInfo = self.mgetCurrentDownInfoModel(item.videoUrl!)
-                            MYLog(downloadInfo.status)
-                            if (downloadInfo.status == STATUS_PAUSED || downloadInfo.status == STATUS_ERROR || downloadInfo.status == STATUS_STOPPED) && (!item.isManualSuspen) {
-                                item.videoState = Int(STATUS_DOWNLOADING)
-                                self.startDownloadWithModel(item)
-                                MFMDBTool.shareInstance.updataDownloadState(item)
-                                break;
-                            }
-                            
-                        }
-                        self.loadDataArray()
-                    }
+                    startDownloadTask()
+                    self.loadDataArray()
                 }
                 self.isFirst = true
                 
             } else {
                 MYLog("连接类型：移动网络")
-                let downArray = MFMDBTool.shareInstance.listDataFromDownloaingTable()
-                if downArray.count > 0 {
-                    for item in downArray {
-                        let downloadInfo = self.mgetCurrentDownInfoModel(item.videoUrl!)
-                        if (downloadInfo.status == STATUS_DOWNLOADING){
-                            item.videoState = Int(STATUS_PAUSED)
-                            DownloadManager.stop(downloadInfo.id)
-                            MFMDBTool.shareInstance.updataDownloadState(item)
-                            break;
-                        }
-                        
-                    }
-                    self.loadDataArray()
-                }
+                MDownDataUtils.handel4GChangeFromNet()
+                self.loadDataArray()
             }
         } else {
             MYLog("网络连接：不可用")
-            let downArray = MFMDBTool.shareInstance.listDataFromDownloaingTable()
-            if downArray.count > 0 {
-                for item in downArray {
-                    let downloadInfo = self.mgetCurrentDownInfoModel(item.videoUrl!)
-                    if (downloadInfo.status == STATUS_DOWNLOADING){
-                        item.videoState = Int(STATUS_PAUSED)
-                        DownloadManager.stop(downloadInfo.id)
-                        MFMDBTool.shareInstance.updataDownloadState(item)
-                        break;
-                    }
-                    
-                }
-                self.loadDataArray()
-            }
+            MDownDataUtils.handleNoNetFromNer()
+            self.loadDataArray()
         }
         
+    }
+    ///开启下一个下载任务
+    private func startDownloadTask(){
+        let downArray = MFMDBTool.shareInstance.listDataFromDownloaingTable()
+        if downArray.count > 0 {
+            for item in downArray {
+                let downloadInfo = MDownDataUtils.mgetCurrentDownInfoModel(item.videoUrl!)
+                MYLog(downloadInfo.status)
+                if (downloadInfo.status == STATUS_PAUSED || downloadInfo.status == STATUS_ERROR || downloadInfo.status == STATUS_STOPPED) && (!item.isManualSuspen) {
+                    item.videoState = Int(STATUS_DOWNLOADING)
+                    self.startDownloadWithModel(item)
+                    MFMDBTool.shareInstance.updataDownloadState(item)
+                    break;
+                }
+                
+            }
+        }
     }
     
     ///开启下载
@@ -385,25 +282,14 @@ class MDownloadingTable: UITableView,UITableViewDelegate,UITableViewDataSource,D
         let wwan = MNetworkUtils.isEnableWWAN()
         ///是 WiFi 情况并且网络可用,如果下载器没状态,或者手动改变状态,开启下载
         if ((wifi && haveNet) && ( model.videoState == Int(STATUS_DOWNLOADING))) {
-            DownloadManager.setDebugMode(false)
-            DownloadManager.init(LibraryFor96k) {[weak self] (merror) in
-                if (merror == nil) {
-                    DownloadManager.start(withName: model.videoUrl, channel: CHANNEL_LOW, speed: SPEED_10X)
-                    self?.downloadInfoM = DownloadManager.listDownloadInfos()
-                }
-            }
+            
+            MDownDataUtils.startDownloadTaskWithModel(model)
+            
         } else if (wwan && haveNet) && ( model.videoState == Int(STATUS_DOWNLOADING)) {
             //当前4G 网络
-            
             let alertControl = UIAlertController.init(title: "提示", message: "当前4G网络是否下载?", preferredStyle: .alert)
             let allow = UIAlertAction.init(title: "是", style: .default, handler: { (action) in
-                DownloadManager.setDebugMode(false)
-                DownloadManager.init(LibraryFor96k) {[weak self] (merror) in
-                    if (merror == nil) {
-                        DownloadManager.start(withName: model.videoUrl, channel: CHANNEL_LOW, speed: SPEED_10X)
-                        self?.downloadInfoM = DownloadManager.listDownloadInfos()
-                    }
-                }
+                MDownDataUtils.startDownloadTaskWithModel(model)
             })
             
             let cancel = UIAlertAction.init(title: "否", style: .cancel, handler: {[weak self](action) in
@@ -420,18 +306,7 @@ class MDownloadingTable: UITableView,UITableViewDelegate,UITableViewDataSource,D
         
     }
     
-    ///获取每个下载任务的下载信息
-    private func mgetCurrentDownInfoModel(_ videoUrl : String) -> DownloadInfo {
-        var model = DownloadInfo()
-        for info in self.downloadInfoM {
-            let temp = NSString.init(string: info.id).components(separatedBy:".")
-            if videoUrl == temp.first{
-                model = info
-                break
-            }
-        }
-        return model
-    }
+
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
