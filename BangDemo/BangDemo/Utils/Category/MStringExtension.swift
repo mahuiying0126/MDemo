@@ -54,9 +54,9 @@ extension String {
         ///行高
         paragraphStyle.lineHeightMultiple = 15
         
-        let dic = [NSParagraphStyleAttributeName : paragraphStyle,
-                   NSFontAttributeName: UIFont.systemFont(ofSize: font),
-                   NSForegroundColorAttributeName : color]
+        let dic = [NSAttributedStringKey.paragraphStyle : paragraphStyle,
+                   NSAttributedStringKey.font: UIFont.systemFont(ofSize: font),
+                   NSAttributedStringKey.foregroundColor : color]
         let text = NSAttributedString.init(string: self, attributes: dic)
         
         return text

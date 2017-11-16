@@ -56,10 +56,10 @@ class MessageDetailViewController: UIViewController , UIWebViewDelegate{
         self.tipHUD.hide(animated: true)
     }
     
-    func backBarButtonItemClick()  {
+    @objc func backBarButtonItemClick()  {
         self.navigationController?.popViewController(animated: true)
     }
-    func MessageRightBtnClick()  {
+    @objc func MessageRightBtnClick()  {
         //分享
     }
     

@@ -97,7 +97,7 @@ class HomeHeadView: UIView {
         return tempTime
     }()
     
-    func scrollViewAutoScroll(){
+    @objc func scrollViewAutoScroll(){
         
         if (self.noticeArray != nil) {
             if self.noticeNum! < (self.noticeArray?.count)! {
@@ -114,7 +114,7 @@ class HomeHeadView: UIView {
     
     }
     
-    func noticClickEvent()  {
+    @objc func noticClickEvent()  {
         if (self.noticeArray != nil) {
             if self.noticeNum! < (self.noticeArray?.count)! {
                let model : HomeNoticeModel = self.noticeArray![self.noticeNum!] as! HomeNoticeModel

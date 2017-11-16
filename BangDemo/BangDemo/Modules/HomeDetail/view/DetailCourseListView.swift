@@ -212,7 +212,7 @@ class DetailCourseListView: UITableView ,UITableViewDelegate,UITableViewDataSour
         return 40 * Ratio_height
     }
     
-    func tapListHeadView(btn:UIButton)  {
+    @objc func tapListHeadView(btn:UIButton)  {
         let section = btn.tag - 1941
         let tmpModel :DetailCourseListModel = self.courseDataArray[section] as! DetailCourseListModel
         tmpModel.isSelected = !tmpModel.isSelected

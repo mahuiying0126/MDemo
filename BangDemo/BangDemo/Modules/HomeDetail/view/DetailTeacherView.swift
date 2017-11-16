@@ -44,7 +44,7 @@ class DetailTeacherView: UITableView,UITableViewDelegate,UITableViewDataSource,U
     
     //MARK: 购买按钮代理回调
     
-    func purchaseNowBtnClick(sender:UIButton){
+    @objc func purchaseNowBtnClick(sender:UIButton){
         if (self.buyOrPlayDelegate != nil) {
             self.buyOrPlayDelegate?.purchaseNowOrPlay()
         }
@@ -110,7 +110,7 @@ class DetailTeacherView: UITableView,UITableViewDelegate,UITableViewDataSource,U
         self.tableHeaderView = self.headView
     }
     //MARK: 收缩,展开事件
-    func downBtnClick(sender:UIButton) {
+    @objc func downBtnClick(sender:UIButton) {
         var web_h = CGFloat()
         let temp_H :CGFloat = 110
         if sender.isSelected {

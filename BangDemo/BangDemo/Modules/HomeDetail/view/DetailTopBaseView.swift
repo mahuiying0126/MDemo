@@ -72,7 +72,7 @@ class DetailTopBaseView: UIView {
         self.backGroundImage?.af_setImage(withURL: URL.init(string: imageUrl)!,placeholderImage:UIImage.init(named: "加载中"))
     }
     
-    func goBackVsPlayView(sender:UIButton)  {
+    @objc  func goBackVsPlayView(sender:UIButton)  {
         
         if self.topDelegate != nil{
             self.topDelegate?.topBaseViewBackVsPlay(tage: sender.tag)

@@ -19,21 +19,21 @@ class MNavigationViewController: UINavigationController {
         navigationBar.barTintColor = navColor
         navigationBar.tintColor = .white
         navigationBar.titleTextAttributes =  [
-            NSForegroundColorAttributeName: Whit,
+            NSAttributedStringKey.foregroundColor: Whit,
             ]
         navigationBar.isTranslucent = false
         navigationBar.backgroundColor = navColor
         
         let item = UIBarButtonItem.appearance()
-        var attrs = Dictionary<String, Any>()
-        attrs[NSForegroundColorAttributeName] = Whit
-        attrs[NSFontAttributeName] = FONT(15.0)
+        var attrs = Dictionary<NSAttributedStringKey, Any>()
+        attrs[NSAttributedStringKey.foregroundColor] = Whit
+        attrs[NSAttributedStringKey.font] = FONT(15.0)
         
         item.setTitleTextAttributes(attrs, for: UIControlState.normal)
         // 设置不可用状态
-        var disableTextAttrs = Dictionary<String, Any>()
-        disableTextAttrs[NSForegroundColorAttributeName] = ColorFromRGB(153.0, 153.0, 153.0 , 0.7)
-        disableTextAttrs[NSFontAttributeName] = FONT(15.0)
+        var disableTextAttrs = Dictionary<NSAttributedStringKey, Any>()
+        disableTextAttrs[NSAttributedStringKey.foregroundColor] = ColorFromRGB(153.0, 153.0, 153.0 , 0.7)
+        disableTextAttrs[NSAttributedStringKey.font] = FONT(15.0)
 //        self.navigationBar.isTranslucent = false
         self.navigationController?.navigationBar.isTranslucent = false
         item.setTitleTextAttributes(disableTextAttrs, for: UIControlState.disabled)
@@ -53,7 +53,7 @@ class MNavigationViewController: UINavigationController {
         super.pushViewController(viewController, animated: animated)
     }
     
-    func backBtnClick() {
+    @objc func backBtnClick() {
         self .popViewController(animated: true)
     }
     

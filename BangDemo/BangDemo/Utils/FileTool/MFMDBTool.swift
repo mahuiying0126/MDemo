@@ -34,8 +34,9 @@ class MFMDBTool: NSObject {
     private func createDownTable(){
         dbQueue?.inDatabase({ (dataBase) in
             let sql = "create table if not exists DownloadingList (courseId varchar(20),kPointId varchar(20),videoName varchar(100),courseName varchar(100),playcount varchar(20),teacherName varchar(100),videotype varchar(100),fileType varchar(100),videoUrl varchar(100),imageUrl varchar(100),parentId varchar(20),totalSize varchar(100),currentSize varchar(100),isManualSuspen varchar(100),videoState varchar(100),primary key (kPointId))"
-            let result = dataBase?.executeUpdate(sql, withArgumentsIn: nil)
-            if result! {
+            let result = dataBase.executeUpdate(sql, withArgumentsIn: [sql])
+            
+            if result {
                 MYLog("正在下载表创建成功")
             } else {
                 MYLog("正在下载表创建失败")
@@ -48,8 +49,8 @@ class MFMDBTool: NSObject {
     private func createFinshTable(){
         dbQueue?.inDatabase({ (dataBase) in
             let sql = "create table if not exists DownloadFinishedList (courseId varchar(20),kPointId varchar(20),videoName varchar(100),courseName varchar(100),playcount varchar(20),teacherName varchar(100),videotype varchar(100),fileType varchar(100),videoUrl varchar(100),imageUrl varchar(100),parentId varchar(20),totalSize varchar(100),currentSize varchar(100),isManualSuspen varchar(100),videoState varchar(100),primary key (kPointId))"
-            let result = dataBase?.executeUpdate(sql, withArgumentsIn: nil)
-            if result! {
+            let result = dataBase.executeUpdate(sql, withArgumentsIn: [sql])
+            if result {
                 MYLog("下载完成表创建成功")
             }else {
                 MYLog("下载完成表创建失败")
@@ -65,7 +66,7 @@ class MFMDBTool: NSObject {
         
         dbQueue?.inDatabase({ (dataBase) in
             let sql = "replace INTO DownloadingList (courseId,kPointId,videoName,courseName,playcount,teacherName,videotype,fileType,videoUrl,imageUrl,parentId,totalSize,currentSize,isManualSuspen,videoState) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)"
-            try?dataBase?.executeUpdate(sql, values: [model.courseId as Any,model.kPointID as Any,model.videoName as Any,model.courseName as Any,model.playcount as Any,model.teacherName as Any,model.videoType as Any,model.fileType as Any,model.videoUrl as Any,model.imageUrl as Any,model.parentId as Any,model.totalSize as Any,model.currentSize as Any,model.isManualSuspen as Any,model.videoState as Any])
+            try?dataBase.executeUpdate(sql, values: [model.courseId as Any,model.kPointID as Any,model.videoName as Any,model.courseName as Any,model.playcount as Any,model.teacherName as Any,model.videoType as Any,model.fileType as Any,model.videoUrl as Any,model.imageUrl as Any,model.parentId as Any,model.totalSize as Any,model.currentSize as Any,model.isManualSuspen as Any,model.videoState as Any])
         })
     }
     
@@ -75,7 +76,7 @@ class MFMDBTool: NSObject {
     func addFinshModel(_ model : DownloadingModel)  {
         dbQueue?.inDatabase({ (dataBase) in
             let sql = "replace INTO DownloadFinishedList (courseId,kPointId,videoName,courseName,playcount,teacherName,videotype,fileType,videoUrl,imageUrl,parentId,totalSize,currentSize,isManualSuspen,videoState) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)"
-            try?dataBase?.executeUpdate(sql, values: [model.courseId as Any,model.kPointID as Any,model.videoName as Any,model.courseName as Any,model.playcount as Any,model.teacherName as Any,model.videoType as Any,model.fileType as Any,model.videoUrl as Any,model.imageUrl as Any,model.parentId as Any,model.totalSize as Any,model.currentSize as Any,model.isManualSuspen as Any,model.videoState as Any])
+            try?dataBase.executeUpdate(sql, values: [model.courseId as Any,model.kPointID as Any,model.videoName as Any,model.courseName as Any,model.playcount as Any,model.teacherName as Any,model.videoType as Any,model.fileType as Any,model.videoUrl as Any,model.imageUrl as Any,model.parentId as Any,model.totalSize as Any,model.currentSize as Any,model.isManualSuspen as Any,model.videoState as Any])
         })
     }
     
@@ -86,7 +87,7 @@ class MFMDBTool: NSObject {
     func removeDownloadingModel(_ pointID : String)  {
         dbQueue?.inDatabase({ (dataBase) in
             let sql = "delete from DownloadingList where kPointId = ?"
-           dataBase?.executeUpdate(sql, withArgumentsIn: [pointID])
+            dataBase.executeUpdate(sql, withArgumentsIn: [pointID])
         })
     }
     
@@ -96,7 +97,7 @@ class MFMDBTool: NSObject {
     func removeFinshModel(_ pointID : String)  {
         dbQueue?.inDatabase({ (dataBase) in
             let sql = "delete from DownloadFinishedList where kPointId = ?"
-            dataBase?.executeUpdate(sql, withArgumentsIn: [pointID])
+            dataBase.executeUpdate(sql, withArgumentsIn: [pointID])
         })
     }
     
@@ -109,7 +110,7 @@ class MFMDBTool: NSObject {
         
         dbQueue?.inDatabase({ (dataBase) in
             let sql = "select kPointId from DownloadingList where kPointId = ?"
-            let rs = dataBase?.executeQuery(sql, withArgumentsIn: [pointID])
+            let rs = dataBase.executeQuery(sql, withArgumentsIn: [pointID])
             while (rs?.next())! {
                 let kpoint = rs?.string(forColumn: "kPointId")
                 if pointID == kpoint {
@@ -133,7 +134,7 @@ class MFMDBTool: NSObject {
         
         dbQueue?.inDatabase({ (dataBase) in
             let sql = "select kPointId from DownloadFinishedList where kPointId = ?"
-            let rs = dataBase?.executeQuery(sql, withArgumentsIn: [pointID])
+            let rs = dataBase.executeQuery(sql, withArgumentsIn: [pointID])
             while (rs?.next())! {
                 let kpoint = rs?.string(forColumn: "kPointId")
                 if pointID == kpoint {
@@ -173,7 +174,7 @@ class MFMDBTool: NSObject {
     private func outPutData( _ sql : String) -> Array<DownloadingModel> {
         var downArray = Array<DownloadingModel>()
         dbQueue?.inDatabase({ (dataBase) in
-            let rs = dataBase?.executeQuery(sql, withArgumentsIn: [0])
+            let rs = dataBase.executeQuery(sql, withArgumentsIn: [0])
             while (rs?.next())! {
                 let model = DownloadingModel()
                 model.courseId = rs?.string(forColumn: "courseId")
@@ -208,7 +209,7 @@ class MFMDBTool: NSObject {
     func updataDownloadState(_ model : DownloadingModel)  {
         dbQueue?.inDatabase({ (dataBase) in
             let sql = "UPDATE DownloadingList SET totalSize=?,currentSize=?,isManualSuspen=?,videoState=? where kPointId=?"
-            dataBase?.executeUpdate(sql, withArgumentsIn: [model.totalSize as Any ,model.currentSize as Any,model.isManualSuspen,model.videoState,model.kPointID!])
+            dataBase.executeUpdate(sql, withArgumentsIn: [model.totalSize as Any ,model.currentSize as Any,model.isManualSuspen,model.videoState,model.kPointID!])
         })
     }
     

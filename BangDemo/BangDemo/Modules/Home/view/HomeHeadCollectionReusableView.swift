@@ -54,7 +54,7 @@ class HomeHeadCollectionReusableView: UICollectionReusableView {
         })
     }
     
-    func moreBtnClick(){
+    @objc func moreBtnClick(){
         if self.moreBtnBlock != nil {
             self.moreBtnBlock!()
         }

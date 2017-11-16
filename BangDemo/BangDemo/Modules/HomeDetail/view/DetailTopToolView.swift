@@ -66,7 +66,7 @@ class DetailTopToolView: UIView {
     }
     
     
-    func detailThreeBtnClick(sender: UIButton)  {
+    @objc func detailThreeBtnClick(sender: UIButton)  {
         if sender.tag == 1 {
             if sender.isSelected {
                 ///已经是已收藏状态,再点击就是取消收藏
@@ -84,7 +84,7 @@ class DetailTopToolView: UIView {
         
     }
     
-    func threeSegmentBtnClick(sender:UISegmentedControl) {
+    @objc func threeSegmentBtnClick(sender:UISegmentedControl) {
        
         self.topViewButtonDelegate?.threeSegmentBtn(segmentIndex: sender.selectedSegmentIndex)
     }

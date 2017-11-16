@@ -217,7 +217,7 @@ final class MPlayerView: UIView,UIGestureRecognizerDelegate {
         self.player = AVPlayer.init(playerItem: self.playerItem)
         self.playerLayer = AVPlayerLayer.init(player: self.player)
         self.playerLayer?.frame = self.layer.bounds
-        self.playerLayer?.videoGravity = AVLayerVideoGravityResize
+        self.playerLayer?.videoGravity = AVLayerVideoGravity.resize
         self.layer.addSublayer(playerLayer!)
         self.player?.play()
         ///页面布局
@@ -627,7 +627,7 @@ final class MPlayerView: UIView,UIGestureRecognizerDelegate {
             let status = playerItem!.status
             switch status {
             case .readyToPlay:
-                self.playerItem?.audioTimePitchAlgorithm = AVAudioTimePitchAlgorithmTimeDomain
+                self.playerItem?.audioTimePitchAlgorithm = AVAudioTimePitchAlgorithm.timeDomain
                 self.status = .PlayerReadyToPlay
                 stopAnimation()
                 //时间刷新,倍速
@@ -696,7 +696,7 @@ final class MPlayerView: UIView,UIGestureRecognizerDelegate {
      */
     private func enableAudioTracks(isable:Bool,playerItem:AVPlayerItem){
         for track in playerItem.tracks {
-            if track.assetTrack.mediaType == AVMediaTypeAudio {
+            if track.assetTrack.mediaType == AVMediaType.audio {
                 track.isEnabled = isable
             }
         }

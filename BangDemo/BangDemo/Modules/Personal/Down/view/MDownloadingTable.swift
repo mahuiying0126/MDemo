@@ -8,7 +8,6 @@
 
 import UIKit
 import Alamofire
-import ReachabilitySwift
 ///点击播放按钮代理
 protocol playViedoDelegate : class  {
     func playVideoWithVideoModel(model : DownloadingModel)
@@ -28,7 +27,7 @@ class MDownloadingTable: UITableView,UITableViewDelegate,UITableViewDataSource,D
     private var downFinshArray : Array<DownloadingModel> = []
     /** *控制器 */
     var  viewControlM : UIViewController?
-    private let reachability = Reachability()!
+//    private let reachability = Reachability()!
     override init(frame: CGRect, style: UITableViewStyle) {
         super.init(frame: frame, style: style)
         
@@ -36,13 +35,13 @@ class MDownloadingTable: UITableView,UITableViewDelegate,UITableViewDataSource,D
         self.register(MFinshTableViewCell.self, forCellReuseIdentifier: cellFinshID)
         DownloadManager.setDownloadStatusChangedDelegate(self)
         // 1、设置网络状态消息监听 2、获得网络Reachability对象
-        NotificationCenter.default.addObserver(self, selector: #selector(self.reachabilityChanged),name: ReachabilityChangedNotification,object: reachability)
-        do{
-            // 3、开启网络状态消息监听
-            try reachability.startNotifier()
-        }catch{
-            MYLog("could not start reachability notifier")
-        }
+//        NotificationCenter.default.addObserver(self, selector: #selector(self.reachabilityChanged),name: ReachabilityChangedNotification,object: reachability)
+//        do{
+//            // 3、开启网络状态消息监听
+//            try reachability.startNotifier()
+//        }catch{
+//            MYLog("could not start reachability notifier")
+//        }
         
         self.delegate = self
         self.dataSource = self
@@ -233,27 +232,27 @@ class MDownloadingTable: UITableView,UITableViewDelegate,UITableViewDataSource,D
     
     ///网络检测
     @objc private func reachabilityChanged(note: NSNotification){
-        let reachability = note.object as! Reachability // 准备获取网络连接信息
-        if reachability.isReachable { // 判断网络连接状态
-            MYLog("网络连接：可用")
-            if reachability.isReachableViaWiFi { // 判断网络连接类型
-                MYLog("连接类型：WiFi")
-                if self.isFirst {
-                    startDownloadTask()
-                    self.loadDataArray()
-                }
-                self.isFirst = true
-                
-            } else {
-                MYLog("连接类型：移动网络")
-                MDownDataUtils.handel4GChangeFromNet()
-                self.loadDataArray()
-            }
-        } else {
-            MYLog("网络连接：不可用")
-            MDownDataUtils.handleNoNetFromNer()
-            self.loadDataArray()
-        }
+//        let reachability = note.object as! Reachability // 准备获取网络连接信息
+//        if reachability.isReachable { // 判断网络连接状态
+//            MYLog("网络连接：可用")
+//            if reachability.isReachableViaWiFi { // 判断网络连接类型
+//                MYLog("连接类型：WiFi")
+//                if self.isFirst {
+//                    startDownloadTask()
+//                    self.loadDataArray()
+//                }
+//                self.isFirst = true
+//                
+//            } else {
+//                MYLog("连接类型：移动网络")
+//                MDownDataUtils.handel4GChangeFromNet()
+//                self.loadDataArray()
+//            }
+//        } else {
+//            MYLog("网络连接：不可用")
+//            MDownDataUtils.handleNoNetFromNer()
+//            self.loadDataArray()
+//        }
         
     }
     ///开启下一个下载任务

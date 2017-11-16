@@ -1,30 +1,29 @@
 PODS:
-  - Alamofire (4.4.0)
-  - AlamofireImage (3.2.0):
-    - Alamofire (~> 4.1)
-  - FMDB (2.6.2):
-    - FMDB/standard (= 2.6.2)
-  - FMDB/standard (2.6.2)
-  - IQKeyboardManagerSwift (4.0.9)
-  - MBProgressHUD (1.0.0)
+  - Alamofire (4.5.1)
+  - AlamofireImage (3.3.0):
+    - Alamofire (~> 4.5)
+  - FMDB (2.7.2):
+    - FMDB/standard (= 2.7.2)
+  - FMDB/standard (2.7.2)
+  - IQKeyboardManagerSwift (5.0.6)
+  - MBProgressHUD (1.1.0)
   - MJExtension (3.0.13)
-  - ReachabilitySwift (3)
-  - SnapKit (3.2.0)
-  - SwiftyJSON (3.1.4)
-  - UMengUShare/Core (6.4.3):
+  - SnapKit (4.0.0)
+  - SwiftyJSON (4.0.0)
+  - UMengUShare/Core (6.4.6):
     - UMengUShare/Network
-  - UMengUShare/Network (6.4.3)
-  - UMengUShare/Social/QQ (6.4.3):
+  - UMengUShare/Network (6.4.6)
+  - UMengUShare/Social/QQ (6.4.6):
     - UMengUShare/Core
     - UMengUShare/Social/ReducedQQ
-  - UMengUShare/Social/ReducedQQ (6.4.3):
+  - UMengUShare/Social/ReducedQQ (6.4.6):
     - UMengUShare/Core
-  - UMengUShare/Social/ReducedWeChat (6.4.3):
+  - UMengUShare/Social/ReducedWeChat (6.4.6):
     - UMengUShare/Core
-  - UMengUShare/Social/WeChat (6.4.3):
+  - UMengUShare/Social/WeChat (6.4.6):
     - UMengUShare/Core
     - UMengUShare/Social/ReducedWeChat
-  - UMengUShare/UI (6.4.3):
+  - UMengUShare/UI (6.4.6):
     - UMengUShare/Core
 
 DEPENDENCIES:
@@ -34,7 +33,6 @@ DEPENDENCIES:
   - IQKeyboardManagerSwift
   - MBProgressHUD
   - MJExtension
-  - ReachabilitySwift
   - SnapKit
   - SwiftyJSON
   - UMengUShare/Social/QQ
@@ -42,17 +40,16 @@ DEPENDENCIES:
   - UMengUShare/UI
 
 SPEC CHECKSUMS:
-  Alamofire: dc44b1600b800eb63da6a19039a0083d62a6a62d
-  AlamofireImage: 157ed682cc81d3b9db4fb90c1f12180ac552d93b
-  FMDB: 854a0341b4726e53276f2a8996f06f1b80f9259a
-  IQKeyboardManagerSwift: 2eefe6c429b86aa08bfbc1b5c891164d754adf91
-  MBProgressHUD: 4890f671c94e8a0f3cf959aa731e9de2f036d71a
+  Alamofire: 2d95912bf4c34f164fdfc335872e8c312acaea4a
+  AlamofireImage: 2e784dc5d00f04903a52c1d169181469c805c3df
+  FMDB: 6198a90e7b6900cfc046e6bc0ef6ebb7be9236aa
+  IQKeyboardManagerSwift: 02bfbb0dff71c66d0ab77d80d25dfce0c3717735
+  MBProgressHUD: e7baa36a220447d8aeb12769bf0585582f3866d9
   MJExtension: 5932755f451458eefa24239358817f8d291240c7
-  ReachabilitySwift: f5b9bb30a0777fac8f09ce8b067e32faeb29bb64
-  SnapKit: 1ca44df72cfa543218d177cb8aab029d10d86ea7
-  SwiftyJSON: c2842d878f95482ffceec5709abc3d05680c0220
-  UMengUShare: d39cb682598df87ebdd3c055d03d00eb0102d42c
+  SnapKit: a42d492c16e80209130a3379f73596c3454b7694
+  SwiftyJSON: 070dabdcb1beb81b247c65ffa3a79dbbfb3b48aa
+  UMengUShare: fdbbf86353976727af26a66e9a84314ecb59c816
 
-PODFILE CHECKSUM: 475e8582ba55fd34e590d9e786afb5406a119452
+PODFILE CHECKSUM: 7d440ef16887d4fed1bec99cf0efe13fc5095193
 
-COCOAPODS: 1.2.0
+COCOAPODS: 1.4.0.beta.2

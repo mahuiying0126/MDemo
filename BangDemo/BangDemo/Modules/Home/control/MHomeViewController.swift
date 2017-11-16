@@ -80,9 +80,9 @@ class MHomeViewController: UIViewController ,noticDelegate{
         }
         collectionView.backgroundColor = Whit
         collectionView.contentInset = UIEdgeInsets.init(top:Screen_width*0.5 + 25 + 10, left: 0, bottom: 0, right: 0)
-        collectionView.register(HomeCollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
+        collectionView.register(HomeCollectionViewCell.self, forCellWithReuseIdentifier: MHomeViewController.reuseIdentifier)
         
-        collectionView.register(HomeHeadCollectionReusableView.self, forSupplementaryViewOfKind:UICollectionElementKindSectionHeader, withReuseIdentifier: reusableView)
+        collectionView.register(HomeHeadCollectionReusableView.self, forSupplementaryViewOfKind:UICollectionElementKindSectionHeader, withReuseIdentifier: MHomeViewController.reusableView)
         
         self.view .addSubview(collectionView)
         

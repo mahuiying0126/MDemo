@@ -42,12 +42,12 @@ class MMainViewController: UITabBarController {
         
         viewController.tabBarItem.selectedImage = UIImage(named:selectImage as String)?.withRenderingMode(UIImageRenderingMode.alwaysOriginal)
         //设置文字样式
-        var textAttrs = Dictionary<String, Any>()
-        textAttrs[NSForegroundColorAttributeName] = UIColorFromRGB(0x919192);
+        var textAttrs = Dictionary<NSAttributedStringKey, Any>()
+    textAttrs[NSAttributedStringKey.foregroundColor] = UIColorFromRGB(0x919192);
         //被选择
-        var selectTextAttrs = Dictionary<String,Any>()
-        selectTextAttrs[NSForegroundColorAttributeName] = ColorFromRGB(63.0, 131.0, 230.0, 1.0);
-        selectTextAttrs[NSFontAttributeName] = FONT(16.0)
+        var selectTextAttrs = Dictionary<NSAttributedStringKey,Any>()
+    selectTextAttrs[NSAttributedStringKey.foregroundColor] = ColorFromRGB(63.0, 131.0, 230.0, 1.0);
+    selectTextAttrs[NSAttributedStringKey.font] = FONT(16.0)
         viewController.tabBarItem.setTitleTextAttributes(
             textAttrs, for: UIControlState.normal)
         viewController.tabBarItem.setTitleTextAttributes(selectTextAttrs, for: UIControlState.selected)

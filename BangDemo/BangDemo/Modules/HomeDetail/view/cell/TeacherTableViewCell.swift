@@ -34,8 +34,8 @@ class TeacherTableViewCell: UITableViewCell {
                 name = " 首席讲师  " + (model.name)!
             }
             let attribut = NSMutableAttributedString.init(string: name)
-            attribut.addAttribute(NSForegroundColorAttributeName, value: navColor, range: NSRange.init(location: 0, length: 5))
-            attribut.addAttribute(NSFontAttributeName, value: FONT(15), range: NSRange.init(location: 0, length: (model.name?.characters.count)!))
+            attribut.addAttribute(NSAttributedStringKey.foregroundColor, value: navColor, range: NSRange.init(location: 0, length: 5))
+            attribut.addAttribute(NSAttributedStringKey.font, value: FONT(15), range: NSRange.init(location: 0, length: (model.name?.characters.count)!))
             self.detailName?.attributedText = attribut
         }
         

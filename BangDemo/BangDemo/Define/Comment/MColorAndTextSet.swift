@@ -11,12 +11,12 @@ import Foundation
 ///16进制颜色
 public func UIColorFromRGB(_ rgbValue :NSInteger) ->UIColor{
     
-    return UIColor (colorLiteralRed: ((Float)((rgbValue & 0xFF0000) >> 16))/255.0, green: ((Float)((rgbValue & 0xFF00) >> 8))/255.0, blue: ((Float)(rgbValue & 0xFF))/255.0, alpha: 1.0)
+    return UIColor (red: ((CGFloat)((rgbValue & 0xFF0000) >> 16))/255.0, green: ((CGFloat)((rgbValue & 0xFF00) >> 8))/255.0, blue: ((CGFloat)(rgbValue & 0xFF))/255.0, alpha: 1.0)
 }
 /// RGB 三原色
-public func ColorFromRGB(_ R:Float,_ G:Float,_ B:Float ,_ A:Float)->UIColor{
+public func ColorFromRGB(_ R:CGFloat,_ G:CGFloat,_ B:CGFloat ,_ A:CGFloat)->UIColor{
     
-    return UIColor (colorLiteralRed: R / 255.0 , green: G/255.0, blue: B/255.0, alpha: A)
+    return UIColor (red: R / 255.0 , green: G/255.0, blue: B/255.0, alpha: A)
 }
 
 public let Whit = UIColor.white

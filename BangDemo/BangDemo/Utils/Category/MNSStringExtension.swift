@@ -49,13 +49,13 @@ extension NSString{
             font = .systemFont(ofSize: 12)
         }
         if self.responds(to: #selector(boundingRect(with:options:attributes:context:))) {
-            var attr = Dictionary<String,Any>()
-            attr[NSFontAttributeName] = font
+            var attr = Dictionary<NSAttributedStringKey,Any>()
+            attr[NSAttributedStringKey.font] = font
             if lineBreakMode != .byWordWrapping {
                 
                 let paragraphStyle = NSMutableParagraphStyle()
                 paragraphStyle.lineBreakMode = lineBreakMode
-                attr[NSParagraphStyleAttributeName] = paragraphStyle
+                attr[NSAttributedStringKey.paragraphStyle] = paragraphStyle
             }
             
             let rect = self.boundingRect(with: size, options: [.usesLineFragmentOrigin,.usesFontLeading] , attributes: attr, context: nil)

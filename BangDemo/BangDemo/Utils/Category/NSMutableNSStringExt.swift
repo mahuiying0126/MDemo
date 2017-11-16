@@ -20,8 +20,8 @@ extension NSMutableAttributedString{
     func attributedString(imageName:String,textStr:String,fontSize:CGFloat,color:UIColor) -> NSMutableAttributedString {
         let text = NSMutableAttributedString()
         
-        let title : NSAttributedString = NSAttributedString(string: textStr, attributes: [NSForegroundColorAttributeName : color, NSFontAttributeName : UIFont.systemFont(ofSize: fontSize)])
-        let kongge : NSAttributedString = NSAttributedString(string: " ", attributes: [NSForegroundColorAttributeName : color, NSFontAttributeName : UIFont.systemFont(ofSize: fontSize)])
+        let title : NSAttributedString = NSAttributedString(string: textStr, attributes: [NSAttributedStringKey.foregroundColor : color, NSAttributedStringKey.font : UIFont.systemFont(ofSize: fontSize)])
+        let kongge : NSAttributedString = NSAttributedString(string: " ", attributes: [NSAttributedStringKey.foregroundColor : color, NSAttributedStringKey.font : UIFont.systemFont(ofSize: fontSize)])
         
         var image = UIImage(named:imageName)
         image = UIImage.init(cgImage: (image?.cgImage)!, scale: 2.0, orientation: UIImageOrientation.up)
@@ -52,12 +52,12 @@ extension NSMutableAttributedString{
     func markStyleAttributeString(_ titleString :String,lineStyle:NSUnderlineStyle, markFont:CGFloat,markMakeRange:NSRange,markColor:UIColor,textFont:CGFloat,textMakeRange:NSRange,textColor:UIColor) -> NSMutableAttributedString {
         //富文本设置
         let attributeString = NSMutableAttributedString.init(string: titleString)
-        attributeString.addAttribute(NSFontAttributeName, value: FONT(markFont), range: markMakeRange)
-        attributeString.addAttribute(NSForegroundColorAttributeName, value: markColor, range: markMakeRange)
-        attributeString.addAttribute(NSFontAttributeName, value: FONT(textFont), range: textMakeRange)
-        attributeString.addAttribute(NSForegroundColorAttributeName, value: textColor, range: textMakeRange)
+        attributeString.addAttribute(NSAttributedStringKey.font, value: FONT(markFont), range: markMakeRange)
+        attributeString.addAttribute(NSAttributedStringKey.foregroundColor, value: markColor, range: markMakeRange)
+        attributeString.addAttribute(NSAttributedStringKey.font, value: FONT(textFont), range: textMakeRange)
+        attributeString.addAttribute(NSAttributedStringKey.foregroundColor, value: textColor, range: textMakeRange)
         
-        attributeString.addAttribute(NSStrikethroughStyleAttributeName, value: NSNumber.init(value: lineStyle.rawValue), range: NSMakeRange(0, attributeString.length))
+        attributeString.addAttribute(NSAttributedStringKey.strikethroughStyle, value: NSNumber.init(value: lineStyle.rawValue), range: NSMakeRange(0, attributeString.length))
         
         return attributeString
     }

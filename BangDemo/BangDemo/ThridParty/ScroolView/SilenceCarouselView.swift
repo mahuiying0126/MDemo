@@ -136,7 +136,7 @@ open class SilenceCarouselView: UIView,UIScrollViewDelegate {
     /**
      定时调用的方法
      */
-    func timerFunction() -> (){
+    @objc func timerFunction() -> (){
         //动画改变scrollview的偏移量就可以实现自动滚动
         self.scrollView?.setContentOffset(CGPoint(x: self.scrollView!.bounds.size.width * 2, y: 0), animated: true)
     }
@@ -196,7 +196,7 @@ open class SilenceCarouselView: UIView,UIScrollViewDelegate {
     /**
      图片点击事件
      */
-    func clickImg() -> (){
+    @objc  func clickImg() -> (){
         if self.silenceCarouselViewTapBlock != nil {
             self.silenceCarouselViewTapBlock!(self.pageControl!.currentPage)
         }
